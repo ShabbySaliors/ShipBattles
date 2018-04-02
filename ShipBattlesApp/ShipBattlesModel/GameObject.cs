@@ -8,9 +8,10 @@ namespace ShipBattlesModel
 {
     public abstract class GameObject
     {
-        Location Loc { get; set; }
-        Direction Direct { get; set; }
-
+        abstract public Location Loc { get; set; }
+        abstract public Direction Direct { get; set; }
+        abstract public double Speed { get; set; }
+        abstract public void UpdatePosition();
         abstract public void Serialize();
         abstract public void Deserialize();
         
@@ -18,25 +19,40 @@ namespace ShipBattlesModel
 
     public class AIShip: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
-
+            
         }
 
         public override void Deserialize()
         {
 
+        }
+
+        public override void UpdatePosition()
+        {
+            Speed = 9;
         }
     }
 
     public class PlayerShip: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
 
         }
 
         public override void Deserialize()
+        {
+
+        }
+        public override void UpdatePosition()
         {
 
         }
@@ -44,12 +60,20 @@ namespace ShipBattlesModel
 
     public class Base: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
 
         }
 
         public override void Deserialize()
+        {
+
+        }
+
+        public override void UpdatePosition()
         {
 
         }
@@ -57,12 +81,20 @@ namespace ShipBattlesModel
 
     public class RepairKit: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
 
         }
 
         public override void Deserialize()
+        {
+
+        }
+
+        public override void UpdatePosition()
         {
 
         }
@@ -70,12 +102,20 @@ namespace ShipBattlesModel
 
     public class Asteroid: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
 
         }
 
         public override void Deserialize()
+        {
+
+        }
+
+        public override void UpdatePosition()
         {
 
         }
@@ -83,12 +123,20 @@ namespace ShipBattlesModel
 
     public class PlayerBullet: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
 
         }
 
         public override void Deserialize()
+        {
+
+        }
+
+        public override void UpdatePosition()
         {
 
         }
@@ -96,6 +144,9 @@ namespace ShipBattlesModel
 
     public class Bullet: GameObject
     {
+        public override Location Loc { get; set; }
+        public override double Speed { get; set; }
+        public override Direction Direct { get; set; }
         public override void Serialize()
         {
 
@@ -105,16 +156,23 @@ namespace ShipBattlesModel
         {
 
         }
+
+        public override void UpdatePosition()
+        {
+
+        }
     }
 
     public class Location
     {
-
+        public int X { get; set; }
+        public int Y { get; set; }
     }
 
     public class Direction
     {
-
+        public double Up { get; set; } // -1 to 1
+        public double Right { get; set; } // -1 to 1
     }
     
 }

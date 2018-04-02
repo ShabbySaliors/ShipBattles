@@ -8,9 +8,16 @@ namespace ShipBattlesModel
 {
     public class GameWorld // Singleton?
     {
-        List<GameObject> Objects { get; set; }
-        int Width { get; set; }
-        int Height { get; set; }
+        public List<GameObject> Objects { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
+        public GameObject GetPlayersShip()
+        {
+            foreach (GameObject obj in Objects)
+            {
+                if obj == 
+            }
+        }
     }
 }
