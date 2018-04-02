@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ShipBattlesModel
 {
-    class Model
+    public class GameWorld // Singleton?
     {
+        List<GameObject> Objects { get; set; }
+        int Width { get; set; }
+        int Height { get; set; }
+
     }
 }
