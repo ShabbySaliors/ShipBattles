@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShipBattlesApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Ship Battles" Height="900" Width="1440"
+        Loaded="Window_Loaded">
     <Grid>
-        
+        <Image Stretch="UniformToFill" Source="Images/background2.jpg" />
+        <Button x:Name="btnEasy" Content="Easy" FontSize="30" Margin="475,695,824.6,124.4" Click="btnEasy_Click" RenderTransformOrigin="0.496,1.592"/>
+        <Button x:Name="btnHard" Content="Hard" FontSize="30"  Margin="824,695,475.6,124.4" Click="btnHard_Click"/>
+        <Button x:Name="btnStart" Content="Start" FontSize="30" Margin="475,512,475.6,280.4" Click="btnStart_Click"/>
+        <Button x:Name="btnAbout" Content="About" FontSize="30" Canvas.Left="610" Canvas.Top="564" Margin="1023,512,76.6,307.4" Click="btnAbout_Click"/>
+        <Button x:Name="btnHelp" Content="Help" FontSize="30" Margin="1023,602,76.6,217.4" Click="btnHelp_Click"/>
+        <Button x:Name="btnHighScore" Content="High Scores" FontSize="30" Margin="1023,695,76.6,124.4" Click="btnHighScore_Click"/>
+        <Image Source="Images/logo.png" HorizontalAlignment="Left" Height="100" Margin="408,113,0,0" VerticalAlignment="Top" Width="620"/>
+        <Button x:Name="btnMed" Content="Medium" FontSize="30" Margin="651,695,648.6,124.4" Click="btnMed_Click" RenderTransformOrigin="0.71,1.467"/>
+        <TextBlock HorizontalAlignment="Left" Margin="88,695,0,0" TextWrapping="Wrap" Text="Select a difficulty level:"  Foreground="White" 
+                   FontSize="35" VerticalAlignment="Top" Height="75"/>
+
     </Grid>
 </Window>
