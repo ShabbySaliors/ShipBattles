@@ -9,7 +9,6 @@ namespace ShipBattlesModel
     public class Controller
     {
         public string Username;
-        public PlayerShip playerShip;
         public GameWorld World { get; set; }
         public int level = 0;
         Random rand = new Random();
@@ -39,17 +38,26 @@ namespace ShipBattlesModel
                 World.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
 
-            World.Objects.Add(new PlayerShip() { Loc = MakeRandLocation(), Speed = PlayerSpeed });
+            World.PlayerShip = new PlayerShip() { Loc = MakeRandLocation(), Speed = PlayerSpeed };
+            World.Objects.Add(World.PlayerShip);
         }
 
         public void Serialize()
         {
-            foreach 
+            Console.WriteLine("Level:");
+            Console.WriteLine(level);
+            Console.WriteLine("Username:");
+            Console.WriteLine(Username);
+            Console.WriteLine("AIShipspeed:");
+            Console.WriteLine(AIShipSpeed);
+            Console.WriteLine("PlayerSpeed");
+            Console.WriteLine(PlayerSpeed);
+            // etc
         }
 
         public void Deserialize()
         {
-
+            // Some code.
         }
 
         public Direction MakeRandDirection()

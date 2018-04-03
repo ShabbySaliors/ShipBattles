@@ -12,8 +12,8 @@ namespace ShipBattlesModel
         abstract public Direction Direct { get; set; }
         abstract public double Speed { get; set; }
         abstract public void UpdatePosition();
-        abstract public void Serialize();
-        abstract public void Deserialize();
+        abstract public string Serialize();
+        abstract public void Deserialize(string serial);
         
     }
 
@@ -22,19 +22,30 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-            
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
         public override void UpdatePosition()
         {
-            Speed = 9;
+
         }
     }
 
@@ -43,14 +54,25 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
         public override void UpdatePosition()
         {
@@ -63,14 +85,25 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
         public override void UpdatePosition()
@@ -84,14 +117,25 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
         public override void UpdatePosition()
@@ -105,14 +149,25 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
         public override void UpdatePosition()
@@ -126,14 +181,25 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
         public override void UpdatePosition()
@@ -147,14 +213,25 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public override double Speed { get; set; }
         public override Direction Direct { get; set; }
-        public override void Serialize()
+        public override string Serialize() // Make is a single String
         {
-
+            string serial = "";
+            serial += Convert.ToString(Loc.Y) + ",";
+            serial += Convert.ToString(Loc.X) + ",";
+            serial += Convert.ToString(Speed) + ",";
+            serial += Convert.ToString(Direct.Up) + ",";
+            serial += Convert.ToString(Direct.Right);
+            return serial;
         }
 
-        public override void Deserialize()
+        public override void Deserialize(string serial)
         {
-
+            string[] serialArray = serial.Split(',');
+            Loc.Y = Convert.ToInt32(serialArray[0]);
+            Loc.X = Convert.ToInt32(serialArray[1]);
+            Speed = Convert.ToDouble(serialArray[2]);
+            Direct.Up = Convert.ToDouble(serialArray[3]);
+            Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
         public override void UpdatePosition()
