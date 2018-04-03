@@ -9,8 +9,15 @@
   </Class>
   <Class Name="ShipBattlesModel.Controller">
     <Position X="18" Y="3.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="ShipBattlesModel.Controller.HighScore" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Controller.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAIABABAAEAAAAQAEAADAACFAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgIABABAAEAAAAQAEAADAAAEAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Controller.cs</FileName>
     </TypeIdentifier>
   </Class>

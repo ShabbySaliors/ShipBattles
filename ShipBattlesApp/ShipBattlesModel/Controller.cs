@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ShipBattlesModel
 {
@@ -42,7 +43,7 @@ namespace ShipBattlesModel
             World.Objects.Add(World.PlayerShip);
         }
 
-        public void Serialize()
+        public void Save()
         {
             Console.WriteLine("Level:");
             Console.WriteLine(level);
@@ -55,7 +56,7 @@ namespace ShipBattlesModel
             // etc
         }
 
-        public void Deserialize()
+        public void Load()
         {
             // Some code.
         }
@@ -68,6 +69,29 @@ namespace ShipBattlesModel
         public Location MakeRandLocation()
         {
             return new Location() { X = rand.Next(World.Width), Y = rand.Next(World.Height) };
+        }
+
+        public class HighScore
+        {
+
+            // Saves a highscore to an output file (and creates the output file if it does not exist)
+            // If the maximum number of highscores is reached, it deletes the lowest highscore (unless the newest highscore is the lowest)
+            public void SaveHighScore(string username, int highScore)
+            {
+                using (FileStream fs = File.Open(highscores.txt, FileMode.Open))
+                {
+                    using (StreamWriter sr = new StreamWriter(fs))
+                    {
+                        sr.WriteLine(username + " " + highScore.ToString());
+                    }
+                }
+            }
+
+            // Load a list of highscores from said output file
+            public void LoadHighScores()
+            {
+                // Some more code.
+            }
         }
     }
 }
