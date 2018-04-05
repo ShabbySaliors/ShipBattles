@@ -22,9 +22,9 @@ namespace ShipBattlesModel
             // set up more complicated.
             World.Width = 300;
             World.Height = 300;
-            for( int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                World.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed});
+                World.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
             for (int i = 0; i < 4; i++)
             {
@@ -71,28 +71,6 @@ namespace ShipBattlesModel
             return new Location() { X = rand.Next(World.Width), Y = rand.Next(World.Height) };
         }
 
-        public class HighScore
-        {
-
-            // Saves a highscore to an output file (and creates the output file if it does not exist)
-            // If the maximum number of highscores is reached, it deletes the lowest highscore (unless the newest highscore is the lowest)
-            public void SaveHighScore(string username, int highScore)
-            {
-                using (FileStream fs = File.Open(highscores.txt, FileMode.Open))
-                {
-                    using (StreamWriter sr = new StreamWriter(fs))
-                    {
-                        sr.WriteLine(username + " " + highScore.ToString());
-                    }
-                }
-            }
-
-            // Load a list of highscores from said output file
-            public void LoadHighScores()
-            {
-                // Some more code.
-            }
-        }
     }
 
     public class HighScore
