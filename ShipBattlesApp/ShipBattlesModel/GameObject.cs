@@ -11,7 +11,7 @@ namespace ShipBattlesModel
         abstract public Location Loc { get; set; }
         abstract public Direction Direct { get; set; }
         abstract public double Speed { get; set; }
-        abstract public void UpdatePosition();
+        abstract public void DoNextAction();
         abstract public string Serialize();
         abstract public void Deserialize(string serial);
         
@@ -43,9 +43,9 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
-
+            
         }
     }
 
@@ -74,7 +74,7 @@ namespace ShipBattlesModel
             Direct.Up = Convert.ToDouble(serialArray[3]);
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
 
         }
@@ -106,7 +106,7 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
 
         }
@@ -138,7 +138,7 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
 
         }
@@ -170,7 +170,7 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
 
         }
@@ -202,7 +202,7 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
 
         }
@@ -234,7 +234,7 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToDouble(serialArray[4]);
         }
 
-        public override void UpdatePosition()
+        public override void DoNextAction()
         {
 
         }
