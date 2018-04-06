@@ -26,3 +26,5 @@ AI Control
 
 Base destruction
 - Depending on the level, a base must get hit ten times before it is destroyed. 
+
+Ship destruction. If s ship gets hit once, It's dead. 
