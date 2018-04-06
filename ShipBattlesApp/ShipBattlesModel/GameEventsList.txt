@@ -1,0 +1,28 @@
+A list of game events which the model must be cabable of. 
+
+- An object being struck by a bullet
+	- Handled by a loop which checks so see if a bullet coordinate is within the hitbox 
+	  for all GameObjects. When such an object is found, a method is call objectName.Hit().
+	  If the object gets detroyed by the hit, then it is removed from the list of GameObjects.
+- An object moves
+	- Handled by a loop which iterates through all game objects and calls a method 
+	  which all of them (e.g. DoNextAction()). The logic for all of these methods will
+	  be different.
+- An object runs into another object. (Beta)
+	- I don't know how to do this without a TON of iterations which would take too much time
+- An object shoots
+	- Since every object will have a direction, you can create a bullet which is moving
+	  in that direction as well at whatever speep those bullets should be moving at. Have a 
+	  Shoot() method for every object type which shoots. 
+	- But you must check to see that an object IsLoaded before you shoot. Otherwise one could shoot
+	- in rapid sucession and destroy everything in the world right away. 
+
+AI Control
+- IF the object is in the plottables list, then have it do smart stuff. Otherwise it's just sitting there. 
+- When the DoNextAciton() method is called, have a random number rolled. If the number is below a certain threshold,
+  then have the ship point directly at the player ship and start moving there. If the random number is within another
+  interval, then have the ship Shoot(). If the random number is above both of these intervals, then merely have it move
+  in a strait direction. 
+
+Base destruction
+- Depending on the level, a base must get hit ten times before it is destroyed. 
