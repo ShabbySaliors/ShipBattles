@@ -76,13 +76,8 @@ namespace ShipBattlesModel
 
     public class HighScore
     {
-        string filepath = "../../highscores.txt";
         string file = "highscores.txt";
         private List<string> scoresList = new List<string> { };
-        // from https://stackoverflow.com/questions/3259583/how-to-get-files-in-a-relative-path-in-c-sharp
-        // static string folder = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\Archive\";
-        // static string filter = "*.txt";
-        // string[] files = Directory.GetFiles(folder, filter);
 
         public List<string> ScoresList
         {
@@ -92,21 +87,38 @@ namespace ShipBattlesModel
             }
         }
 
+        // Checks if the high-scores file exists
+        // If it does not, it makes a new high-scores file
+        // After the check, it initializes scoresList with 10 empty strings
+        // scoresList will be changed into an array later
+        public void CheckHighScoresFile()
+        {
+            // from https://msdn.microsoft.com/en-us/library/system.io.file.exists%28v=vs.110%29.aspx
+            if (!File.Exists(file))
+            {
+                // from https://stackoverflow.com/questions/5156254/closing-a-file-after-file-create
+                var temp = File.Create(file);
+                temp.Close();
+            }
+            for (int i = 0; i <= 9; i++)
+            {
+                scoresList.Add("");
+            }
+        }
+
         // Saves a high-score to an output file (it first creates the output file if it does not exist)
         // If the maximum number of high-scores is reached, it deletes the lowest high-score
         // If the newest high-score
         public void SaveHighScore(string username, string highScore)
-        {
-            // File.Exists from https://stackoverflow.com/questions/38960/how-to-find-out-if-a-file-exists-in-c-sharp-net
-            if (!File.Exists(file))
-            {
-                File.Create(filepath);
-            }
-            using (FileStream fs = File.Open(filepath, FileMode.Open))
+        {           
+            using (FileStream fs = File.Open(file, FileMode.Open))
             {
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
+                    // test input
                     sw.WriteLine(username + " " + highScore);
+                    scoresList[0] = username;
+                    scoresList[1] = highScore;
                 }
             }
         }
@@ -114,20 +126,22 @@ namespace ShipBattlesModel
         // Load a list of high-scores from said output file
         public void LoadHighScores()
         {
-            if (!File.Exists(file))
+            if (File.Exists(file))
             {
-                scoresList.Add("There are currently no high-scores. Play a level to get the first high-score!");
-                return;
-            }
-            using (FileStream fs = File.Open(filepath, FileMode.Open))
-            {
-                using (StreamReader sr = new StreamReader(fs))
+                using (FileStream fs = File.Open(file, FileMode.Open))
                 {
-                    for (int i = 0; i == 10; i++)
+                    using (StreamReader sr = new StreamReader(fs))
                     {
-                        string[] tempString = sr.ReadLine().Split(' ');
-                        scoresList.Add(tempString[0]);
-                        scoresList.Add(tempString[1]);
+                        for (int i = 0; i <= 19; i+=2)
+                        {
+                            string tempString1;
+                            if ((tempString1 = sr.ReadLine()) != null)
+                            {
+                                string[] tempString2 = tempString1.Split(' ');
+                                scoresList[i] = tempString2[0];
+                                scoresList[i + 1] = tempString2[1];
+                            }
+                        }
                     }
                 }
             }

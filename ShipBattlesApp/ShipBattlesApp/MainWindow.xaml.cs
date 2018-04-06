@@ -22,7 +22,7 @@ namespace ShipBattlesApp
     {
         public enum GameMode { Easy, Medium, Hard }
         GameMode gameMode = new GameMode();
-        ShipBattlesModel.HighScore hs = new ShipBattlesModel.HighScore();
+        ShipBattlesModel.HighScore hsTemp = new ShipBattlesModel.HighScore();
         Button oldBtn = new Button();
         Button btn;
 
@@ -40,7 +40,8 @@ namespace ShipBattlesApp
             this.MinHeight = 900.0;
             btnEasy.Background = new SolidColorBrush(Colors.Green);
             gameMode = GameMode.Easy;
-            hs.LoadHighScores();
+            hsTemp.CheckHighScoresFile();
+            hsTemp.LoadHighScores();
         }
 
         public MainWindow()
@@ -48,31 +49,14 @@ namespace ShipBattlesApp
             InitializeComponent();
         }
 
-        private void btnEasy_Click(object sender, RoutedEventArgs e)
+        private void btnDiff_Click(object sender, RoutedEventArgs e)
         {
+            btnEasy.Background = new SolidColorBrush(Colors.LightGray);
             oldBtn.Background = new SolidColorBrush(Colors.LightGray);
             btn = (Button)sender;
             btn.Background = new SolidColorBrush(Colors.Green);
             oldBtn = btn;
             gameMode = GameMode.Easy;
-        }
-
-        private void btnMed_Click(object sender, RoutedEventArgs e)
-        {
-            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
-            btn = (Button)sender;
-            btn.Background = new SolidColorBrush(Colors.Green);
-            oldBtn = btn;
-            gameMode = GameMode.Medium;
-        }
-
-        private void btnHard_Click(object sender, RoutedEventArgs e)
-        {
-            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
-            btn = (Button)sender;
-            btn.Background = new SolidColorBrush(Colors.Green);
-            oldBtn = btn;
-            gameMode = GameMode.Hard;
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -94,7 +78,7 @@ namespace ShipBattlesApp
         {
             // from https://stackoverflow.com/questions/11133947/how-to-open-second-window-from-first-window-in-wpf
             // and https://stackoverflow.com/questions/30023419/how-to-call-a-variable-from-one-window-to-another-window
-            HighScoreWindow hswindow = new HighScoreWindow(hs);
+            HighScoreWindow hswindow = new HighScoreWindow(hsTemp);
             hswindow.Show();
         }
     }
