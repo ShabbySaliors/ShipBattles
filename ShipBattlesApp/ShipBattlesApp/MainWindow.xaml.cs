@@ -22,6 +22,9 @@ namespace ShipBattlesApp
     {
         public enum GameMode { Easy, Medium, Hard }
         GameMode gameMode = new GameMode();
+        ShipBattlesModel.HighScore hs = new ShipBattlesModel.HighScore();
+        Button oldBtn = new Button();
+        Button btn;
 
 
         private void FrameworkElement_Loaded(object sender, RoutedEventArgs e)
@@ -37,6 +40,7 @@ namespace ShipBattlesApp
             this.MinHeight = 900.0;
             btnEasy.Background = new SolidColorBrush(Colors.Green);
             gameMode = GameMode.Easy;
+            hs.LoadHighScores();
         }
 
         public MainWindow()
@@ -46,25 +50,28 @@ namespace ShipBattlesApp
 
         private void btnEasy_Click(object sender, RoutedEventArgs e)
         {
-            btnEasy.Background = new SolidColorBrush(Colors.Green);
-            btnMed.Background = new SolidColorBrush(Colors.LightGray);
-            btnHard.Background = new SolidColorBrush(Colors.LightGray);
+            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
+            btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.Green);
+            oldBtn = btn;
             gameMode = GameMode.Easy;
         }
 
         private void btnMed_Click(object sender, RoutedEventArgs e)
         {
-            btnEasy.Background = new SolidColorBrush(Colors.LightGray);
-            btnMed.Background = new SolidColorBrush(Colors.Green);
-            btnHard.Background = new SolidColorBrush(Colors.LightGray);
+            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
+            btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.Green);
+            oldBtn = btn;
             gameMode = GameMode.Medium;
         }
 
         private void btnHard_Click(object sender, RoutedEventArgs e)
         {
-            btnEasy.Background = new SolidColorBrush(Colors.LightGray);
-            btnMed.Background = new SolidColorBrush(Colors.LightGray);
-            btnHard.Background = new SolidColorBrush(Colors.Green);
+            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
+            btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.Green);
+            oldBtn = btn;
             gameMode = GameMode.Hard;
         }
 
@@ -85,7 +92,10 @@ namespace ShipBattlesApp
 
         private void btnHighScore_Click(object sender, RoutedEventArgs e)
         {
-
+            // from https://stackoverflow.com/questions/11133947/how-to-open-second-window-from-first-window-in-wpf
+            // and https://stackoverflow.com/questions/30023419/how-to-call-a-variable-from-one-window-to-another-window
+            HighScoreWindow hswindow = new HighScoreWindow(hs);
+            hswindow.Show();
         }
     }
 }
