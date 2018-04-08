@@ -11,11 +11,12 @@ namespace ShipBattlesModel
     public class Controller
     {
         public string Username;
-        public GameWorld World { get; set; }
+        public GameWorld World = GameWorld.Instance;
         public int level = 0;
         Random rand = new Random();
         public int AIShipSpeed = 1;
         int PlayerSpeed = 2;
+        public List<GameObject> hits = new List<GameObject>();
 
         public void LoadWorld()
         {
@@ -23,6 +24,7 @@ namespace ShipBattlesModel
             // set up more complicated.
 
             // Make sure that you set a bullet speed. 
+            GameWorld.Instance.BulletSpeed = 1;
             World.Width = 300;
             World.Height = 300;
             for (int i = 0; i < 5; i++)
@@ -41,9 +43,41 @@ namespace ShipBattlesModel
             {
                 World.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-
-            World.PlayerShip = new PlayerShip() { Loc = MakeRandLocation(), Speed = PlayerSpeed };
             World.Objects.Add(World.PlayerShip);
+        }
+
+        public void IterateGame()
+        {
+            foreach(GameObject obj in World.Objects)
+            {
+                obj.DoNextAction();
+            }
+
+            hits.Clear();
+            foreach(GameObject obj in World.Objects)
+            {
+                if (obj is Bullet)
+                {
+                    CheckForCollisions(obj).GetHit(); // Not sure if this will crash because of the null reference.
+
+                } else if (obj is PlayerBullet)
+                {
+                    CheckForCollisions(obj).GetHit();
+                } 
+            }
+
+            World.MakePlottibles();
+        }
+
+        private GameObject CheckForCollisions(GameObject obj)
+        {
+            foreach(GameObject hitObject in GameWorld.Instance.Objects)
+            {
+                if (obj.Loc.Y < hitObject.Loc.Y + hitObject.CollideBoxSize && obj.Loc.Y > hitObject.Loc.Y - hitObject.CollideBoxSize)
+                    if (obj.Loc.X < hitObject.Loc.X + hitObject.CollideBoxSize && obj.Loc.X > hitObject.Loc.X - hitObject.CollideBoxSize)
+                        return hitObject;
+            }
+            return null;
         }
 
         public void Save()

@@ -27,4 +27,12 @@ AI Control
 Base destruction
 - Depending on the level, a base must get hit ten times before it is destroyed. 
 
-Ship destruction. If s ship gets hit once, It's dead. 
+Ship destruction. If a ship gets hit once, It's dead. 
+
+How to move the player's ship. 
+As the controller iterates through the objects and calls DoNextAction for each object, how am I to move the player's ship? 
+- Have an instance variable for the palyer's ship which is is adjusted by the keys going up and down. 
+- Make the player's ship an singleton? 
+- Instance variables
+	- 
+	- 

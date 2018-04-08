@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShipBattlesApp"
         mc:Ignorable="d"
-        Title="Ship Battles" Height="900" Width="1440"
+        Title="Ship Battles" Height="900" Width="1400"
         Loaded="Window_Loaded">
     <Grid>
         <Image Stretch="UniformToFill" Source="Images/background2.jpg" />

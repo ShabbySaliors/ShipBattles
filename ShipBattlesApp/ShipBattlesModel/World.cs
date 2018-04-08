@@ -12,13 +12,15 @@ namespace ShipBattlesModel
         public List<GameObject> Objects { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public PlayerShip PlayerShip { get; set; }
+        public PlayerShip PlayerShip = PlayerShip.Instance;
         public List<GameObject> Plottibles { get; set; }
         public int BulletSpeed { get; set; }
 
         private GameWorld()
         {
             Rand = new Random();
+            Objects.Add(PlayerShip);
+            Plottibles = new List<GameObject>();
             // Most of the logic for setting up the proper world will be in the controller. 
             // Why? Because we need to incorporate the levels and I'm not sure how do do this
             // in the World constructor. Everytime you make an new level, you will have to effectively
@@ -27,6 +29,16 @@ namespace ShipBattlesModel
             // if they are plottable. Of course we could have the controller be a singleton. But we must
             // at least one because the object classes need to reference stuff in the game to make their 
             // disicions. Whatever. I'll just put the World as the singleton and see what happens.
+        }
+
+        public List<GameObject> MakePlottibles()
+        {
+            foreach(GameObject obj in Objects)
+            {
+                if((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < Width / 2))
+                    Plottibles.Add(obj);
+            }
+            return Plottibles;
         }
 
         public Direction MakeRandomDirection ()
@@ -39,6 +51,12 @@ namespace ShipBattlesModel
             } while (!(d.Right == 0 && d.Up == 0));
             return d;
         } 
+
+        public Location MakeRandomLocation()
+        {
+            Location loc = new Location() { X = Rand.Next(Width), Y = Rand.Next(Height) };
+            return loc;
+        }
 
         private static GameWorld instance = new GameWorld();
         public static GameWorld Instance
