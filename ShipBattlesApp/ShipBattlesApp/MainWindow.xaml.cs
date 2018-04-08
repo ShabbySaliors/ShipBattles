@@ -23,7 +23,7 @@ namespace ShipBattlesApp
         public enum GameMode { Easy, Medium, Hard }
         GameMode gameMode = new GameMode();
         ShipBattlesModel.HighScore hsTemp = new ShipBattlesModel.HighScore();
-        Button oldBtn = new Button();
+        Button oldBtn;
         Button btn;
 
 
@@ -42,6 +42,7 @@ namespace ShipBattlesApp
             gameMode = GameMode.Easy;
             hsTemp.CheckHighScoresFile();
             hsTemp.LoadHighScores();
+            oldBtn = btnEasy;
         }
 
         public MainWindow()
@@ -51,7 +52,6 @@ namespace ShipBattlesApp
 
         private void btnDiff_Click(object sender, RoutedEventArgs e)
         {
-            btnEasy.Background = new SolidColorBrush(Colors.LightGray);
             oldBtn.Background = new SolidColorBrush(Colors.LightGray);
             btn = (Button)sender;
             btn.Background = new SolidColorBrush(Colors.Green);

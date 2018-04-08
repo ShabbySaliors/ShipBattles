@@ -92,7 +92,7 @@ namespace ShipBattlesModel
         // Checks if the high-scores file exists
         // If it does not, it makes a new high-scores file
         // After the check, it initializes scoresList with 10 empty strings
-        // scoresList will be changed into an array later
+        // scoresList will be changed into a list of objects later
         public void CheckHighScoresFile()
         {
             // from https://msdn.microsoft.com/en-us/library/system.io.file.exists%28v=vs.110%29.aspx
