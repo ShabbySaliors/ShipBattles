@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace ShipBattlesModel
 {
@@ -103,20 +105,76 @@ namespace ShipBattlesModel
 
         public void Save()
         {
-            Console.WriteLine("Level:");
-            Console.WriteLine(level);
-            Console.WriteLine("Username:");
-            Console.WriteLine(Username);
-            Console.WriteLine("AIShipspeed:");
-            Console.WriteLine(AIShipSpeed);
-            Console.WriteLine("PlayerSpeed");
-            Console.WriteLine(PlayerSpeed);
+            // https://www.dotnetperls.com/serialize-list
+            try
+            {
+                using (Stream stream = File.Open("SaveFile.txt", FileMode.Create))
+                {
+                    List<object> saveList = new List<object> { };
+                    saveList.Add(Username);
+                    saveList.Add(level);
+                    saveList.Add(rand);
+                    saveList.Add(AIShipSpeed);
+                    saveList.Add(PlayerShip);
+                    saveList.Add(PlayerSpeed);
+                    saveList.Add(hits);
+                    saveList.Add(GameWorld.Instance.PlayerShipHitBoxSize);
+                    saveList.Add(GameWorld.Instance.PlayerShipLocation);
+                    saveList.Add(GameWorld.Instance.Rand);
+                    saveList.Add(GameWorld.Instance.Objects);
+                    saveList.Add(GameWorld.Instance.Width);
+                    saveList.Add(GameWorld.Instance.Height);
+                    saveList.Add(GameWorld.Instance.Plottibles);
+                    saveList.Add(GameWorld.Instance.BulletSpeed);
+
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(stream, saveList);
+                }
+            }
+            catch (IOException)
+            {
+            }
+            //Console.WriteLine("Level:");
+            //Console.WriteLine(level);
+            //Console.WriteLine("Username:");
+            //Console.WriteLine(Username);
+            //Console.WriteLine("AIShipspeed:");
+            //Console.WriteLine(AIShipSpeed);
+            //Console.WriteLine("PlayerSpeed");
+            //Console.WriteLine(PlayerSpeed);
             // etc
         }
 
         public void Load()
         {
-            // Some code.
+            // https://www.dotnetperls.com/serialize-list
+            try
+            {
+                using (Stream stream = File.Open("SaveFile.txt", FileMode.Open))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    List<object> loadList = (List<object>)bin.Deserialize(stream);
+                    Username = (string)loadList[0];
+                    level = (int)loadList[1];
+                    rand = (Random)loadList[2];
+                    AIShipSpeed = (int)loadList[3];
+                    PlayerShip = (PlayerShip)loadList[4];
+                    PlayerSpeed = (int)loadList[5];
+                    hits = (List<GameObject>)loadList[6];
+                    GameWorld.Instance.PlayerShipHitBoxSize = (int)loadList[7];
+                    GameWorld.Instance.PlayerShipLocation = (Location)loadList[8];
+                    GameWorld.Instance.Rand = (Random)loadList[9];
+                    GameWorld.Instance.Objects = (List<GameObject>)loadList[10];
+                    GameWorld.Instance.Width = (int)loadList[11];
+                    GameWorld.Instance.Height = (int)loadList[12];
+                    GameWorld.Instance.Plottibles = (List<GameObject>)loadList[13];
+                    GameWorld.Instance.BulletSpeed = (int)loadList[14];
+                    
+                }
+            }
+            catch (IOException)
+            {
+            }
         }
 
         public Direction MakeRandDirection()
