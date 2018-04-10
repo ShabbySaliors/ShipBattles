@@ -79,7 +79,6 @@ namespace ShipBattlesModel
                 if (obj is Bullet)
                 {
                     hits.Add(CheckForCollisions(obj)); // Not sure if this will crash because of the null reference.
-
                 } else if (obj is PlayerBullet)
                 {
                     hits.Add(CheckForCollisions(obj));

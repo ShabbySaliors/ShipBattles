@@ -52,7 +52,6 @@ namespace ShipBattlesApp
             GameBoardCanvas.Children.Clear();
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
                 PlotObject(obj);
-            Console.WriteLine(GameWorld.Instance.Plottibles.Count);
         }
 
         private void PlotObject(GameObject obj)
@@ -65,8 +64,8 @@ namespace ShipBattlesApp
             // newImage.MouseDown += Img_MouseDown;
             // Here we must concider the possibility that the images move instead of all being replotted every time. 
             // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on? 
-            Canvas.SetLeft(newImage, obj.Loc.X);
-            Canvas.SetTop(newImage, obj.Loc.Y);
+            Canvas.SetLeft(newImage, obj.Loc.X - newImage.Width / 2);
+            Canvas.SetTop(newImage, obj.Loc.Y - newImage.Height / 2);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -74,8 +73,6 @@ namespace ShipBattlesApp
             if (e.Key == Key.W)
             {
                 ctrl.PlayerShip.Direct.Up = 1;
-                Console.Write("Player Ship Direction.Up :");
-                Console.WriteLine(ctrl.PlayerShip.Direct.Up);
             }
             else if (e.Key == Key.A)
                 ctrl.PlayerShip.Direct.Right = -1;
@@ -103,9 +100,9 @@ namespace ShipBattlesApp
         private void Wind_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W)
-                ctrl.PlayerShip.Direct.Up = 1;
+                ctrl.PlayerShip.Direct.Up = -1;
             else if (e.Key == Key.A)
-                ctrl.PlayerShip.Direct.Right = -1;
+                ctrl.PlayerShip.Direct.Right = 1;
             else if (e.Key == Key.S)
                 ctrl.PlayerShip.Direct.Up = -1;
             else if (e.Key == Key.D)

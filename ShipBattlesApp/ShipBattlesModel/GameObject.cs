@@ -102,10 +102,12 @@ namespace ShipBattlesModel
         public Bullet Shoot()
         {
             Bullet b = new Bullet();
-            b.Direct = Direct;
-            b.Loc = Loc;
-            b.Loc.Y += Direct.Up * (HitBoxSize + 200);
-            b.Loc.X += Direct.Right * (HitBoxSize + 200);
+            b.Direct = new Direction();
+            b.Direct.Up = Direct.Up;
+            b.Direct.Right = Direct.Right;
+            b.Loc = new Location();
+            b.Loc.Y = Loc.Y + Direct.Up * (HitBoxSize + 50);
+            b.Loc.X = Loc.X + Direct.Right * (HitBoxSize + 50);
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
@@ -161,10 +163,12 @@ namespace ShipBattlesModel
         public Bullet Shoot()
         {
             Bullet b = new Bullet();
-            b.Direct = Direct;
-            b.Loc = Loc;
-            b.Loc.Y += Direct.Up * (HitBoxSize + 200);
-            b.Loc.X += Direct.Right * (HitBoxSize + 200);
+            b.Direct = new Direction();
+            b.Direct.Up = ShootDirection.Up;
+            b.Direct.Right = ShootDirection.Right;
+            b.Loc = new Location();
+            b.Loc.Y = Loc.Y + Direct.Up * (HitBoxSize + 50);
+            b.Loc.X = Loc.X + Direct.Right * (HitBoxSize + 50);
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
@@ -366,7 +370,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/laser.jpg";
+            ImageFilepath = "Images/redLaser.png";
         }
         public override string Serialize() // Make is a single String
         {
@@ -409,8 +413,8 @@ namespace ShipBattlesModel
         {
             Speed = GameWorld.Instance.BulletSpeed; // Assumes that that bullet speed has been set by the contoller
             HitBoxSize = 1;
-            CollideBoxSize = 2;
-            ImageFilepath = "Images/laser.jpg";
+            CollideBoxSize = 3;
+            ImageFilepath = "Images/redLaser.png";
         }
         public override string Serialize() // Make is a single String
         {
@@ -435,7 +439,13 @@ namespace ShipBattlesModel
 
         public override void DoNextAction()
         {
-            
+            Move();
+        }
+
+        private void Move()
+        {
+            Loc.X += Speed * Direct.Right;
+            Loc.Y += Speed * Direct.Up;
         }
     }
 
