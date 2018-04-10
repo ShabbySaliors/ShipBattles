@@ -31,7 +31,23 @@ namespace ShipBattlesApp
             ctrl.LoadWorld();
             GameWorld.Instance.MakePlottibles();
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
-                //Plot(obj)
+            {
+                PlotObject(obj);
+            }
+        }
+
+        private void PlotObject(GameObject obj)
+        {
+            Image newImage = new Image();
+            newImage.Source = new BitmapImage(new Uri(obj.ImageFilepath, UriKind.Relative));
+            //newImage.Width = imgWidth;
+            //newImage.Height = imgHieght;
+            GameBoardCanvas.Children.Add(newImage);
+            // newImage.MouseDown += Img_MouseDown;
+            // Here we must concider the possibility that the images move instead of all being replotted every time. 
+            // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on? 
+            Canvas.SetLeft(newImage, obj.Loc.X);
+            Canvas.SetTop(newImage, obj.Loc.Y);
         }
     }
 }

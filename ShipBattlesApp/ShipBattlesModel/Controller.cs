@@ -11,7 +11,6 @@ namespace ShipBattlesModel
     public class Controller
     {
         public string Username;
-        public GameWorld World = GameWorld.Instance;
         public int level = 0;
         Random rand = new Random();
         public int AIShipSpeed = 1;
@@ -25,36 +24,36 @@ namespace ShipBattlesModel
 
             // Make sure that you set a bullet speed. 
             GameWorld.Instance.BulletSpeed = 1;
-            World.Width = 300;
-            World.Height = 300;
+            GameWorld.Instance.Width = 300;
+            GameWorld.Instance.Height = 300;
             for (int i = 0; i < 5; i++)
             {
-                World.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
+                GameWorld.Instance.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
             for (int i = 0; i < 4; i++)
             {
-                World.Objects.Add(new Base() { Loc = MakeRandLocation() });
+                GameWorld.Instance.Objects.Add(new Base() { Loc = MakeRandLocation() });
             }
             for (int i = 0; i < 4; i++)
             {
-                World.Objects.Add(new Asteroid() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
+                GameWorld.Instance.Objects.Add(new Asteroid() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
             for (int i = 0; i < 3; i++)
             {
-                World.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
+                GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-            World.Objects.Add(World.PlayerShip);
+            GameWorld.Instance.Objects.Add(GameWorld.Instance.PlayerShip);
         }
 
         public void IterateGame()
         {
-            foreach(GameObject obj in World.Objects)
+            foreach(GameObject obj in GameWorld.Instance.Objects)
             {
                 obj.DoNextAction();
             }
 
             hits.Clear();
-            foreach(GameObject obj in World.Objects)
+            foreach(GameObject obj in GameWorld.Instance.Objects)
             {
                 if (obj is Bullet)
                 {
@@ -66,7 +65,7 @@ namespace ShipBattlesModel
                 } 
             }
 
-            World.MakePlottibles();
+            GameWorld.Instance.MakePlottibles();
         }
 
         private GameObject CheckForCollisions(GameObject obj)
@@ -105,7 +104,7 @@ namespace ShipBattlesModel
 
         public Location MakeRandLocation()
         {
-            return new Location() { X = rand.Next(World.Width), Y = rand.Next(World.Height) };
+            return new Location() { X = rand.Next(GameWorld.Instance.Width), Y = rand.Next(GameWorld.Instance.Height) };
         }
 
     }

@@ -8,6 +8,7 @@ namespace ShipBattlesModel
 {
     public abstract class GameObject : ISerializible
     {
+        abstract public string ImageFilepath { get; set; }
         abstract public int CollideBoxSize { get; set; }
         abstract public int HitBoxSize { get; set; }
         abstract public Location Loc { get; set; }
@@ -23,6 +24,7 @@ namespace ShipBattlesModel
 
     public class AIShip: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int CollideBoxSize { get; set; }
         public override int HitBoxSize { get; set; }
         public int hitBoxSize = 10;
@@ -34,6 +36,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
+            ImageFilepath = "Images/alien.jpg";
         }
         public override string Serialize() // Make it a single String
         {
@@ -111,6 +114,7 @@ namespace ShipBattlesModel
 
     public class PlayerShip: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
@@ -121,6 +125,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
+            ImageFilepath = "Images/playerShip.png";
         }
 
         public PlayerShip Callibrate(int level)
@@ -163,6 +168,7 @@ namespace ShipBattlesModel
 
     public class Base: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
@@ -173,6 +179,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 40;
             HitBoxSize = 30;
+            ImageFilepath = "Images/SpaceStation.jpg";
         }
         public override string Serialize() // Make is a single String
         {
@@ -203,6 +210,7 @@ namespace ShipBattlesModel
 
     public class RepairKit: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
@@ -213,6 +221,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
+            ImageFilepath = "logo.png";
         }
         public override string Serialize() // Make is a single String
         {
@@ -258,6 +267,7 @@ namespace ShipBattlesModel
 
     public class Asteroid: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
@@ -268,6 +278,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
+            ImageFilepath = "Images/asteroid.jpg";
         }
         public override string Serialize() // Make is a single String
         {
@@ -313,6 +324,7 @@ namespace ShipBattlesModel
 
     public class PlayerBullet: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
@@ -323,6 +335,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
+            ImageFilepath = "Images/laser.jpg";
         }
         public override string Serialize() // Make is a single String
         {
@@ -353,6 +366,7 @@ namespace ShipBattlesModel
 
     public class Bullet: GameObject, ISerializible
     {
+        public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
@@ -365,6 +379,7 @@ namespace ShipBattlesModel
             Speed = GameWorld.Instance.BulletSpeed; // Assumes that that bullet speed has been set by the contoller
             HitBoxSize = 1;
             CollideBoxSize = 2;
+            ImageFilepath = "laser.jpg";
         }
         public override string Serialize() // Make is a single String
         {
