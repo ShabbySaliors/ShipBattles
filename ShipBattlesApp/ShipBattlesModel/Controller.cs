@@ -14,6 +14,7 @@ namespace ShipBattlesModel
         public int level = 0;
         Random rand = new Random();
         public int AIShipSpeed = 1;
+        public PlayerShip PlayerShip { get; set; }
         int PlayerSpeed = 2;
         public List<GameObject> hits = new List<GameObject>();
 
@@ -22,10 +23,15 @@ namespace ShipBattlesModel
             // Later I will use functions of the 'level' varaible to make the 
             // set up more complicated.
 
-            // Make sure that you set a bullet speed. 
+            // Make sure that you set a bullet speed.
+            // GameWorld.Instance.Objects.Add(PlayerShip.Intance);
+            //GameWorld.Instance.PlayerShip = new PlayerShip();
+            //GameWorld.Instance.PlayerShip.ShootDirection = GameWorld.Instance.MakeRandomDirection();
+            PlayerShip = new PlayerShip() { Loc = MakeRandLocation(), Direct = MakeRandDirection() };
             GameWorld.Instance.BulletSpeed = 1;
             GameWorld.Instance.Width = 300;
             GameWorld.Instance.Height = 300;
+            GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
             for (int i = 0; i < 5; i++)
             {
                 GameWorld.Instance.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
@@ -42,9 +48,20 @@ namespace ShipBattlesModel
             {
                 GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-            GameWorld.Instance.Objects.Add(GameWorld.Instance.PlayerShip);
+            GameWorld.Instance.Objects.Add(PlayerShip);
+
+
         }
 
+        public List<GameObject> MakePlottibles()
+        {
+            foreach (GameObject obj in GameWorld.Instance.Objects)
+            {
+                if ((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < GameWorld.Instance.Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < GameWorld.Instance.Width / 2))
+                    GameWorld.Instance.Plottibles.Add(obj);
+            }
+            return GameWorld.Instance.Plottibles;
+        }
         public void IterateGame()
         {
             foreach(GameObject obj in GameWorld.Instance.Objects)
@@ -65,7 +82,7 @@ namespace ShipBattlesModel
                 } 
             }
 
-            GameWorld.Instance.MakePlottibles();
+            GameWorld.Instance.Plottibles = MakePlottibles();
         }
 
         private GameObject CheckForCollisions(GameObject obj)

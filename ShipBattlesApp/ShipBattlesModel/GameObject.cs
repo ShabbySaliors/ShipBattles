@@ -27,7 +27,6 @@ namespace ShipBattlesModel
         public override string ImageFilepath { get; set; }
         public override int CollideBoxSize { get; set; }
         public override int HitBoxSize { get; set; }
-        public int hitBoxSize = 10;
         private Random rand = GameWorld.Instance.Rand;
         public override Location Loc { get; set; }
         public int Speed { get; set; }
@@ -72,20 +71,20 @@ namespace ShipBattlesModel
 
         public void Turn()
         {
-            Location target = GameWorld.Instance.PlayerShip.Loc;
+            Location target = GameWorld.Instance.PlayerShipLocation;
             // Here we would like to point the AIShip in the direction of the player's ship. 
             // To do this, we will check each case where the players coordinates are in different 
             // quadrents of the AIships origin. 
-            if(target.Y - GameWorld.Instance.PlayerShip.HitBoxSize > Loc.Y)
+            if(target.Y - GameWorld.Instance.PlayerShipHitBoxSize > Loc.Y)
                 Direct.Up = 1;
-            else if (target.Y + GameWorld.Instance.PlayerShip.HitBoxSize < Loc.Y)
+            else if (target.Y + GameWorld.Instance.PlayerShipHitBoxSize < Loc.Y)
                 Direct.Up = -1;
             else
                 Direct.Up = 0;
 
-            if (target.X - GameWorld.Instance.PlayerShip.HitBoxSize > Loc.X)
+            if (target.X - GameWorld.Instance.PlayerShipHitBoxSize > Loc.X)
                 Direct.Right = 1;
-            else if (target.X + GameWorld.Instance.PlayerShip.HitBoxSize < Loc.X)
+            else if (target.X + GameWorld.Instance.PlayerShipHitBoxSize < Loc.X)
                 Direct.Right = -1;
             else if (Direct.Up != 0)
                 Direct.Right = 0;
@@ -105,8 +104,8 @@ namespace ShipBattlesModel
             Bullet b = new Bullet();
             b.Direct = Direct;
             b.Loc = Loc;
-            b.Loc.Y += Direct.Up * (hitBoxSize + 1);
-            b.Loc.X += Direct.Right * (hitBoxSize + 1);
+            b.Loc.Y += Direct.Up * (HitBoxSize + 1);
+            b.Loc.X += Direct.Right * (HitBoxSize + 1);
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
@@ -120,12 +119,15 @@ namespace ShipBattlesModel
         private Random rand = GameWorld.Instance.Rand;
         public override Location Loc { get; set; }
         public int Speed { get; set; }
+        public bool ToShoot { get; set; }
+        public Direction ShootDirection { get; set; }
         public Direction Direct { get; set; }
-        private PlayerShip()
+        public PlayerShip()
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
             ImageFilepath = "Images/playerShip.png";
+            ToShoot = false;
         }
 
         public PlayerShip Callibrate(int level)
@@ -135,6 +137,37 @@ namespace ShipBattlesModel
             Speed = 2;
             return this;
         }
+        public override void DoNextAction()
+        {
+            Move();
+            if (!(Direct.Up == 0 && Direct.Right == 0))
+            {
+                ShootDirection.Up = Direct.Up;
+                ShootDirection.Right = Direct.Right;
+            }
+            if(ToShoot)
+            {
+                Shoot();
+                ToShoot = false;
+            }
+        }
+        private void Move()
+        {
+            Loc.X += Speed * Direct.Right;
+            Loc.Y += Speed * Direct.Up;
+        }
+
+        public Bullet Shoot()
+        {
+            Bullet b = new Bullet();
+            b.Direct = Direct;
+            b.Loc = Loc;
+            b.Loc.Y += Direct.Up * (HitBoxSize + 1);
+            b.Loc.X += Direct.Right * (HitBoxSize + 1);
+            GameWorld.Instance.Objects.Add(b);
+            return b;
+        }
+
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -155,15 +188,12 @@ namespace ShipBattlesModel
             Direct.Up = Convert.ToInt32(serialArray[3]);
             Direct.Right = Convert.ToInt32(serialArray[4]);
         }
-        public override void DoNextAction()
-        {
-            
-        }
-        private static PlayerShip instance = new PlayerShip();
-        public static PlayerShip Instance
-        {
-            get { return instance; }
-        }
+
+        //private static PlayerShip instance = new PlayerShip();
+        //public static PlayerShip Instance
+        //{
+        //    get { return instance; }
+        //}
     }
 
     public class Base: GameObject, ISerializible

@@ -8,20 +8,22 @@ namespace ShipBattlesModel
 {
     public class GameWorld
     {
+        public int PlayerShipHitBoxSize { get; set; }
+        public Location PlayerShipLocation { get; set; }
         public Random Rand { get; set; }
         public List<GameObject> Objects { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public PlayerShip PlayerShip = PlayerShip.Instance;
+        //public PlayerShip PlayerShip;
         public List<GameObject> Plottibles { get; set; }
         public int BulletSpeed { get; set; }
 
         private GameWorld()
         {
             Rand = new Random();
-            Objects.Add(PlayerShip);
             Plottibles = new List<GameObject>();
             BulletSpeed = 5;
+            Objects = new List<GameObject>();
             // Most of the logic for setting up the proper world will be in the controller. 
             // Why? Because we need to incorporate the levels and I'm not sure how do do this
             // in the World constructor. Everytime you make an new level, you will have to effectively
@@ -32,15 +34,15 @@ namespace ShipBattlesModel
             // disicions. Whatever. I'll just put the World as the singleton and see what happens.
         }
 
-        public List<GameObject> MakePlottibles()
-        {
-            foreach(GameObject obj in Objects)
-            {
-                if((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < Width / 2))
-                    Plottibles.Add(obj);
-            }
-            return Plottibles;
-        }
+        //public List<GameObject> MakePlottibles()
+        //{
+        //    foreach(GameObject obj in Objects)
+        //    {
+        //        if((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < Width / 2))
+        //            Plottibles.Add(obj);
+        //    }
+        //    return Plottibles;
+        //}
 
         public Direction MakeRandomDirection ()
         {

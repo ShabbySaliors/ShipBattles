@@ -48,7 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializationInterface.cs" />
     <Compile Include="SerializationTests.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="GameWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ModelClassDiagram.cd" />

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ShipBattlesApp"
         mc:Ignorable="d"
         Title="GamePlayWindow" Height="900" Width="1440"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Grid>
         <Image Stretch="UniformToFill" Source="Images/background2WithoutStar.jpg" />
         <Canvas x:Name="GameBoardCanvas" HorizontalAlignment="Left" Height="739" Margin="79,51,0,0" VerticalAlignment="Top" Width="1084"/>
