@@ -66,7 +66,7 @@ namespace ShipBattlesModel
 
         public Direction MakeRandDirection()
         {
-            return new Direction() { Up = (rand.Next(3) - 1) , Right = (rand.Next(3) - 1) };
+            return new Direction() { Up = (rand.Next(3) - 1), Right = (rand.Next(3) - 1) };
         }
 
         public Location MakeRandLocation()
@@ -78,10 +78,16 @@ namespace ShipBattlesModel
 
     public class HighScore
     {
-        string file = "highscores.txt";
-        private List<string> scoresList = new List<string> { };
-
-        public List<string> ScoresList
+        string filename = "highscores.txt";
+        private List<Score> scoresList = new List<Score> { };
+        public string Filename
+        {
+            get
+            {
+                return filename;
+            }
+        }
+        public List<Score> ScoresList
         {
             get
             {
@@ -91,62 +97,112 @@ namespace ShipBattlesModel
 
         // Checks if the high-scores file exists
         // If it does not, it makes a new high-scores file
-        // After the check, it initializes scoresList with 10 empty strings
-        // scoresList will be changed into a list of objects later
         public void CheckHighScoresFile()
         {
             // from https://msdn.microsoft.com/en-us/library/system.io.file.exists%28v=vs.110%29.aspx
-            if (!File.Exists(file))
+            if (!File.Exists(filename))
             {
                 // from https://stackoverflow.com/questions/5156254/closing-a-file-after-file-create
-                var temp = File.Create(file);
+                var temp = File.Create(filename);
                 temp.Close();
-            }
-            for (int i = 0; i <= 9; i++)
-            {
-                scoresList.Add("");
             }
         }
 
         // Saves a high-score to an output file (it first creates the output file if it does not exist)
         // If the maximum number of high-scores is reached, it deletes the lowest high-score
-        // If the newest high-score
-        public void SaveHighScore(string username, string highScore)
-        {           
-            using (FileStream fs = File.Open(file, FileMode.Open))
+        // (or the newest high-score if it ties with the lowest)
+        // 
+        public void SaveHighScore(string username, int highScore)
+        {
+            FileStream fs1 = File.Open(filename, FileMode.Open);
+            StreamWriter sw1 = new StreamWriter(fs1);
+            if (scoresList.Count == 5)
             {
-                using (StreamWriter sw = new StreamWriter(fs))
+                Score score = new Score(username, highScore);
+                scoresList.Add(score);
+                scoresList.Sort();
+                if (scoresList[0].Points == scoresList[1].Points)
                 {
-                    // test input
-                    sw.WriteLine(username + " " + highScore);
-                    scoresList[0] = username;
-                    scoresList[1] = highScore;
+                    scoresList.Remove(score);
                 }
+                else
+                {
+                    scoresList.RemoveAt(0);
+                }
+                scoresList.Reverse();
+
+                sw1.Close();
+                fs1.Close();
+                File.Delete(filename);
+                CheckHighScoresFile();
+                FileStream fs2 = File.Open(filename, FileMode.Open);
+                StreamWriter sw2 = new StreamWriter(fs2);
+                foreach (Score s in scoresList)
+                {
+                    sw2.WriteLine(s.Name + " " + s.Points.ToString());
+                }
+                sw2.Close();
+                fs2.Close();
+            }
+            else
+            {
+                sw1.WriteLine(username + " " + highScore.ToString());
+                Score score = new Score(username, highScore);
+                scoresList.Add(score);
+                sw1.Close();
+                fs1.Close();
             }
         }
 
         // Load a list of high-scores from said output file
-        public void LoadHighScores()
+        public void LoadHighScores(bool testMode)
         {
-            if (File.Exists(file))
+            if (testMode) filename = "test.txt";
+            if (File.Exists(filename))
             {
-                using (FileStream fs = File.Open(file, FileMode.Open))
+                using (FileStream fs = File.Open(filename, FileMode.Open))
                 {
                     using (StreamReader sr = new StreamReader(fs))
                     {
-                        for (int i = 0; i <= 19; i+=2)
+                        for (int i = 0; i <= 4; i++)
                         {
                             string tempString1;
                             if ((tempString1 = sr.ReadLine()) != null)
                             {
                                 string[] tempString2 = tempString1.Split(' ');
-                                scoresList[i] = tempString2[0];
-                                scoresList[i + 1] = tempString2[1];
+                                scoresList.Add(new Score(tempString2[0], Convert.ToInt32(tempString2[1])));
                             }
+                        }
+                        if (scoresList.Count != 0)
+                        {
+                            scoresList.Sort();
+                            scoresList.Reverse();
                         }
                     }
                 }
             }
+            filename = "highscores.txt";
+        }
+    }
+
+    // taken and changed from https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=netframework-4.7.1#System_Collections_Generic_List_1_Sort_System_Comparison__0
+    // (it is the first big code example)
+    public class Score : IComparable<Score>
+    {
+        public string Name { get; set; }
+
+        public int Points { get; set; }
+
+        public Score(string name, int points)
+        {
+            Name = name;
+            Points = points;
+        }
+
+        public int CompareTo(Score compareScore)
+        {
+            if (compareScore == null) return 1;
+            else return this.Points.CompareTo(compareScore.Points);
         }
     }
 }
