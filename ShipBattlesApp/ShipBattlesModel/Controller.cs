@@ -27,10 +27,11 @@ namespace ShipBattlesModel
             // GameWorld.Instance.Objects.Add(PlayerShip.Intance);
             //GameWorld.Instance.PlayerShip = new PlayerShip();
             //GameWorld.Instance.PlayerShip.ShootDirection = GameWorld.Instance.MakeRandomDirection();
-            PlayerShip = new PlayerShip() { Loc = MakeRandLocation(), Direct = MakeRandDirection() };
             GameWorld.Instance.BulletSpeed = 1;
-            GameWorld.Instance.Width = 300;
-            GameWorld.Instance.Height = 300;
+            GameWorld.Instance.Width = 1000;
+            GameWorld.Instance.Height = 800;
+            PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
+            PlayerShip.Speed = PlayerSpeed;
             GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
             for (int i = 0; i < 5; i++)
             {
@@ -55,6 +56,7 @@ namespace ShipBattlesModel
 
         public List<GameObject> MakePlottibles()
         {
+            GameWorld.Instance.Plottibles.Clear();
             foreach (GameObject obj in GameWorld.Instance.Objects)
             {
                 if ((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < GameWorld.Instance.Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < GameWorld.Instance.Width / 2))
@@ -64,9 +66,11 @@ namespace ShipBattlesModel
         }
         public void IterateGame()
         {
-            foreach(GameObject obj in GameWorld.Instance.Objects)
+            int i = 0;
+            while(i < GameWorld.Instance.Objects.Count)
             {
-                obj.DoNextAction();
+                GameWorld.Instance.Objects[i].DoNextAction();
+                i++;
             }
 
             hits.Clear();
@@ -74,13 +78,15 @@ namespace ShipBattlesModel
             {
                 if (obj is Bullet)
                 {
-                    CheckForCollisions(obj).GetHit(); // Not sure if this will crash because of the null reference.
+                    hits.Add(CheckForCollisions(obj)); // Not sure if this will crash because of the null reference.
 
                 } else if (obj is PlayerBullet)
                 {
-                    CheckForCollisions(obj).GetHit();
+                    hits.Add(CheckForCollisions(obj));
                 } 
             }
+            foreach (GameObject obj in hits)
+                obj.GetHit();
 
             GameWorld.Instance.Plottibles = MakePlottibles();
         }
@@ -122,6 +128,14 @@ namespace ShipBattlesModel
         public Location MakeRandLocation()
         {
             return new Location() { X = rand.Next(GameWorld.Instance.Width), Y = rand.Next(GameWorld.Instance.Height) };
+        }
+        
+        public Location GetCenterLocation()
+        {
+            Location loc = new Location();
+            loc.Y = (GameWorld.Instance.Height + GameWorld.Instance.Height % 2) / 2;
+            loc.X = (GameWorld.Instance.Width + GameWorld.Instance.Width % 2) / 2;
+            return loc;
         }
 
     }

@@ -104,8 +104,8 @@ namespace ShipBattlesModel
             Bullet b = new Bullet();
             b.Direct = Direct;
             b.Loc = Loc;
-            b.Loc.Y += Direct.Up * (HitBoxSize + 1);
-            b.Loc.X += Direct.Right * (HitBoxSize + 1);
+            b.Loc.Y += Direct.Up * (HitBoxSize + 200);
+            b.Loc.X += Direct.Right * (HitBoxSize + 200);
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
@@ -128,6 +128,7 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/playerShip.png";
             ToShoot = false;
+            ShootDirection = new Direction { Up = 1, Right = 0 };
         }
 
         public PlayerShip Callibrate(int level)
@@ -162,8 +163,8 @@ namespace ShipBattlesModel
             Bullet b = new Bullet();
             b.Direct = Direct;
             b.Loc = Loc;
-            b.Loc.Y += Direct.Up * (HitBoxSize + 1);
-            b.Loc.X += Direct.Right * (HitBoxSize + 1);
+            b.Loc.Y += Direct.Up * (HitBoxSize + 200);
+            b.Loc.X += Direct.Right * (HitBoxSize + 200);
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
@@ -251,7 +252,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "logo.png";
+            ImageFilepath = "Images/logo.png";
         }
         public override string Serialize() // Make is a single String
         {
@@ -308,7 +309,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/asteroid.jpg";
+            ImageFilepath = "Images/asteriod.jpg";
         }
         public override string Serialize() // Make is a single String
         {
@@ -409,7 +410,7 @@ namespace ShipBattlesModel
             Speed = GameWorld.Instance.BulletSpeed; // Assumes that that bullet speed has been set by the contoller
             HitBoxSize = 1;
             CollideBoxSize = 2;
-            ImageFilepath = "laser.jpg";
+            ImageFilepath = "Images/laser.jpg";
         }
         public override string Serialize() // Make is a single String
         {

@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="GamePlayWindow" Height="900" Width="1440"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
-    <Grid>
+    <Grid Margin="9,0,-9,0">
         <Image Stretch="UniformToFill" Source="Images/background2WithoutStar.jpg" />
-        <Canvas x:Name="GameBoardCanvas" HorizontalAlignment="Left" Height="739" Margin="79,51,0,0" VerticalAlignment="Top" Width="1084"/>
+        <Canvas x:Name="GameBoardCanvas" HorizontalAlignment="Center" Height="739" Margin="79,51,0,0" VerticalAlignment="Center" Width="1084"/>
 
     </Grid>
 </Window>

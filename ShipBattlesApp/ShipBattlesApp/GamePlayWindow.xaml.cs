@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ShipBattlesModel;
+using System.Windows.Threading;
 
 namespace ShipBattlesApp
 {
@@ -21,6 +22,7 @@ namespace ShipBattlesApp
     public partial class GamePlayWindow : Window
     {
         Controller ctrl = new Controller();
+        DispatcherTimer iterationTimer = new DispatcherTimer();
         public GamePlayWindow()
         {
             InitializeComponent();
@@ -30,18 +32,35 @@ namespace ShipBattlesApp
         {
             ctrl.LoadWorld();
             ctrl.MakePlottibles();
+            Console.WriteLine(GameWorld.Instance.Plottibles.Count);
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
             {
                 PlotObject(obj);
             }
+
+            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 100); // 50 ms
+            iterationTimer.Tick += Timer_Tick;
+            iterationTimer.Start();
+        }
+
+        // Mr. Malloy
+        // Looking for more help over the summer. If I'm interested, I can let Mr. Malloy know.
+        // Call Malachi back. 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            ctrl.IterateGame();
+            GameBoardCanvas.Children.Clear();
+            foreach (GameObject obj in GameWorld.Instance.Plottibles)
+                PlotObject(obj);
+            Console.WriteLine(GameWorld.Instance.Plottibles.Count);
         }
 
         private void PlotObject(GameObject obj)
         {
             Image newImage = new Image();
             newImage.Source = new BitmapImage(new Uri(obj.ImageFilepath, UriKind.Relative));
-            //newImage.Width = imgWidth;
-            //newImage.Height = imgHieght;
+            newImage.Width = 2 * obj.CollideBoxSize + 5;
+            newImage.Height = 2 * obj.CollideBoxSize + 5;
             GameBoardCanvas.Children.Add(newImage);
             // newImage.MouseDown += Img_MouseDown;
             // Here we must concider the possibility that the images move instead of all being replotted every time. 
@@ -52,12 +71,28 @@ namespace ShipBattlesApp
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.W)
+            {
+                ctrl.PlayerShip.Direct.Up = 1;
+                Console.Write("Player Ship Direction.Up :");
+                Console.WriteLine(ctrl.PlayerShip.Direct.Up);
+            }
+            else if (e.Key == Key.A)
+                ctrl.PlayerShip.Direct.Right = -1;
+            else if (e.Key == Key.S)
+                ctrl.PlayerShip.Direct.Up = -1;
+            else if (e.Key == Key.D)
+                ctrl.PlayerShip.Direct.Right = 1;
+            else if (e.Key == Key.Space)
+                ctrl.PlayerShip.ToShoot = true;
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.W || e.Key == Key.S)
+                ctrl.PlayerShip.Direct.Up = 0;
+            else if (e.Key == Key.A || e.Key == Key.D)
+                ctrl.PlayerShip.Direct.Right = 0;
         }
 
         // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the 
