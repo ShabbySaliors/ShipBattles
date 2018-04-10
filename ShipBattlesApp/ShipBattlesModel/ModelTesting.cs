@@ -15,9 +15,9 @@ namespace ShipBattlesModel
         {
             Controller ctrl = new Controller();
             ctrl.LoadWorld();
-            Assert.IsTrue(ctrl.World.Objects.Count == 17);
-            Assert.IsTrue(ctrl.World.Height == 300);
-            Assert.IsTrue(ctrl.World.Width == 300);
+            Assert.IsTrue(GameWorld.Instance.Objects.Count == 17);
+            Assert.IsTrue(GameWorld.Instance.Height == 300);
+            Assert.IsTrue(GameWorld.Instance.Width == 300);
         }
 
         public void TestMakeRandDirection()
@@ -38,8 +38,8 @@ namespace ShipBattlesModel
             for (int i = 0; i < 200; i++)
             {
                 Location loc = ctrl.MakeRandLocation();
-                Assert.IsTrue(loc.X <= ctrl.World.Width && loc.X >= 0);
-                Assert.IsTrue(loc.Y <= ctrl.World.Height && loc.Y >= 0);
+                Assert.IsTrue(loc.X <= GameWorld.Instance.Width && loc.X >= 0);
+                Assert.IsTrue(loc.Y <= GameWorld.Instance.Height && loc.Y >= 0);
             }
         }
     }

@@ -61,7 +61,8 @@ namespace ShipBattlesApp
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-
+            GamePlayWindow gpwindow = new GamePlayWindow();
+            gpwindow.Show();
         }
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
