@@ -41,7 +41,7 @@ namespace ShipBattlesApp
             btnEasy.Background = new SolidColorBrush(Colors.Green);
             gameMode = GameMode.Easy;
             hsTemp.CheckHighScoresFile();
-            hsTemp.LoadHighScores();
+            hsTemp.LoadHighScores(false);
             oldBtn = btnEasy;
         }
 

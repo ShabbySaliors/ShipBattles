@@ -30,22 +30,25 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if (hs.ScoresList[0] == "")
+            this.MinWidth = 1440.0;
+            this.MinHeight = 900.0;
+
+            if (hs.ScoresList.Count == 0)
             {
                 No_Scores.Text = "There are currently no high-scores.\n Play a level to get the first high-score!";
             }
             else
             {
-                Block_0.Text = hs.ScoresList[0];
-                Block_1.Text = hs.ScoresList[1];
-                Block_2.Text = hs.ScoresList[2];
-                Block_3.Text = hs.ScoresList[3];
-                Block_4.Text = hs.ScoresList[4];
-                Block_5.Text = hs.ScoresList[5];
-                Block_6.Text = hs.ScoresList[6];
-                Block_7.Text = hs.ScoresList[7];
-                Block_8.Text = hs.ScoresList[8];
-                Block_9.Text = hs.ScoresList[9];
+                Block_0.Text = hs.ScoresList[0].Name;
+                Block_1.Text = hs.ScoresList[1].Points.ToString();
+                Block_2.Text = hs.ScoresList[2].Name;
+                Block_3.Text = hs.ScoresList[3].Points.ToString();
+                Block_4.Text = hs.ScoresList[4].Name;
+                Block_5.Text = hs.ScoresList[5].Points.ToString();
+                Block_6.Text = hs.ScoresList[6].Name;
+                Block_7.Text = hs.ScoresList[7].Points.ToString();
+                Block_8.Text = hs.ScoresList[8].Name;
+                Block_9.Text = hs.ScoresList[9].Points.ToString();
             }
         }
     }
