@@ -52,6 +52,11 @@ namespace ShipBattlesApp
             GameBoardCanvas.Children.Clear();
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
                 PlotObject(obj);
+            if(ctrl.IsGameOver())
+            {
+                iterationTimer.Stop();
+                AnimateEnding();
+            }
         }
 
         private void PlotObject(GameObject obj)
@@ -72,12 +77,12 @@ namespace ShipBattlesApp
         {
             if (e.Key == Key.W)
             {
-                ctrl.PlayerShip.Direct.Up = 1;
+                ctrl.PlayerShip.Direct.Up = -1;
             }
             else if (e.Key == Key.A)
                 ctrl.PlayerShip.Direct.Right = -1;
             else if (e.Key == Key.S)
-                ctrl.PlayerShip.Direct.Up = -1;
+                ctrl.PlayerShip.Direct.Up = 1;
             else if (e.Key == Key.D)
                 ctrl.PlayerShip.Direct.Right = 1;
             else if (e.Key == Key.Space)
@@ -121,5 +126,32 @@ namespace ShipBattlesApp
 
         // Another problem is that I need to center the coordinate of the picture and then rotate the picture with 
         // respect to that coordinate according to the direction of the object.
+
+        private void AnimateEnding()
+        {
+            TextBox gameOver = new TextBox()
+            {
+                Margin = new Thickness(40, 0, 40, 0),
+                Text = Convert.ToString(ctrl.level),
+                TextAlignment = TextAlignment.Center,
+                FontSize = 70,
+                FontWeight = FontWeights.ExtraBold,
+                Background = Brushes.Red,
+            };
+
+            Window wind = new Window()
+            {
+                Title = "Game Over",
+                Height = 150,
+                Width = 500,
+                ForceCursor = true,
+                WindowStyle = WindowStyle.ToolWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Visibility = Visibility.Visible,
+                Background = Brushes.DarkBlue,
+                Name = "wind",
+                Content = gameOver
+            };
+        }
     }
 }

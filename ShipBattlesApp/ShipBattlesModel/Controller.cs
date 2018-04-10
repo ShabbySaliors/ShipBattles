@@ -17,7 +17,7 @@ namespace ShipBattlesModel
         Random rand = new Random();
         public int AIShipSpeed = 1;
         public PlayerShip PlayerShip { get; set; }
-        int PlayerSpeed = 2;
+        int PlayerSpeed = 3;
         public List<GameObject> hits = new List<GameObject>();
 
         public void LoadWorld()
@@ -29,7 +29,7 @@ namespace ShipBattlesModel
             // GameWorld.Instance.Objects.Add(PlayerShip.Intance);
             //GameWorld.Instance.PlayerShip = new PlayerShip();
             //GameWorld.Instance.PlayerShip.ShootDirection = GameWorld.Instance.MakeRandomDirection();
-            GameWorld.Instance.BulletSpeed = 1;
+            GameWorld.Instance.BulletSpeed = 2;
             GameWorld.Instance.Width = 1000;
             GameWorld.Instance.Height = 800;
             PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
@@ -87,7 +87,8 @@ namespace ShipBattlesModel
                 } 
             }
             foreach (GameObject obj in hits)
-                obj.GetHit();
+                if (obj != null)
+                    obj.GetHit();
 
             GameWorld.Instance.Plottibles = MakePlottibles();
         }
@@ -98,9 +99,22 @@ namespace ShipBattlesModel
             {
                 if (obj.Loc.Y < hitObject.Loc.Y + hitObject.CollideBoxSize && obj.Loc.Y > hitObject.Loc.Y - hitObject.CollideBoxSize)
                     if (obj.Loc.X < hitObject.Loc.X + hitObject.CollideBoxSize && obj.Loc.X > hitObject.Loc.X - hitObject.CollideBoxSize)
-                        return hitObject;
+                        if(hitObject != obj)
+                            return hitObject;
             }
             return null;
+        }
+
+        public bool IsGameOver()
+        {
+            if (GameWorld.Instance.Objects.Contains(PlayerShip))
+                return false;
+            else
+                foreach (GameObject obj in GameWorld.Instance.Objects)
+                    if (obj is Base)
+                        return true;
+            return false;
+                      
         }
 
         public void Save()

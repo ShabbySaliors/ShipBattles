@@ -15,11 +15,7 @@ namespace ShipBattlesModel
         abstract public void DoNextAction();
         abstract public string Serialize();
         abstract public void Deserialize(string serial);
-        public GameObject GetHit()
-        {
-            GameWorld.Instance.Objects.Remove(this);
-            return this;
-        }
+        abstract public GameObject GetHit();
     }
 
     public class AIShip: GameObject, ISerializible
@@ -106,10 +102,15 @@ namespace ShipBattlesModel
             b.Direct.Up = Direct.Up;
             b.Direct.Right = Direct.Right;
             b.Loc = new Location();
-            b.Loc.Y = Loc.Y + Direct.Up * (HitBoxSize + 50);
-            b.Loc.X = Loc.X + Direct.Right * (HitBoxSize + 50);
+            b.Loc.Y = Loc.Y + Direct.Up * (HitBoxSize + 10);
+            b.Loc.X = Loc.X + Direct.Right * (HitBoxSize + 10);
             GameWorld.Instance.Objects.Add(b);
             return b;
+        }
+        public override GameObject GetHit()
+        {
+            GameWorld.Instance.Objects.Remove(this);
+            return this;
         }
     }
 
@@ -150,7 +151,7 @@ namespace ShipBattlesModel
             }
             if(ToShoot)
             {
-                Shoot();
+                 Shoot();
                 ToShoot = false;
             }
         }
@@ -160,15 +161,15 @@ namespace ShipBattlesModel
             Loc.Y += Speed * Direct.Up;
         }
 
-        public Bullet Shoot()
+        public PlayerBullet Shoot()
         {
-            Bullet b = new Bullet();
+            PlayerBullet b = new PlayerBullet();
             b.Direct = new Direction();
             b.Direct.Up = ShootDirection.Up;
             b.Direct.Right = ShootDirection.Right;
             b.Loc = new Location();
-            b.Loc.Y = Loc.Y + Direct.Up * (HitBoxSize + 50);
-            b.Loc.X = Loc.X + Direct.Right * (HitBoxSize + 50);
+            b.Loc.Y = Loc.Y + ShootDirection.Up * (HitBoxSize + 5);
+            b.Loc.X = Loc.X + ShootDirection.Right * (HitBoxSize + 5);
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
@@ -199,6 +200,11 @@ namespace ShipBattlesModel
         //{
         //    get { return instance; }
         //}
+        public override GameObject GetHit()
+        {
+            GameWorld.Instance.Objects.Remove(this);
+            return this;
+        }
     }
 
     public class Base: GameObject, ISerializible
@@ -241,6 +247,13 @@ namespace ShipBattlesModel
         {
 
         }
+        public override GameObject GetHit()
+        {
+            CollideBoxSize -= 4;
+            if(CollideBoxSize < 5)
+                GameWorld.Instance.Objects.Remove(this);
+            return this;
+        }
     }
 
     public class RepairKit: GameObject, ISerializible
@@ -254,6 +267,7 @@ namespace ShipBattlesModel
         public Direction Direct { get; set; }
         public RepairKit()
         {
+            Speed = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
             ImageFilepath = "Images/logo.png";
@@ -283,7 +297,7 @@ namespace ShipBattlesModel
         {
             double r = rand.NextDouble();
             if (r < 0.05)
-                this.Turn();
+                Turn();
             else
                 Move();
         }
@@ -298,6 +312,11 @@ namespace ShipBattlesModel
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
+        public override GameObject GetHit()
+        {
+            GameWorld.Instance.Objects.Remove(this);
+            return this;
+        }
     }
 
     public class Asteroid: GameObject, ISerializible
@@ -311,6 +330,7 @@ namespace ShipBattlesModel
         public Direction Direct { get; set; }
         public Asteroid()
         {
+            Speed = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
             ImageFilepath = "Images/asteriod.jpg";
@@ -340,7 +360,7 @@ namespace ShipBattlesModel
         {
             double r = rand.NextDouble();
             if (r < 0.05)
-                this.Turn();
+                Turn();
             else
                 Move();
         }
@@ -355,6 +375,11 @@ namespace ShipBattlesModel
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
+        public override GameObject GetHit()
+        {
+            GameWorld.Instance.Objects.Remove(this);
+            return this;
+        }
     }
 
     public class PlayerBullet: GameObject, ISerializible
@@ -364,13 +389,14 @@ namespace ShipBattlesModel
         public override int CollideBoxSize { get; set; }
         private Random rand = GameWorld.Instance.Rand;
         public override Location Loc { get; set; }
-        public double Speed { get; set; }
+        public int Speed { get; set; }
         public Direction Direct { get; set; }
         public PlayerBullet()
         {
-            CollideBoxSize = 20;
-            HitBoxSize = 10;
+            CollideBoxSize = 3;
+            HitBoxSize = 1;
             ImageFilepath = "Images/redLaser.png";
+            Speed = 5;
         }
         public override string Serialize() // Make is a single String
         {
@@ -395,8 +421,19 @@ namespace ShipBattlesModel
 
         public override void DoNextAction()
         {
-
+            Move();
         }
+        public void Move()
+        {
+            Loc.X += Speed * Direct.Right;
+            Loc.Y += Speed * Direct.Up;
+        }
+        public override GameObject GetHit()
+        {
+            GameWorld.Instance.Objects.Remove(this);
+            return this;
+        }
+
     }
 
     public class Bullet: GameObject, ISerializible
@@ -446,6 +483,11 @@ namespace ShipBattlesModel
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
+        }
+        public override GameObject GetHit()
+        {
+            GameWorld.Instance.Objects.Remove(this);
+            return this;
         }
     }
 

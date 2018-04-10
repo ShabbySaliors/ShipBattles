@@ -51,7 +51,7 @@ namespace ShipBattlesModel
             {
                 d.Right = Rand.Next(2) - 1;
                 d.Up = Rand.Next(2) - 1;
-            } while (!(d.Right == 0 && d.Up == 0));
+            } while (d.Right == 0 && d.Up == 0);
             return d;
         } 
 
