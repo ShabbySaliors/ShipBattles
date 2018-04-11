@@ -31,3 +31,8 @@ To Save:
 
 # Gamepley Link 
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
+
+# Work Hours
+| Zach | 12.00 |
+| Jeremiah | 28.08 |
+| Rusty | 15.5 | 
