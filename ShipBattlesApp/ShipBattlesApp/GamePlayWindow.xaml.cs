@@ -87,6 +87,11 @@ namespace ShipBattlesApp
                 ctrl.PlayerShip.Direct.Right = 1;
             else if (e.Key == Key.Space)
                 ctrl.PlayerShip.ToShoot = true;
+            else if (e.Key == Key.Enter)
+            {
+                ctrl.Save();
+                this.Close();
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -129,10 +134,12 @@ namespace ShipBattlesApp
 
         private void AnimateEnding()
         {
+            string msg = "Score: ";
+            msg += Convert.ToString(GameWorld.Instance.Score);
             TextBox gameOver = new TextBox()
             {
                 Margin = new Thickness(40, 0, 40, 0),
-                Text = Convert.ToString(ctrl.level),
+                Text = msg,
                 TextAlignment = TextAlignment.Center,
                 FontSize = 70,
                 FontWeight = FontWeights.ExtraBold,

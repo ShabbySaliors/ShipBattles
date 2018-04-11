@@ -35,6 +35,7 @@ namespace ShipBattlesModel
             PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
             PlayerShip.Speed = PlayerSpeed;
             GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
+            GameWorld.Instance.Objects.Clear();
             for (int i = 0; i < 5; i++)
             {
                 GameWorld.Instance.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
@@ -112,9 +113,8 @@ namespace ShipBattlesModel
             else
                 foreach (GameObject obj in GameWorld.Instance.Objects)
                     if (obj is Base)
-                        return true;
-            return false;
-                      
+                        return false;
+            return true;
         }
 
         public void Save()
@@ -140,6 +140,7 @@ namespace ShipBattlesModel
                     saveList.Add(GameWorld.Instance.Height);
                     saveList.Add(GameWorld.Instance.Plottibles);
                     saveList.Add(GameWorld.Instance.BulletSpeed);
+                    saveList.Add(GameWorld.Instance.Score);
 
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(stream, saveList);
@@ -183,6 +184,7 @@ namespace ShipBattlesModel
                     GameWorld.Instance.Height = (int)loadList[12];
                     GameWorld.Instance.Plottibles = (List<GameObject>)loadList[13];
                     GameWorld.Instance.BulletSpeed = (int)loadList[14];
+                    GameWorld.Instance.Score = (int)loadList[15];
                     
                 }
             }
