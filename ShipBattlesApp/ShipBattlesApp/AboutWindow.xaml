@@ -1,0 +1,17 @@
+﻿<Window x:Class="ShipBattlesApp.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShipBattlesApp"
+        mc:Ignorable="d"
+        Title="About" Height="900" Width="1440">
+    <Grid>
+        <Image Stretch="UniformToFill" Source="Images/background2.jpg"/>
+        <Image Source="Images/about.png" HorizontalAlignment="Left" Height="100" Margin="528,116,0,0" VerticalAlignment="Top" Width="414"/>
+        <TextBlock x:Name="Block_0" HorizontalAlignment="Left" Margin="600,453,0,0" TextWrapping="Wrap" Text="Programmers:"  Foreground="White" 
+            FontSize="35" VerticalAlignment="Top" Height="75"/>
+        <TextBlock x:Name="Block_1" HorizontalAlignment="Left" Margin="275,609,0,0" TextWrapping="Wrap" Text="Jeremiah England      Zachary Metzger      Rusty Ranta"  Foreground="White" 
+            FontSize="35" VerticalAlignment="Top" Height="75"/>
+    </Grid>
+</Window>

@@ -67,12 +67,14 @@ namespace ShipBattlesApp
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
-
+            AboutWindow aboutWindow = new AboutWindow();
+            aboutWindow.Show();
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
-
+            HelpWindow helpWindow = new HelpWindow();
+            helpWindow.Show();
         }
 
         private void btnHighScore_Click(object sender, RoutedEventArgs e)
@@ -81,6 +83,11 @@ namespace ShipBattlesApp
             // and https://stackoverflow.com/questions/30023419/how-to-call-a-variable-from-one-window-to-another-window
             HighScoreWindow hswindow = new HighScoreWindow(hsTemp);
             hswindow.Show();
+        }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
