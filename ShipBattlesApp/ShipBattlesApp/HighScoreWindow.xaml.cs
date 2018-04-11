@@ -39,16 +39,15 @@ namespace ShipBattlesApp
             }
             else
             {
-                Block_0.Text = hs.ScoresList[0].Name;
-                Block_1.Text = hs.ScoresList[1].Points.ToString();
-                Block_2.Text = hs.ScoresList[2].Name;
-                Block_3.Text = hs.ScoresList[3].Points.ToString();
-                Block_4.Text = hs.ScoresList[4].Name;
-                Block_5.Text = hs.ScoresList[5].Points.ToString();
-                Block_6.Text = hs.ScoresList[6].Name;
-                Block_7.Text = hs.ScoresList[7].Points.ToString();
-                Block_8.Text = hs.ScoresList[8].Name;
-                Block_9.Text = hs.ScoresList[9].Points.ToString();
+                List<TextBlock> nameList = new List<TextBlock> { Name_1, Name_2, Name_3, Name_4, Name_5, };
+                List<TextBlock> scoreList = new List<TextBlock> { Score_1, Score_2, Score_3, Score_4, Score_5, };
+                int count = 0;
+                foreach (ShipBattlesModel.Score s in hs.ScoresList)
+                {
+                    nameList[count].Text = s.Name;
+                    scoreList[count].Text = s.Points.ToString();
+                    count++;
+                }
             }
         }
     }
