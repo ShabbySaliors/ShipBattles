@@ -249,7 +249,6 @@ namespace ShipBattlesModel
         // Saves a high-score to an output file (it first creates the output file if it does not exist)
         // If the maximum number of high-scores is reached, it deletes the lowest high-score
         // (or the newest high-score if it ties with the lowest)
-        // 
         public void SaveHighScore(string username, int highScore)
         {
             FileStream fs1 = File.Open(filename, FileMode.Open);
@@ -293,8 +292,10 @@ namespace ShipBattlesModel
         }
 
         // Load a list of high-scores from said output file
+        // testMode will trigger an alternate filename for unit tests that need it
         public void LoadHighScores(bool testMode)
         {
+            // here is the trigger
             if (testMode) filename = "test.txt";
             if (File.Exists(filename))
             {
@@ -319,6 +320,7 @@ namespace ShipBattlesModel
                     }
                 }
             }
+            // reset filename regardless of trigger activation
             filename = "highscores.txt";
         }
     }
