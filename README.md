@@ -22,3 +22,5 @@ To Save:
 - Ships and Bases get destroyed by the project bullets from our ship
 - The AI ships follow the player and attack
 - The 
+
+- Gamepley Link: https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
