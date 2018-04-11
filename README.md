@@ -21,7 +21,6 @@ To Save:
 - Live action Gameplay
 - Ships and Bases get destroyed by the project bullets from our ship
 - The AI ships follow the player and attack
-<<<<<<< HEAD
 
 # Known Issues
 - Game crashes upon attempting to save.
