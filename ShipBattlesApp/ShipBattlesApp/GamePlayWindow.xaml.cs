@@ -54,6 +54,8 @@ namespace ShipBattlesApp
                 PlotObject(obj);
             if(ctrl.IsGameOver())
             {
+                HighScore hs = new HighScore();
+                hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score);
                 iterationTimer.Stop();
                 AnimateEnding();
             }
