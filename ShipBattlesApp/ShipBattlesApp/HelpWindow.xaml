@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShipBattlesApp"
         mc:Ignorable="d"
-        Title="Help" Height="900" Width="1440"
-        Loaded="Window_Loaded">
+        Title="Help" Height="900" Width="1440">
     <Grid>
         <Image Stretch="UniformToFill" Source="Images/background2.jpg"/>
         <Image Source="Images/help.png" HorizontalAlignment="Left" Height="100" Margin="624,116,0,0" VerticalAlignment="Top" Width="271"/>
