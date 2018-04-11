@@ -140,6 +140,7 @@ namespace ShipBattlesModel
                     saveList.Add(GameWorld.Instance.Height);
                     saveList.Add(GameWorld.Instance.Plottibles);
                     saveList.Add(GameWorld.Instance.BulletSpeed);
+                    saveList.Add(GameWorld.Instance.Score);
 
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(stream, saveList);
@@ -183,6 +184,7 @@ namespace ShipBattlesModel
                     GameWorld.Instance.Height = (int)loadList[12];
                     GameWorld.Instance.Plottibles = (List<GameObject>)loadList[13];
                     GameWorld.Instance.BulletSpeed = (int)loadList[14];
+                    GameWorld.Instance.Score = (int)loadList[15];
                     
                 }
             }

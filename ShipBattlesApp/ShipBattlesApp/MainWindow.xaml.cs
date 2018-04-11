@@ -26,7 +26,6 @@ namespace ShipBattlesApp
         Button oldBtn;
         Button btn;
 
-
         private void FrameworkElement_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -87,7 +86,8 @@ namespace ShipBattlesApp
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-
+            GamePlayWindow gpwindow = new GamePlayWindow();
+            gpwindow.Show();
         }
     }
 }
