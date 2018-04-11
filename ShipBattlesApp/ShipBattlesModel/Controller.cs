@@ -32,6 +32,7 @@ namespace ShipBattlesModel
             GameWorld.Instance.BulletSpeed = 2;
             GameWorld.Instance.Width = 1000;
             GameWorld.Instance.Height = 800;
+            GameWorld.Instance.Score = 0;
             PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
             PlayerShip.Speed = PlayerSpeed;
             GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
@@ -108,8 +109,8 @@ namespace ShipBattlesModel
 
         public bool IsGameOver()
         {
-            if (GameWorld.Instance.Objects.Contains(PlayerShip))
-                return false;
+            if (!(GameWorld.Instance.Objects.Contains(PlayerShip)))
+                return true;
             else
                 foreach (GameObject obj in GameWorld.Instance.Objects)
                     if (obj is Base)
