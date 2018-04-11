@@ -19,6 +19,7 @@
         <Image Source="Images/logo.png" HorizontalAlignment="Left" Height="100" Margin="408,113,0,0" VerticalAlignment="Top" Width="620"/>
         <TextBlock HorizontalAlignment="Left" Margin="88,695,0,0" TextWrapping="Wrap" Text="Select a difficulty level:"  Foreground="White" 
                    FontSize="35" VerticalAlignment="Top" Height="75"/>
+        <Button x:Name="btnLoad" Content="Load" FontSize="30" Margin="556,615,543.6,204.4" Click="btnLoad_Click"/>
 
     </Grid>
 </Window>
