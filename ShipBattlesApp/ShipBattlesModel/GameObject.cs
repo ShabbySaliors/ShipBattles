@@ -109,6 +109,7 @@ namespace ShipBattlesModel
         }
         public override GameObject GetHit()
         {
+            GameWorld.Instance.Score += 1;
             GameWorld.Instance.Objects.Remove(this);
             return this;
         }
@@ -245,11 +246,12 @@ namespace ShipBattlesModel
 
         public override void DoNextAction()
         {
-
+            
         }
         public override GameObject GetHit()
         {
             CollideBoxSize -= 4;
+            GameWorld.Instance.Score += 1;
             if(CollideBoxSize < 5)
                 GameWorld.Instance.Objects.Remove(this);
             return this;

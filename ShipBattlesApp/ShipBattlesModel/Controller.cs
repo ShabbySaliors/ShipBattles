@@ -35,6 +35,7 @@ namespace ShipBattlesModel
             PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
             PlayerShip.Speed = PlayerSpeed;
             GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
+            GameWorld.Instance.Objects.Clear();
             for (int i = 0; i < 5; i++)
             {
                 GameWorld.Instance.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
@@ -112,9 +113,8 @@ namespace ShipBattlesModel
             else
                 foreach (GameObject obj in GameWorld.Instance.Objects)
                     if (obj is Base)
-                        return true;
-            return false;
-                      
+                        return false;
+            return true;
         }
 
         public void Save()

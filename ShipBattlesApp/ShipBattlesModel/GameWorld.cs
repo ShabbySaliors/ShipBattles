@@ -8,6 +8,7 @@ namespace ShipBattlesModel
 {
     public class GameWorld
     {
+        public int Score { get; set; }
         public int PlayerShipHitBoxSize { get; set; }
         public Location PlayerShipLocation { get; set; }
         public Random Rand { get; set; }
@@ -24,6 +25,7 @@ namespace ShipBattlesModel
             Plottibles = new List<GameObject>();
             BulletSpeed = 5;
             Objects = new List<GameObject>();
+            Score = 0;
             // Most of the logic for setting up the proper world will be in the controller. 
             // Why? Because we need to incorporate the levels and I'm not sure how do do this
             // in the World constructor. Everytime you make an new level, you will have to effectively
