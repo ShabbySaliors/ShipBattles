@@ -10,27 +10,27 @@
     <Grid>
         <Image Stretch="UniformToFill" Source="Images/background2.jpg"/>
         <Image Source="Images/logo_hs.png" HorizontalAlignment="Left" Height="100" Margin="408,113,0,0" VerticalAlignment="Top" Width="620"/>
-        <TextBlock x:Name="Block_0" HorizontalAlignment="Left" Margin="350,340,0,0" TextWrapping="Wrap" Text="Name"  Foreground="White" 
+        <TextBlock x:Name="Name_1" HorizontalAlignment="Left" Margin="350,340,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_2" HorizontalAlignment="Left" Margin="350,430,0,0" TextWrapping="Wrap" Text="Name"  Foreground="White" 
+        <TextBlock x:Name="Name_2" HorizontalAlignment="Left" Margin="350,430,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_4" HorizontalAlignment="Left" Margin="350,520,0,0" TextWrapping="Wrap" Text="Name"  Foreground="White" 
+        <TextBlock x:Name="Name_3" HorizontalAlignment="Left" Margin="350,520,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_6" HorizontalAlignment="Left" Margin="350,610,0,0" TextWrapping="Wrap" Text="Name"  Foreground="White" 
+        <TextBlock x:Name="Name_4" HorizontalAlignment="Left" Margin="350,610,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_8" HorizontalAlignment="Left" Margin="350,700,0,0" TextWrapping="Wrap" Text="Name"  Foreground="White" 
+        <TextBlock x:Name="Name_5" HorizontalAlignment="Left" Margin="350,700,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_1" HorizontalAlignment="Left" Margin="975,340,0,0" TextWrapping="Wrap" Text="Score"  Foreground="White" 
+        <TextBlock x:Name="Score_1" HorizontalAlignment="Left" Margin="975,340,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_3" HorizontalAlignment="Left" Margin="975,430,0,0" TextWrapping="Wrap" Text="Score"  Foreground="White" 
+        <TextBlock x:Name="Score_2" HorizontalAlignment="Left" Margin="975,430,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_5" HorizontalAlignment="Left" Margin="975,520,0,0" TextWrapping="Wrap" Text="Score"  Foreground="White" 
+        <TextBlock x:Name="Score_3" HorizontalAlignment="Left" Margin="975,520,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_7" HorizontalAlignment="Left" Margin="975,610,0,0" TextWrapping="Wrap" Text="Score"  Foreground="White" 
+        <TextBlock x:Name="Score_4" HorizontalAlignment="Left" Margin="975,610,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_9" HorizontalAlignment="Left" Margin="975,700,0,0" TextWrapping="Wrap" Text="Score"  Foreground="White" 
+        <TextBlock x:Name="Score_5" HorizontalAlignment="Left" Margin="975,700,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="No_Scores" HorizontalAlignment="Left" Margin="486,340,0,0" TextWrapping="Wrap" Text="No Score"  Foreground="White" 
-            FontSize="35" VerticalAlignment="Top" Height="218" TextAlignment="Center" Width="419"/>
+        <TextBlock x:Name="No_Scores" HorizontalAlignment="Left" Margin="408,340,0,0" TextWrapping="Wrap" Text=""  Foreground="White" 
+            FontSize="35" VerticalAlignment="Top" Height="218" TextAlignment="Center" Width="620"/>
     </Grid>
 </Window>
