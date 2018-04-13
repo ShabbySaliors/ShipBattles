@@ -27,7 +27,7 @@ To Save:
 - Load button only launches a new game.
 - Not all enemy bases appear on screen.
 - Game score does not update. 
-- Object on screen do not terminate upon leaving the screen (creates lag).
+- Objects on screen do not terminate upon leaving the screen (creates lag).
 
 # Gameplay Link 
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
