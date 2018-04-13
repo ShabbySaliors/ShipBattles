@@ -29,7 +29,7 @@ To Save:
 - Game score does not update. 
 - Object on screen do not terminate upon leaving the screen (creates lag).
 
-# Gamepley Link 
+# Gameplay Link 
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
 
 # Work Hours
