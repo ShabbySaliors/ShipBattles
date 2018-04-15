@@ -397,7 +397,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 3;
             HitBoxSize = 1;
-            ImageFilepath = "Images/redLaser.png";
+            ImageFilepath = "Images/laser.png";
             Speed = 5;
         }
         public override string Serialize() // Make is a single String
@@ -453,7 +453,7 @@ namespace ShipBattlesModel
             Speed = GameWorld.Instance.BulletSpeed; // Assumes that that bullet speed has been set by the contoller
             HitBoxSize = 1;
             CollideBoxSize = 3;
-            ImageFilepath = "Images/redLaser.png";
+            ImageFilepath = "Images/laser.png";
         }
         public override string Serialize() // Make is a single String
         {

@@ -131,16 +131,12 @@
     <Resource Include="Images\alien.png" />
     <Resource Include="Images\asteroid.png" />
     <Resource Include="Images\background2.jpg" />
-    <Resource Include="Images\laser.jpg" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\logo_hs.png" />
     <Resource Include="Images\playerShip.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background2WithoutStar.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\redLaser.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\about.png" />
@@ -151,6 +147,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\life.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\laser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gameBackground.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
