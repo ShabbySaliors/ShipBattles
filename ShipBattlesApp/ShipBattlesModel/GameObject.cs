@@ -391,6 +391,7 @@ namespace ShipBattlesModel
 
     public class PlayerBullet: GameObject, ISerializible
     {
+        private int numberOfMoves = 0;
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
@@ -428,7 +429,15 @@ namespace ShipBattlesModel
 
         public override void DoNextAction()
         {
-            Move();
+            if (numberOfMoves < GameWorld.Instance.Height / Speed / 2)
+            {
+                Move();
+                numberOfMoves += 1;
+            }
+            else
+            {
+                GameWorld.Instance.Objects.Remove(this);
+            }
         }
         public void Move()
         {
@@ -445,6 +454,7 @@ namespace ShipBattlesModel
 
     public class Bullet: GameObject, ISerializible
     {
+        private int numberOfMoves = 0;
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
@@ -483,7 +493,13 @@ namespace ShipBattlesModel
 
         public override void DoNextAction()
         {
-            Move();
+            if (numberOfMoves < GameWorld.Instance.Height / Speed / 2)
+            {
+                Move();
+                numberOfMoves += 1;
+            }
+            else
+                GameWorld.Instance.Objects.Remove(this);
         }
 
         private void Move()

@@ -38,7 +38,7 @@ namespace ShipBattlesApp
                 PlotObject(obj);
             }
 
-            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 100); // 50 ms
+            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 50); // 100 ms
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
         }

@@ -82,11 +82,21 @@ namespace ShipBattlesModel
             {
                 if (obj is Bullet)
                 {
-                    hits.Add(CheckForCollisions(obj)); // Not sure if this will crash because of the null reference.
+                    GameObject hitObject = CheckForCollisions(obj);
+                    if (hitObject != null)
+                    {
+                        hits.Add(hitObject);
+                        hits.Add(obj); // remove the bullet too.
+                    }
                 } else if (obj is PlayerBullet)
                 {
-                    hits.Add(CheckForCollisions(obj));
-                } 
+                    GameObject hitObject = CheckForCollisions(obj);
+                    if(hitObject != null)
+                    {
+                        hits.Add(hitObject);
+                        hits.Add(obj); // remove the bullet too.
+                    }
+                }
             }
             foreach (GameObject obj in hits)
                 if (obj != null)
