@@ -31,7 +31,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/alien.jpg";
+            ImageFilepath = "Images/alien.png";
         }
         public override string Serialize() // Make it a single String
         {
@@ -221,7 +221,7 @@ namespace ShipBattlesModel
         {
             CollideBoxSize = 40;
             HitBoxSize = 30;
-            ImageFilepath = "Images/SpaceStation.jpg";
+            ImageFilepath = "Images/SpaceStation.png";
         }
         public override string Serialize() // Make is a single String
         {
@@ -272,7 +272,7 @@ namespace ShipBattlesModel
             Speed = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/logo.png";
+            ImageFilepath = "Images/life.png";
         }
         public override string Serialize() // Make is a single String
         {
@@ -335,7 +335,7 @@ namespace ShipBattlesModel
             Speed = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/asteriod.jpg";
+            ImageFilepath = "Images/asteroid.png";
         }
         public override string Serialize() // Make is a single String
         {
