@@ -14,7 +14,7 @@ namespace ShipBattlesModel
         public void TestLoadWorld()
         {
             Controller ctrl = new Controller();
-            ctrl.LoadWorld();
+            ctrl.LoadWorld(1);
             Assert.IsTrue(GameWorld.Instance.Objects.Count == 17);
             Assert.IsTrue(GameWorld.Instance.Height == 300);
             Assert.IsTrue(GameWorld.Instance.Width == 300);
@@ -34,7 +34,7 @@ namespace ShipBattlesModel
         public void TestMakeRandLocation()
         {
             Controller ctrl = new Controller();
-            ctrl.LoadWorld();
+            ctrl.LoadWorld(1);
             for (int i = 0; i < 200; i++)
             {
                 Location loc = ctrl.MakeRandLocation();

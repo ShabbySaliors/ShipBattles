@@ -20,7 +20,7 @@ namespace ShipBattlesModel
         int PlayerSpeed = 3;
         public List<GameObject> hits = new List<GameObject>();
 
-        public void LoadWorld()
+        public void LoadWorld(int lev)
         {
             // Later I will use functions of the 'level' varaible to make the 
             // set up more complicated.
@@ -29,27 +29,31 @@ namespace ShipBattlesModel
             // GameWorld.Instance.Objects.Add(PlayerShip.Intance);
             //GameWorld.Instance.PlayerShip = new PlayerShip();
             //GameWorld.Instance.PlayerShip.ShootDirection = GameWorld.Instance.MakeRandomDirection();
-            GameWorld.Instance.BulletSpeed = 2;
-            GameWorld.Instance.Width = 1000;
-            GameWorld.Instance.Height = 800;
-            GameWorld.Instance.Score = 0;
-            PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
-            PlayerShip.Speed = PlayerSpeed;
-            GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
+            if(lev == 1)
+            {
+                GameWorld.Instance.Score = 0;
+                GameWorld.Instance.BulletSpeed = 2;
+                GameWorld.Instance.Width = 1000;
+                GameWorld.Instance.Height = 740;
+                PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
+                PlayerShip.Speed = PlayerSpeed;
+                GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
+            }
+
             GameWorld.Instance.Objects.Clear();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < lev + 4; i++)
             {
                 GameWorld.Instance.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < lev + 3; i++)
             {
                 GameWorld.Instance.Objects.Add(new Base() { Loc = MakeRandLocation() });
             }
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < lev + 3; i++)
             {
                 GameWorld.Instance.Objects.Add(new Asteroid() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < lev + 3; i++)
             {
                 GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
@@ -119,12 +123,16 @@ namespace ShipBattlesModel
 
         public bool IsGameOver()
         {
-            if (!(GameWorld.Instance.Objects.Contains(PlayerShip)))
-                return true;
-            else
-                foreach (GameObject obj in GameWorld.Instance.Objects)
-                    if (obj is Base)
-                        return false;
+            if (GameWorld.Instance.Objects.Contains(PlayerShip))
+                return false;
+            return true;
+        }
+
+        public bool IsLevelOver()
+        {
+            foreach (GameObject obj in GameWorld.Instance.Objects)
+                if (obj is Base)
+                    return false;
             return true;
         }
 

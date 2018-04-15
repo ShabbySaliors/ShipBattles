@@ -30,7 +30,7 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ctrl.LoadWorld();
+            ctrl.LoadWorld(1);
             ctrl.MakePlottibles();
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
@@ -58,6 +58,11 @@ namespace ShipBattlesApp
                 hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score);
                 iterationTimer.Stop();
                 AnimateEnding();
+            }
+            if (ctrl.IsLevelOver())
+            {
+                ctrl.level += 1;
+                ctrl.LoadWorld(ctrl.level);
             }
         }
 
