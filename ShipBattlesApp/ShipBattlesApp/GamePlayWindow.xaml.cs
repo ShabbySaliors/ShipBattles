@@ -75,6 +75,9 @@ namespace ShipBattlesApp
             Canvas.SetTop(newImage, obj.Loc.Y - newImage.Height / 2);
         }
 
+        // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the 
+        // WASD keys are being pressed, and then stop moving yet still shoot while the keys are not being depressed.
+        // The first solution which comes to mind is creating a variable witin
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W)
@@ -94,36 +97,16 @@ namespace ShipBattlesApp
                 ctrl.Save();
                 this.Close();
             }
+            else if (e.Key == Key.C)
+            {
+                if (ctrl.PlayerShip.IsInCheatMode)
+                    ctrl.PlayerShip.IsInCheatMode = false;
+                else
+                    ctrl.PlayerShip.IsInCheatMode = true;
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.W || e.Key == Key.S)
-                ctrl.PlayerShip.Direct.Up = 0;
-            else if (e.Key == Key.A || e.Key == Key.D)
-                ctrl.PlayerShip.Direct.Right = 0;
-        }
-
-        // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the 
-        // WASD keys are being pressed, and then stop moving yet still shoot while the keys are not being depressed.
-        // The first solution which comes to mind is creating a variable witin
-
-
-        private void Wind_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.W)
-                ctrl.PlayerShip.Direct.Up = -1;
-            else if (e.Key == Key.A)
-                ctrl.PlayerShip.Direct.Right = 1;
-            else if (e.Key == Key.S)
-                ctrl.PlayerShip.Direct.Up = -1;
-            else if (e.Key == Key.D)
-                ctrl.PlayerShip.Direct.Right = 1;
-            else if (e.Key == Key.Space)
-                ctrl.PlayerShip.ToShoot = true;
-        }
-
-        private void Wind_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W || e.Key == Key.S)
                 ctrl.PlayerShip.Direct.Up = 0;

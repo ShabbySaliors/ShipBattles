@@ -12,7 +12,7 @@ namespace ShipBattlesModel
 {
     public class Controller
     {
-        public string Username = "Rantaeasta!";
+        public string Username = "RantaBeasta!";
         public int level = 0;
         Random rand = new Random();
         public int AIShipSpeed = 1;

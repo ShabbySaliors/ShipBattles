@@ -126,6 +126,7 @@ namespace ShipBattlesModel
         public bool ToShoot { get; set; }
         public Direction ShootDirection { get; set; }
         public Direction Direct { get; set; }
+        public bool IsInCheatMode = false;
         public PlayerShip()
         {
             CollideBoxSize = 20;
@@ -203,8 +204,12 @@ namespace ShipBattlesModel
         //}
         public override GameObject GetHit()
         {
-            GameWorld.Instance.Objects.Remove(this);
-            return this;
+            if (!IsInCheatMode)
+            {
+                GameWorld.Instance.Objects.Remove(this);
+                return this;
+            }
+            return null;
         }
     }
 
