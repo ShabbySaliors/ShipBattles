@@ -58,9 +58,14 @@ namespace ShipBattlesModel
                 GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
             GameWorld.Instance.Objects.Add(PlayerShip);
-
-
         }
+        
+        // Load Logic:
+        // Call the LoadWorld method once with lev = 1;
+        // Call it again with current level;
+        // Clear Gameworld.Object
+        // Populate Gameworld.Objects with your info from the file
+        // 
 
         public List<GameObject> MakePlottibles()
         {

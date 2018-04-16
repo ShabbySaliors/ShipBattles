@@ -8,6 +8,7 @@ namespace ShipBattlesModel
 {
     public class GameWorld
     {
+        public bool LoadedGame { get; set; }
         public int Score { get; set; }
         public int PlayerShipHitBoxSize { get; set; }
         public Location PlayerShipLocation { get; set; }
