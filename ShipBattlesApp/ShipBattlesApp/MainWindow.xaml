@@ -20,6 +20,10 @@
         <TextBlock HorizontalAlignment="Left" Margin="88,695,0,0" TextWrapping="Wrap" Text="Select a difficulty level:"  Foreground="White" 
                    FontSize="35" VerticalAlignment="Top" Height="75"/>
         <Button x:Name="btnLoad" Content="Load" FontSize="30" Margin="556,615,543.6,204.4" Click="btnLoad_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="475,349,0,0" TextWrapping="Wrap" Text="Enter your name:"  Foreground="White" 
+            FontSize="35" VerticalAlignment="Top" Height="75" Width="270"/>
+        <TextBox x:Name="nameBox" HorizontalAlignment="Left" Height="52" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="270"
+                 KeyDown="nameBox_KeyDown" Margin="475,429,0,0" FontSize="35"/>
 
     </Grid>
 </Window>

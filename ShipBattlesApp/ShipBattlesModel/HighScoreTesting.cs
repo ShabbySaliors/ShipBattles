@@ -62,11 +62,11 @@ namespace ShipBattlesModel
             Assert.IsTrue(File.Exists(hsTest.Filename));
 
             hsTest.SaveHighScore("Waluigi", 6000);
-            hsTest.SaveHighScore("Geo_Stelar", 1250);
+            hsTest.SaveHighScore("Geo Stelar", 1250);
             hsTest.SaveHighScore("Sans", 2500);
             hsTest.SaveHighScore("Wavedash", 3675);
             hsTest.SaveHighScore("Audacity", 500);
-            hsTest.SaveHighScore("Dr_Edgar_George_Zomboss", 925);
+            hsTest.SaveHighScore("Dr Edgar George Zomboss", 925);
 
             Assert.IsTrue(hsTest.ScoresList.Count == 5);
             Assert.IsTrue(hsTest.ScoresList[0].Name == "Waluigi");

@@ -12,7 +12,7 @@ namespace ShipBattlesModel
 {
     public class Controller
     {
-        public string Username = "RantaBeasta!";
+        public string Username;
         public int level = 0;
         Random rand = new Random();
         public int AIShipSpeed = 1;
@@ -269,50 +269,60 @@ namespace ShipBattlesModel
         // (or the newest high-score if it ties with the lowest)
         public void SaveHighScore(string username, int highScore)
         {
+            string nameToSave = "";
+            int i = 0;
+            bool isUniqueScore = false;
             FileStream fs1 = File.Open(filename, FileMode.Open);
             StreamWriter sw1 = new StreamWriter(fs1);
-            if (scoresList.Count == 5)
-            {
-                Score score = new Score(username, highScore);
-                scoresList.Add(score);
-                scoresList.Sort();
-                if (scoresList[0].Points == scoresList[1].Points)
-                {
-                    scoresList.Remove(score);
-                }
-                else
-                {
-                    scoresList.RemoveAt(0);
-                }
-                scoresList.Reverse();
 
-                sw1.Close();
-                fs1.Close();
-                File.Delete(filename);
-                CheckHighScoresFile();
-                FileStream fs2 = File.Open(filename, FileMode.Open);
-                StreamWriter sw2 = new StreamWriter(fs2);
-                foreach (Score s in scoresList)
-                {
-                    sw2.WriteLine(s.Name + " " + s.Points.ToString());
-                }
-                sw2.Close();
-                fs2.Close();
+            foreach (char c in username)
+            {
+                if (c == ' ') nameToSave += '_';
+                else nameToSave += c;
             }
+
+            Score score = new Score(nameToSave, highScore);
+            if (scoresList.Count == 0) scoresList.Add(score);
             else
             {
-                sw1.WriteLine(username + " " + highScore.ToString());
-                Score score = new Score(username, highScore);
-                scoresList.Add(score);
-                sw1.Close();
-                fs1.Close();
+                foreach (Score s in scoresList)
+                {
+                    if (score.Points == s.Points) isUniqueScore = true;
+                    if (isUniqueScore == false)
+                    {
+                        scoresList.Add(score);
+                        break;
+                    }
+                }
             }
+            scoresList.Sort();
+            if (scoresList.Count == 6)
+            {
+                scoresList.RemoveAt(0);
+            }
+            scoresList.Reverse();
+
+            sw1.Close();
+            fs1.Close();
+            File.Delete(filename);
+            CheckHighScoresFile();
+            FileStream fs2 = File.Open(filename, FileMode.Open);
+            StreamWriter sw2 = new StreamWriter(fs2);
+            foreach (Score s in scoresList)
+            {
+                if (i == (scoresList.Count - 1)) sw2.Write(s.Name + " " + s.Points.ToString());
+                else sw2.WriteLine(s.Name + " " + s.Points.ToString());
+                i++;
+            }
+            sw2.Close();
+            fs2.Close();
         }
 
         // Load a list of high-scores from said output file
         // testMode will trigger an alternate filename for unit tests that need it
         public void LoadHighScores(bool testMode)
         {
+            string nameToLoad = "";
             // here is the trigger
             if (testMode) filename = "test.txt";
             if (File.Exists(filename))
@@ -327,7 +337,13 @@ namespace ShipBattlesModel
                             if ((tempString1 = sr.ReadLine()) != null)
                             {
                                 string[] tempString2 = tempString1.Split(' ');
-                                scoresList.Add(new Score(tempString2[0], Convert.ToInt32(tempString2[1])));
+                                foreach (char c in tempString2[0])
+                                {
+                                    if (c == '_') nameToLoad += ' ';
+                                    else nameToLoad += c;
+                                }
+                                scoresList.Add(new Score(nameToLoad, Convert.ToInt32(tempString2[1])));
+                                nameToLoad = "";
                             }
                         }
                         if (scoresList.Count != 0)

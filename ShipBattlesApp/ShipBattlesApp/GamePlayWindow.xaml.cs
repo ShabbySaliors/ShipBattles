@@ -23,8 +23,17 @@ namespace ShipBattlesApp
     {
         Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
-        public GamePlayWindow()
+        HighScore hs;
+        public GamePlayWindow(HighScore hstemp)
         {
+            hs = hstemp;
+            InitializeComponent();
+        }
+
+        public GamePlayWindow(HighScore hstemp, string name)
+        {
+            hs = hstemp;
+            ctrl.Username = name;
             InitializeComponent();
         }
 
@@ -52,9 +61,8 @@ namespace ShipBattlesApp
             GameBoardCanvas.Children.Clear();
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
                 PlotObject(obj);
-            if(ctrl.IsGameOver())
+            if (ctrl.IsGameOver())
             {
-                HighScore hs = new HighScore();
                 hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score);
                 iterationTimer.Stop();
                 AnimateEnding();
@@ -126,21 +134,23 @@ namespace ShipBattlesApp
         {
             string msg = "Score: ";
             msg += Convert.ToString(GameWorld.Instance.Score);
+            msg += "\nCheck to see if you got a high-score!";
             TextBox gameOver = new TextBox()
             {
                 Margin = new Thickness(40, 0, 40, 0),
                 Text = msg,
                 TextAlignment = TextAlignment.Center,
-                FontSize = 70,
+                FontSize = 40,
                 FontWeight = FontWeights.ExtraBold,
                 Background = Brushes.Red,
             };
+            gameOver.IsEnabled = false;
 
             Window wind = new Window()
             {
                 Title = "Game Over",
                 Height = 150,
-                Width = 500,
+                Width = 850,
                 ForceCursor = true,
                 WindowStyle = WindowStyle.ToolWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,

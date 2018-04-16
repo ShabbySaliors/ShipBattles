@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace ShipBattlesApp
 {
@@ -22,7 +23,7 @@ namespace ShipBattlesApp
     {
         public enum GameMode { Easy, Medium, Hard }
         GameMode gameMode = new GameMode();
-        ShipBattlesModel.HighScore hsTemp = new ShipBattlesModel.HighScore();
+        ShipBattlesModel.HighScore hs = new ShipBattlesModel.HighScore();
         Button oldBtn;
         Button btn;
 
@@ -39,8 +40,8 @@ namespace ShipBattlesApp
             this.MinHeight = 900.0;
             btnEasy.Background = new SolidColorBrush(Colors.Green);
             gameMode = GameMode.Easy;
-            hsTemp.CheckHighScoresFile();
-            hsTemp.LoadHighScores(false);
+            hs.CheckHighScoresFile();
+            hs.LoadHighScores(false);
             oldBtn = btnEasy;
         }
 
@@ -60,7 +61,43 @@ namespace ShipBattlesApp
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            GamePlayWindow gpwindow = new GamePlayWindow();
+            string tempName = nameBox.Text;
+            string name = "";
+            nameBox.Text = "";
+            List<int> indexList = new List<int> { };
+            if (tempName == "")
+            {
+                TextBox noName = new TextBox()
+                {
+                    Margin = new Thickness(40, 0, 40, 0),
+                    Text = "Please enter a name.",
+                    TextAlignment = TextAlignment.Center,
+                    FontSize = 70,
+                    FontWeight = FontWeights.ExtraBold,
+                    Foreground = Brushes.Green,
+                };
+                noName.IsEnabled = false;
+
+                Window noNameWind = new Window()
+                {
+                    Title = "Please enter a name.",
+                    Height = 150,
+                    Width = 1000,
+                    Visibility = Visibility.Visible,
+                    Name = "noNameWind",
+                    Content = noName
+                };
+                return;
+            }
+
+            foreach (char c in tempName)
+            {
+                if (c == ' ') name += '_';
+                else name += c;
+            }
+
+
+            GamePlayWindow gpwindow = new GamePlayWindow(hs, name);
             gpwindow.Show();
         }
 
@@ -80,14 +117,30 @@ namespace ShipBattlesApp
         {
             // from https://stackoverflow.com/questions/11133947/how-to-open-second-window-from-first-window-in-wpf
             // and https://stackoverflow.com/questions/30023419/how-to-call-a-variable-from-one-window-to-another-window
-            HighScoreWindow hswindow = new HighScoreWindow(hsTemp);
+            HighScoreWindow hswindow = new HighScoreWindow(hs);
             hswindow.Show();
         }
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            GamePlayWindow gpwindow = new GamePlayWindow();
+            GamePlayWindow gpwindow = new GamePlayWindow(hs);
             gpwindow.Show();
+        }
+
+        private void nameBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            List<string> list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
+            "Q", "R", "S", "T" ,"U", "V", "W", "X", "Y", "Z"};
+
+            foreach (string s in list)
+            {
+                if (e.Key.ToString() == s)
+                {
+                    e.Handled = false;
+                    return;
+                }
+            }
+            e.Handled = true;
         }
     }
 }
