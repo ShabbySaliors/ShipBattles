@@ -39,12 +39,18 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ctrl.LoadWorld(1);
-            ctrl.MakePlottibles();
-            Console.WriteLine(GameWorld.Instance.Plottibles.Count);
-            foreach (GameObject obj in GameWorld.Instance.Plottibles)
+            if(GameWorld.Instance.LoadedGame)
             {
-                PlotObject(obj);
+                //logic 
+            } else
+            {
+                ctrl.LoadWorld(1);
+                ctrl.MakePlottibles();
+                Console.WriteLine(GameWorld.Instance.Plottibles.Count);
+                foreach (GameObject obj in GameWorld.Instance.Plottibles)
+                {
+                    PlotObject(obj);
+                }
             }
 
             iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 50); // 100 ms
@@ -52,9 +58,6 @@ namespace ShipBattlesApp
             iterationTimer.Start();
         }
 
-        // Mr. Malloy
-        // Looking for more help over the summer. If I'm interested, I can let Mr. Malloy know.
-        // Call Malachi back. 
         private void Timer_Tick(object sender, EventArgs e)
         {
             ctrl.IterateGame();

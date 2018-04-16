@@ -12,6 +12,6 @@
         <Canvas x:Name="GameBoardCanvas" HorizontalAlignment="Center" Height="739" Margin="79,51,0,0" VerticalAlignment="Center" Width="1084"/>
         <StackPanel HorizontalAlignment="Left" Height="354" Margin="1260,10,0,0" VerticalAlignment="Top" Width="166">
             <TextBlock TextWrapping="Wrap" Text="Test" Height="50" Foreground="Red"/>
-        </StackPanel>
+           </StackPanel>
     </Grid>
 </Window>

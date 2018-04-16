@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using ShipBattlesModel;
 
 namespace ShipBattlesApp
 {
@@ -123,6 +124,7 @@ namespace ShipBattlesApp
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
+            GameWorld.Instance.LoadedGame = true;
             GamePlayWindow gpwindow = new GamePlayWindow(hs);
             gpwindow.Show();
         }
