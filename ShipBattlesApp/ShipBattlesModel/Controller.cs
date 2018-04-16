@@ -63,9 +63,8 @@ namespace ShipBattlesModel
         // Load Logic:
         // Call the LoadWorld method once with lev = 1;
         // Call it again with current level;
-        // Clear Gameworld.Object
+        // Clear Gameworld.Object;
         // Populate Gameworld.Objects with your info from the file
-        // 
 
         public List<GameObject> MakePlottibles()
         {
