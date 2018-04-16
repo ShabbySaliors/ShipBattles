@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Controller.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="HighScore.cs" />
     <Compile Include="HighScoreTesting.cs" />
     <Compile Include="ModelTesting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
