@@ -13,7 +13,7 @@ namespace ShipBattlesModel
     public class Controller
     {
         public string Username;
-        public int level = 0;
+        public int level = 1;
         public LevelTimer LevelTimer {get; set;}
         Random rand = new Random();
         public int AIShipSpeed = 1;
@@ -133,6 +133,7 @@ namespace ShipBattlesModel
                 if (obj is Base)
                     return false;
             level += 1;
+            GameWorld.Instance.Score += (int)(1000 / LevelTimer.Seconds());
             LoadWorld(level);
             return true;
         }
@@ -216,6 +217,10 @@ namespace ShipBattlesModel
         public void Update()
         {
             currentTime = DateTime.Now;
+        }
+        public int Seconds()
+        {
+            return currentTime.Subtract(startingTime).Seconds;
         }
         public string Write()
         {

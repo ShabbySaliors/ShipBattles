@@ -79,6 +79,7 @@ namespace ShipBattlesApp
             }
             ctrl.IsLevelOver();
             TimerBlock.Text = ctrl.LevelTimer.Write();
+            PointsBlock.Text = "Points: " + GameWorld.Instance.Score.ToString();
         }
 
         private void PlotObject(GameObject obj)
