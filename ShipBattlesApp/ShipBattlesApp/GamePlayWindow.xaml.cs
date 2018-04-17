@@ -41,8 +41,15 @@ namespace ShipBattlesApp
         {
             if (GameWorld.Instance.LoadedGame)
             {
-                //logic 
-            } else
+                ctrl.LoadWorld(1);
+                ctrl.Load();
+                ctrl.LoadWorld(ctrl.level);
+                foreach (GameObject obj in GameWorld.Instance.Plottibles)
+                {
+                    PlotObject(obj);
+                }
+            }
+            else
             {
                 ctrl.LoadWorld(1);
                 ctrl.MakePlottibles();

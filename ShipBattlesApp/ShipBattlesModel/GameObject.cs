@@ -234,8 +234,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Loc.Y) + ",";
             serial += Convert.ToString(Loc.X) + ",";
             serial += Convert.ToString(Speed) + ",";
-            serial += Convert.ToString(Direct.Up) + ",";
-            serial += Convert.ToString(Direct.Right);
+            //serial += Convert.ToString(Direct.Up) + ",";
+            //serial += Convert.ToString(Direct.Right);
             return serial;
         }
 
@@ -245,8 +245,8 @@ namespace ShipBattlesModel
             Loc.Y = Convert.ToInt32(serialArray[0]);
             Loc.X = Convert.ToInt32(serialArray[1]);
             Speed = Convert.ToDouble(serialArray[2]);
-            Direct.Up = Convert.ToInt32(serialArray[3]);
-            Direct.Right = Convert.ToInt32(serialArray[4]);
+            //Direct.Up = Convert.ToInt32(serialArray[3]);
+            //Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
         public override void DoNextAction()
@@ -285,8 +285,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Loc.Y) + ",";
             serial += Convert.ToString(Loc.X) + ",";
             serial += Convert.ToString(Speed) + ",";
-            serial += Convert.ToString(Direct.Up) + ",";
-            serial += Convert.ToString(Direct.Right);
+            //serial += Convert.ToString(Direct.Up) + ",";
+            //serial += Convert.ToString(Direct.Right);
             return serial;
         }
 
@@ -296,8 +296,8 @@ namespace ShipBattlesModel
             Loc.Y = Convert.ToInt32(serialArray[0]);
             Loc.X = Convert.ToInt32(serialArray[1]);
             Speed = Convert.ToInt32(serialArray[2]);
-            Direct.Up = Convert.ToInt32(serialArray[3]);
-            Direct.Right = Convert.ToInt32(serialArray[4]);
+            //Direct.Up = Convert.ToInt32(serialArray[3]);
+            //Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
         public override void DoNextAction()
@@ -348,8 +348,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Loc.Y) + ",";
             serial += Convert.ToString(Loc.X) + ",";
             serial += Convert.ToString(Speed) + ",";
-            serial += Convert.ToString(Direct.Up) + ",";
-            serial += Convert.ToString(Direct.Right);
+            //serial += Convert.ToString(Direct.Up) + ",";
+            //serial += Convert.ToString(Direct.Right);
             return serial;
         }
 
@@ -359,8 +359,8 @@ namespace ShipBattlesModel
             Loc.Y = Convert.ToInt32(serialArray[0]);
             Loc.X = Convert.ToInt32(serialArray[1]);
             Speed = Convert.ToInt32(serialArray[2]);
-            Direct.Up = Convert.ToInt32(serialArray[3]);
-            Direct.Right = Convert.ToInt32(serialArray[4]);
+            //Direct.Up = Convert.ToInt32(serialArray[3]);
+            //Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
         public override void DoNextAction()
@@ -412,8 +412,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Loc.Y) + ",";
             serial += Convert.ToString(Loc.X) + ",";
             serial += Convert.ToString(Speed) + ",";
-            serial += Convert.ToString(Direct.Up) + ",";
-            serial += Convert.ToString(Direct.Right);
+            //serial += Convert.ToString(Direct.Up) + ",";
+            //serial += Convert.ToString(Direct.Right);
             return serial;
         }
 
@@ -423,8 +423,8 @@ namespace ShipBattlesModel
             Loc.Y = Convert.ToInt32(serialArray[0]);
             Loc.X = Convert.ToInt32(serialArray[1]);
             Speed = Convert.ToInt32(serialArray[2]);
-            Direct.Up = Convert.ToInt32(serialArray[3]);
-            Direct.Right = Convert.ToInt32(serialArray[4]);
+            //Direct.Up = Convert.ToInt32(serialArray[3]);
+            //Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
         public override void DoNextAction()
@@ -476,8 +476,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Loc.Y) + ",";
             serial += Convert.ToString(Loc.X) + ",";
             serial += Convert.ToString(Speed) + ",";
-            serial += Convert.ToString(Direct.Up) + ",";
-            serial += Convert.ToString(Direct.Right);
+            //serial += Convert.ToString(Direct.Up) + ",";
+            //serial += Convert.ToString(Direct.Right);
             return serial;
         }
 
@@ -487,8 +487,8 @@ namespace ShipBattlesModel
             Loc.Y = Convert.ToInt32(serialArray[0]);
             Loc.X = Convert.ToInt32(serialArray[1]);
             Speed = Convert.ToInt32(serialArray[2]);
-            Direct.Up = Convert.ToInt32(serialArray[3]);
-            Direct.Right = Convert.ToInt32(serialArray[4]);
+            //Direct.Up = Convert.ToInt32(serialArray[3]);
+            //Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
         public override void DoNextAction()
