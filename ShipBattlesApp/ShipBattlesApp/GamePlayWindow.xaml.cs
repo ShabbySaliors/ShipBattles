@@ -39,7 +39,7 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(GameWorld.Instance.LoadedGame)
+            if (GameWorld.Instance.LoadedGame)
             {
                 //logic 
             } else
@@ -70,11 +70,8 @@ namespace ShipBattlesApp
                 iterationTimer.Stop();
                 AnimateEnding();
             }
-            if (ctrl.IsLevelOver())
-            {
-                ctrl.level += 1;
-                ctrl.LoadWorld(ctrl.level);
-            }
+            ctrl.IsLevelOver();
+            TimerBlock.Text = ctrl.LevelTimer.Write();
         }
 
         private void PlotObject(GameObject obj)
@@ -152,7 +149,7 @@ namespace ShipBattlesApp
             Window wind = new Window()
             {
                 Title = "Game Over",
-                Height = 150,
+                Height = 300,
                 Width = 850,
                 ForceCursor = true,
                 WindowStyle = WindowStyle.ToolWindow,
@@ -162,6 +159,11 @@ namespace ShipBattlesApp
                 Name = "wind",
                 Content = gameOver
             };
+        }
+
+        public void PrintTimer()
+        {
+            
         }
     }
 }
