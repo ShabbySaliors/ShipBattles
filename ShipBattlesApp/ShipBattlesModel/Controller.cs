@@ -14,32 +14,27 @@ namespace ShipBattlesModel
     {
         public string Username;
         public int level = 0;
+        public LevelTimer LevelTimer {get; set;}
         Random rand = new Random();
         public int AIShipSpeed = 1;
         public PlayerShip PlayerShip { get; set; }
         int PlayerSpeed = 3;
         public List<GameObject> hits = new List<GameObject>();
-
         public void LoadWorld(int lev)
         {
-            // Later I will use functions of the 'level' varaible to make the 
-            // set up more complicated.
 
-            // Make sure that you set a bullet speed.
-            // GameWorld.Instance.Objects.Add(PlayerShip.Intance);
-            //GameWorld.Instance.PlayerShip = new PlayerShip();
-            //GameWorld.Instance.PlayerShip.ShootDirection = GameWorld.Instance.MakeRandomDirection();
             if(lev == 1)
-            {
-                GameWorld.Instance.Score = 0;
-                GameWorld.Instance.BulletSpeed = 2;
-                GameWorld.Instance.Width = 1000;
-                GameWorld.Instance.Height = 740;
-                PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
-                PlayerShip.Speed = PlayerSpeed;
-                GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
-            }
+                {
+                    GameWorld.Instance.Score = 0;
+                    GameWorld.Instance.BulletSpeed = 2;
+                    GameWorld.Instance.Width = 1000;
+                    GameWorld.Instance.Height = 740;
+                    PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
+                    PlayerShip.Speed = PlayerSpeed;
+                    GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
+                }
 
+            LevelTimer = new LevelTimer();
             GameWorld.Instance.Objects.Clear();
             for (int i = 0; i < lev + 4; i++)
             {
@@ -63,9 +58,8 @@ namespace ShipBattlesModel
         // Load Logic:
         // Call the LoadWorld method once with lev = 1;
         // Call it again with current level;
-        // Clear Gameworld.Object
+        // Clear Gameworld.Object;
         // Populate Gameworld.Objects with your info from the file
-        // 
 
         public List<GameObject> MakePlottibles()
         {
@@ -110,7 +104,7 @@ namespace ShipBattlesModel
             foreach (GameObject obj in hits)
                 if (obj != null)
                     obj.GetHit();
-
+            LevelTimer.Update();
             GameWorld.Instance.Plottibles = MakePlottibles();
         }
 
@@ -138,6 +132,8 @@ namespace ShipBattlesModel
             foreach (GameObject obj in GameWorld.Instance.Objects)
                 if (obj is Base)
                     return false;
+            level += 1;
+            LoadWorld(level);
             return true;
         }
 
@@ -206,6 +202,24 @@ namespace ShipBattlesModel
             loc.Y = (GameWorld.Instance.Height + GameWorld.Instance.Height % 2) / 2;
             loc.X = (GameWorld.Instance.Width + GameWorld.Instance.Width % 2) / 2;
             return loc;
+        }
+    }
+
+    public class LevelTimer
+    {
+        DateTime startingTime;
+        DateTime currentTime;
+        public LevelTimer()
+        {
+            startingTime = DateTime.Now;
+        }
+        public void Update()
+        {
+            currentTime = DateTime.Now;
+        }
+        public string Write()
+        {
+            return currentTime.Subtract(startingTime).ToString();
         }
     }
 }
