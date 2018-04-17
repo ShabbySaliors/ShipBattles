@@ -17,6 +17,9 @@ To Shoot:
 To Save:
 - Enter
 
+To Cheat:
+- "C"
+
 # Work Complete
 - Live action Gameplay
 - Ships and Bases get destroyed by the project bullets from our ship
@@ -41,7 +44,7 @@ To Save:
 # Work Hours
 |Author | Time| 
 |-------|-----|
-| Zach | 12.00 |
+| Zach | 15.25 |
 | Jeremiah | 32.34 |
 | Rusty | 22.00 | 
-|Total  | **** |
+|Total  | 69.59|
