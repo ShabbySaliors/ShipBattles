@@ -38,8 +38,13 @@ To Cheat:
 - Unknown bug in High Scores.
 - Objects spawn on top of each other.
 
-# Gameplay Link 
+# Gameplay Link
+
+## Alpha
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
+
+## Beta
+- https://youtu.be/yBQ1dpoCy3k
 
 # Work Hours
 |Author | Time| 
