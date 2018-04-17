@@ -21,13 +21,13 @@ To Save:
 - Live action Gameplay
 - Ships and Bases get destroyed by the project bullets from our ship
 - The AI ships follow the player and attack
+- High Scores
 
 # Known Issues
-- Game crashes upon attempting to save.
-- Load button only launches a new game.
-- Not all enemy bases appear on screen.
-- Game score does not update. 
-- Objects on screen do not terminate upon leaving the screen (creates lag).
+- Serialization tests do not pass.
+- Load does not fully restore saved state. 
+- Unknown bug in High Scores.
+- Objects spawn on top of each other.
 
 # Gameplay Link 
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
@@ -37,5 +37,5 @@ To Save:
 |-------|-----|
 | Zach | 12.00 |
 | Jeremiah | 28.08 |
-| Rusty | 15.5 | 
+| Rusty | 22.00 | 
 |Total  | **** |
