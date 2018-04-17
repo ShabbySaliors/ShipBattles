@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ShipBattlesModel
 {
     [TestClass]
-    class SerializationTests
+    public class SerializationTests
     {
         [TestMethod]
         public void TestAIShipSerializtion()
@@ -18,10 +18,12 @@ namespace ShipBattlesModel
             Direction dir = ctrl.MakeRandDirection();
             AIShip ship = new AIShip() { Loc = loc, Direct = dir, Speed = 1 };
             string serial = ship.Serialize();
+            Console.WriteLine(serial);
             Location newLoc = ctrl.MakeRandLocation();
             Direction newDir = ctrl.MakeRandDirection();
             AIShip newShip = new AIShip() { Loc = newLoc, Direct = newDir, Speed = 0 };
             newShip.Deserialize(serial);
+            Console.WriteLine(newShip);
             Assert.IsTrue(newShip.Loc == loc);
             Assert.IsTrue(newShip.Speed == 1);
             Assert.IsTrue(newShip.Direct == dir);
@@ -44,6 +46,7 @@ namespace ShipBattlesModel
             Assert.IsTrue(newKit.Direct == dir);
         }
 
+        [TestMethod]
         public void TestAsteroidSerialization()
         {
             Controller ctrl = new Controller();
@@ -60,6 +63,7 @@ namespace ShipBattlesModel
             Assert.IsTrue(newAst.Direct == dir);
         }
 
+        [TestMethod]
         public void TestBulletSerialization()
         {
             Controller ctrl = new Controller();

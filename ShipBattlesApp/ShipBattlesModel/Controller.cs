@@ -143,77 +143,50 @@ namespace ShipBattlesModel
 
         public void Save()
         {
-            // https://www.dotnetperls.com/serialize-list
-            try
+            string saveFile = "SaveFile.txt";
+            if (File.Exists(saveFile))
             {
-                using (Stream stream = File.Open("SaveFile.txt", FileMode.Create))
-                {
-                    List<object> saveList = new List<object> { };
-                    saveList.Add(Username);
-                    saveList.Add(level);
-                    saveList.Add(rand);
-                    saveList.Add(AIShipSpeed);
-                    saveList.Add(PlayerShip);
-                    saveList.Add(PlayerSpeed);
-                    saveList.Add(hits);
-                    saveList.Add(GameWorld.Instance.PlayerShipHitBoxSize);
-                    saveList.Add(GameWorld.Instance.PlayerShipLocation);
-                    saveList.Add(GameWorld.Instance.Rand);
-                    saveList.Add(GameWorld.Instance.Objects);
-                    saveList.Add(GameWorld.Instance.Width);
-                    saveList.Add(GameWorld.Instance.Height);
-                    saveList.Add(GameWorld.Instance.Plottibles);
-                    saveList.Add(GameWorld.Instance.BulletSpeed);
-                    saveList.Add(GameWorld.Instance.Score);
-
-                    BinaryFormatter bin = new BinaryFormatter();
-                    bin.Serialize(stream, saveList);
-                }
+                File.Delete(saveFile);
             }
-            catch (IOException)
+            FileStream stream = File.Open(saveFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(Username);
+            writer.WriteLine(Convert.ToString(level));
+            writer.WriteLine(Convert.ToString(PlayerShip.Loc.X));
+            writer.WriteLine(Convert.ToString(PlayerShip.Loc.Y));
+            //writer.WriteLine(GameWorld.Instance.PlayerShipLocation);
+            writer.WriteLine(Convert.ToString(GameWorld.Instance.Score));
+            foreach (GameObject gameObject in GameWorld.Instance.Objects)
             {
+                string stringObject = gameObject.Serialize();
+                writer.WriteLine(stringObject);
             }
-            //Console.WriteLine("Level:");
-            //Console.WriteLine(level);
-            //Console.WriteLine("Username:");
-            //Console.WriteLine(Username);
-            //Console.WriteLine("AIShipspeed:");
-            //Console.WriteLine(AIShipSpeed);
-            //Console.WriteLine("PlayerSpeed");
-            //Console.WriteLine(PlayerSpeed);
-            // etc
+            writer.Close();
+            stream.Close();
         }
 
         public void Load()
         {
-            // https://www.dotnetperls.com/serialize-list
-            try
+            string saveFile = "SaveFile.txt";
+            if (File.Exists(saveFile) == true)
             {
-                using (Stream stream = File.Open("SaveFile.txt", FileMode.Open))
+                using (FileStream stream = File.Open(saveFile, FileMode.Open))
                 {
-                    BinaryFormatter bin = new BinaryFormatter();
-                    List<object> loadList = (List<object>)bin.Deserialize(stream);
-                    Username = (string)loadList[0];
-                    level = (int)loadList[1];
-                    rand = (Random)loadList[2];
-                    AIShipSpeed = (int)loadList[3];
-                    PlayerShip = (PlayerShip)loadList[4];
-                    PlayerSpeed = (int)loadList[5];
-                    hits = (List<GameObject>)loadList[6];
-                    GameWorld.Instance.PlayerShipHitBoxSize = (int)loadList[7];
-                    GameWorld.Instance.PlayerShipLocation = (Location)loadList[8];
-                    GameWorld.Instance.Rand = (Random)loadList[9];
-                    GameWorld.Instance.Objects = (List<GameObject>)loadList[10];
-                    GameWorld.Instance.Width = (int)loadList[11];
-                    GameWorld.Instance.Height = (int)loadList[12];
-                    GameWorld.Instance.Plottibles = (List<GameObject>)loadList[13];
-                    GameWorld.Instance.BulletSpeed = (int)loadList[14];
-                    GameWorld.Instance.Score = (int)loadList[15];
-                    
+                    StreamReader reader = new StreamReader(stream);
+                    Username = reader.ReadLine();
+                    level = Convert.ToInt32(reader.ReadLine());
+                    PlayerShip.Loc.X = Convert.ToInt32(reader.ReadLine());
+                    PlayerShip.Loc.Y = Convert.ToInt32(reader.ReadLine());
+                    //GameWorld.Instance.PlayerShipLocation = (Location)reader.ReadLine();
+                    GameWorld.Instance.Score = Convert.ToInt32(reader.ReadLine());
+                    //while (reader.ReadLine() != null)
+                    //{
+                        //gameObject.Deserialize(reader.ReadLine());
+                        //GameWorld.Instance.Objects.Add(gameObject);
+                    //}
+                    reader.Close();
+                    stream.Close();
                 }
-            }
-            catch (IOException)
-            {
             }
         }
 
