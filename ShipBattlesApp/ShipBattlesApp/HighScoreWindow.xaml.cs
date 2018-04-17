@@ -39,12 +39,19 @@ namespace ShipBattlesApp
             }
             else
             {
+                string realName = "";
                 List<TextBlock> nameList = new List<TextBlock> { Name_1, Name_2, Name_3, Name_4, Name_5, };
                 List<TextBlock> scoreList = new List<TextBlock> { Score_1, Score_2, Score_3, Score_4, Score_5, };
                 int count = 0;
                 foreach (ShipBattlesModel.Score s in hs.ScoresList)
                 {
-                    nameList[count].Text = s.Name;
+                    // DO NOT UNCOMMENT
+                    //foreach (char c in nameList[count].Text)
+                    //{
+                    //    if (c == '_') realName += ' ';
+                    //    else realName += c;
+                    //}
+                    nameList[count].Text = realName;
                     scoreList[count].Text = s.Points.ToString();
                     count++;
                 }
