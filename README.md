@@ -22,6 +22,12 @@ To Save:
 - Ships and Bases get destroyed by the project bullets from our ship
 - The AI ships follow the player and attack
 - High Scores
+- Unlimited Levels
+- Tame Based Scoring
+- Cheat Mode
+- Username Entry
+- Serialization 
+- Main Menu (Help, Title, About)
 
 # Known Issues
 - Serialization tests do not pass.
@@ -36,6 +42,6 @@ To Save:
 |Author | Time| 
 |-------|-----|
 | Zach | 12.00 |
-| Jeremiah | 28.08 |
+| Jeremiah | 32.34 |
 | Rusty | 22.00 | 
 |Total  | **** |
