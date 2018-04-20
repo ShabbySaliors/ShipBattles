@@ -7,11 +7,13 @@ using System.IO;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Media;
 
 namespace ShipBattlesModel
 {
     public class Controller
     {
+        private SoundPlayer explosionPlayer = new SoundPlayer("Audio/explosion.wav");
         public string Username;
         public int level = 1;
         public LevelTimer LevelTimer {get; set;}
@@ -88,6 +90,7 @@ namespace ShipBattlesModel
                     GameObject hitObject = CheckForCollisions(obj);
                     if (hitObject != null)
                     {
+                        explosionPlayer.Play();
                         hits.Add(hitObject);
                         hits.Add(obj); // remove the bullet too.
                     }
@@ -96,6 +99,7 @@ namespace ShipBattlesModel
                     GameObject hitObject = CheckForCollisions(obj);
                     if(hitObject != null)
                     {
+                        explosionPlayer.Play();
                         hits.Add(hitObject);
                         hits.Add(obj); // remove the bullet too.
                     }

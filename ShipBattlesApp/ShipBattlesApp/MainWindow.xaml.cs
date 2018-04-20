@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using ShipBattlesModel;
+using System.Media;
 
 namespace ShipBattlesApp
 {
@@ -22,6 +23,8 @@ namespace ShipBattlesApp
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private SoundPlayer backgroundMusicPlayer = new SoundPlayer("Audio/MystOnTheMoor.wav");
         public enum GameMode { Easy, Medium, Hard }
         GameMode gameMode = new GameMode();
         ShipBattlesModel.HighScore hs = new ShipBattlesModel.HighScore();
@@ -36,6 +39,7 @@ namespace ShipBattlesApp
         // This event executes upon loading the MainWindow
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            backgroundMusicPlayer.PlayLooping();
             // https://docs.microsoft.com/en-us/dotnet/api/system.windows.frameworkelement.minwidth?view=netframework-4.7.1#System_Windows_FrameworkElement_MinWidth
             this.MinWidth = 1440.0;
             this.MinHeight = 900.0;
@@ -97,7 +101,7 @@ namespace ShipBattlesApp
                 else name += c;
             }
 
-
+            backgroundMusicPlayer.Stop();
             GamePlayWindow gpwindow = new GamePlayWindow(hs, name);
             gpwindow.Show();
         }
@@ -124,6 +128,7 @@ namespace ShipBattlesApp
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
+            backgroundMusicPlayer.Stop();
             GameWorld.Instance.LoadedGame = true;
             GamePlayWindow gpwindow = new GamePlayWindow(hs);
             gpwindow.Show();

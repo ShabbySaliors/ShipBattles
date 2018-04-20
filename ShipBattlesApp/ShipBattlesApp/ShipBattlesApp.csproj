@@ -154,5 +154,16 @@
   <ItemGroup>
     <Resource Include="Images\gameBackground.jpg" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Audio\enemyLaser.mp3" />
+    <Content Include="Audio\explosion.wav" />
+    <Content Include="Audio\Home Base Groove.mp3" />
+    <Content Include="Audio\interstellarhero.wav" />
+    <Content Include="Audio\MystOnTheMoor.mp3" />
+    <Content Include="Audio\MystOnTheMoor.wav" />
+    <Content Include="Audio\playerLaser.mp3" />
+    <Content Include="Audio\playerLaser.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

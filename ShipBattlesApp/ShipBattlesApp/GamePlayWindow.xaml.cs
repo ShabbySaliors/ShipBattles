@@ -8,8 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Media;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 using System.Windows.Shapes;
 using ShipBattlesModel;
 using System.Windows.Threading;
@@ -21,6 +23,7 @@ namespace ShipBattlesApp
     /// </summary>
     public partial class GamePlayWindow : Window
     {
+        private SoundPlayer playerLaserPlayer = new SoundPlayer("Audio/playerLaser.wav");
         Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
         HighScore hs;
@@ -112,7 +115,10 @@ namespace ShipBattlesApp
             else if (e.Key == Key.D)
                 ctrl.PlayerShip.Direct.Right = 1;
             else if (e.Key == Key.Space)
+            {
+                playerLaserPlayer.Play();
                 ctrl.PlayerShip.ToShoot = true;
+            }
             else if (e.Key == Key.Enter)
             {
                 ctrl.Save();
