@@ -63,7 +63,7 @@ namespace ShipBattlesApp
                 }
             }
 
-            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 50); // 100 ms
+            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20); // 100 ms
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
         }
