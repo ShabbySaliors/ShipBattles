@@ -56,7 +56,7 @@ namespace ShipBattlesModel
             }
             GameWorld.Instance.Objects.Add(PlayerShip);
         }
-        
+
         // Load Logic:
         // Call the LoadWorld method once with lev = 1;
         // Call it again with current level;
@@ -68,8 +68,10 @@ namespace ShipBattlesModel
             GameWorld.Instance.Plottibles.Clear();
             foreach (GameObject obj in GameWorld.Instance.Objects)
             {
-                if ((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < GameWorld.Instance.Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < GameWorld.Instance.Width / 2))
-                    GameWorld.Instance.Plottibles.Add(obj);
+                //if ((Math.Abs(obj.Loc.Y % GameWorld.Instance.Height - PlayerShip.Loc.Y % GameWorld.Instance.Height) < GameWorld.Instance.Height / 2)
+                //        && (Math.Abs(obj.Loc.X % GameWorld.Instance.Width - PlayerShip.Loc.X % GameWorld.Instance.Width) < GameWorld.Instance.Width / 2))
+                //    GameWorld.Instance.Plottibles.Add(obj);
+                GameWorld.Instance.Plottibles.Add(obj);
             }
             return GameWorld.Instance.Plottibles;
         }
@@ -116,9 +118,18 @@ namespace ShipBattlesModel
         {
             foreach(GameObject hitObject in GameWorld.Instance.Objects)
             {
-                if (obj.Loc.Y < hitObject.Loc.Y + hitObject.CollideBoxSize && obj.Loc.Y > hitObject.Loc.Y - hitObject.CollideBoxSize)
-                    if (obj.Loc.X < hitObject.Loc.X + hitObject.CollideBoxSize && obj.Loc.X > hitObject.Loc.X - hitObject.CollideBoxSize)
-                        if(hitObject != obj)
+                //if ((obj.Loc.Y % GameWorld.Instance.Height < hitObject.Loc.Y % GameWorld.Instance.Height + hitObject.CollideBoxSize
+                //        || obj.Loc.Y % GameWorld.Instance.Height < hitObject.Loc.Y % GameWorld.Instance.Height + hitObject.CollideBoxSize) // if lower than top
+                //        && obj.Loc.Y % GameWorld.Instance.Height > hitObject.Loc.Y % GameWorld.Instance.Height - hitObject.CollideBoxSize) // if higher than bottom
+                //    if (obj.Loc.X % GameWorld.Instance.Width < hitObject.Loc.X % GameWorld.Instance.Width + hitObject.CollideBoxSize // If 'lefter' than right
+                //            && obj.Loc.X % GameWorld.Instance.Width > hitObject.Loc.X % GameWorld.Instance.Width - hitObject.CollideBoxSize) // if 'righter/ than left
+                //        if(hitObject != obj)
+                //            return hitObject;
+                int dy = ((hitObject.Loc.Y + hitObject.CollideBoxSize) % GameWorld.Instance.Height) - (obj.Loc.Y % GameWorld.Instance.Height);
+                int dx = ((hitObject.Loc.X + hitObject.CollideBoxSize) % GameWorld.Instance.Width) - (obj.Loc.X % GameWorld.Instance.Width);
+                if ((dy < 2 * hitObject.CollideBoxSize && dy > 0) || dy < 2 * hitObject.CollideBoxSize - GameWorld.Instance.Height)
+                    if ((dx < 2 * hitObject.CollideBoxSize && dx > 0) || dx < 2 * hitObject.CollideBoxSize -GameWorld.Instance.Width)
+                        if (hitObject != obj)
                             return hitObject;
             }
             return null;

@@ -175,6 +175,27 @@ namespace ShipBattlesModel
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
+        public int FindY_Dist(GameObject obj)
+        {
+            int d = obj.Loc.Y % GameWorld.Instance.Height - Loc.Y % GameWorld.Instance.Height;
+            if (d < 0 - GameWorld.Instance.Height / 2)
+                return d + GameWorld.Instance.Height;
+            else if (d > GameWorld.Instance.Height / 2)
+                return d - GameWorld.Instance.Height;
+            else
+                return d;
+        }
+
+        public int FindX_Dist(GameObject obj)
+        {
+            int d = obj.Loc.X % GameWorld.Instance.Width - Loc.X % GameWorld.Instance.Width;
+            if (d < 0 - GameWorld.Instance.Width / 2)
+                return d + GameWorld.Instance.Width;
+            else if (d > GameWorld.Instance.Width / 2)
+                return d - GameWorld.Instance.Width;
+            else
+                return d;
+        }
 
         public override string Serialize() // Make is a single String
         {

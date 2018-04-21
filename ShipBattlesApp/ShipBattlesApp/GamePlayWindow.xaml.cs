@@ -94,9 +94,19 @@ namespace ShipBattlesApp
             GameBoardCanvas.Children.Add(newImage);
             // newImage.MouseDown += Img_MouseDown;
             // Here we must concider the possibility that the images move instead of all being replotted every time. 
-            // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on? 
-            Canvas.SetLeft(newImage, obj.Loc.X - newImage.Width / 2);
-            Canvas.SetTop(newImage, obj.Loc.Y - newImage.Height / 2);
+            // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on?
+            if (obj == ctrl.PlayerShip)
+            {
+                Canvas.SetLeft(newImage, (GameBoardCanvas.Width + GameBoardCanvas.Width % 2) / 2 - newImage.Width / 2);
+                Canvas.SetTop(newImage, (GameBoardCanvas.Height + GameBoardCanvas.Height % 2) / 2 - newImage.Height / 2);
+            } else
+            {
+                Canvas.SetLeft(newImage, (GameBoardCanvas.Width + GameBoardCanvas.Width % 2) / 2 + ctrl.PlayerShip.FindX_Dist(obj) - newImage.Width / 2);
+                Canvas.SetTop(newImage, (GameBoardCanvas.Height + GameBoardCanvas.Height % 2) / 2 + ctrl.PlayerShip.FindY_Dist(obj) - newImage.Height / 2);
+            }
+
+            //Canvas.SetLeft(newImage, obj.Loc.X - newImage.Width / 2);
+            //Canvas.SetTop(newImage, obj.Loc.Y - newImage.Height / 2);
         }
 
         // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the 
