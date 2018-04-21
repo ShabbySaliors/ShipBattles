@@ -45,7 +45,7 @@ namespace ShipBattlesApp
             this.MinHeight = 900.0;
             btnEasy.Background = new SolidColorBrush(Colors.Green);
             gameMode = GameMode.Easy;
-            hs.CheckHighScoresFile();
+            hs.CheckHighScoresFile(false);
             hs.LoadHighScores(false);
             oldBtn = btnEasy;
         }

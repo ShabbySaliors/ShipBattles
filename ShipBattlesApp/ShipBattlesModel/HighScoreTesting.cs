@@ -14,38 +14,49 @@ namespace ShipBattlesModel
     {
         HighScore hsTest = new HighScore();
 
+        private void ResetFile()
+        {
+            File.Delete("test.txt");
+            hsTest.CheckHighScoresFile(true);
+            Assert.IsTrue(File.Exists("test.txt"));
+        }
+
         [TestMethod]
         public void TestLoadNoScores()
         {
-            File.Delete(hsTest.Filename);
-            hsTest.CheckHighScoresFile();
-            Assert.IsTrue(File.Exists(hsTest.Filename));
+            ResetFile();
 
-            hsTest.LoadHighScores(false);
+            hsTest.LoadHighScores(true);
             Assert.IsTrue(hsTest.ScoresList.Count == 0);
         }
 
         [TestMethod]
         public void TestSaveHighScore()
         {
-            File.Delete(hsTest.Filename);
-            hsTest.CheckHighScoresFile();
-            Assert.IsTrue(File.Exists(hsTest.Filename));
+            ResetFile();
 
-            hsTest.SaveHighScore("Bob", 5000);
-            Assert.IsTrue(hsTest.ScoresList[0].Name == "Bob");
-            Assert.IsTrue(hsTest.ScoresList[0].Points == 5000);
+            hsTest.SaveHighScore("Kyle", 6975, true);
+            Assert.IsTrue(hsTest.ScoresList[0].Name == "Kyle");
+            Assert.IsTrue(hsTest.ScoresList[0].Points == 6975);
         }
 
         [TestMethod]
         public void TestLoadAllScores()
         {
+            ResetFile();
+
+            hsTest.SaveHighScore("Jeff", 7000, true);
+            hsTest.SaveHighScore("Bob", 5000, true);
+            hsTest.SaveHighScore("James", 3000, true);
+            hsTest.SaveHighScore("Desmond", 2525, true);
+            hsTest.SaveHighScore("Alex", 1000, true);
+
             hsTest.LoadHighScores(true);
             Assert.IsTrue(hsTest.ScoresList.Count == 5);
-            Assert.IsTrue(hsTest.ScoresList[0].Name == "Kyle");
-            Assert.IsTrue(hsTest.ScoresList[0].Points == 6975);
-            Assert.IsTrue(hsTest.ScoresList[1].Name == "Jeff");
-            Assert.IsTrue(hsTest.ScoresList[1].Points == 4000);
+            Assert.IsTrue(hsTest.ScoresList[0].Name == "Jeff");
+            Assert.IsTrue(hsTest.ScoresList[0].Points == 7000);
+            Assert.IsTrue(hsTest.ScoresList[1].Name == "Bob");
+            Assert.IsTrue(hsTest.ScoresList[1].Points == 5000);
             Assert.IsTrue(hsTest.ScoresList[2].Name == "James");
             Assert.IsTrue(hsTest.ScoresList[2].Points == 3000);
             Assert.IsTrue(hsTest.ScoresList[3].Name == "Desmond");
@@ -57,16 +68,14 @@ namespace ShipBattlesModel
         [TestMethod]
         public void TestSaveAndSortHighScores()
         {
-            File.Delete(hsTest.Filename);
-            hsTest.CheckHighScoresFile();
-            Assert.IsTrue(File.Exists(hsTest.Filename));
+            ResetFile();
 
-            hsTest.SaveHighScore("Waluigi", 6000);
-            hsTest.SaveHighScore("Geo Stelar", 1250);
-            hsTest.SaveHighScore("Sans", 2500);
-            hsTest.SaveHighScore("Wavedash", 3675);
-            hsTest.SaveHighScore("Audacity", 500);
-            hsTest.SaveHighScore("Dr Edgar George Zomboss", 925);
+            hsTest.SaveHighScore("Waluigi", 6000, true);
+            hsTest.SaveHighScore("Geo Stelar", 1250, true);
+            hsTest.SaveHighScore("Sans", 2500, true);
+            hsTest.SaveHighScore("Wavedash", 3675, true);
+            hsTest.SaveHighScore("Audacity", 500, true);
+            hsTest.SaveHighScore("Dr Edgar George Zomboss", 925, true);
 
             Assert.IsTrue(hsTest.ScoresList.Count == 5);
             Assert.IsTrue(hsTest.ScoresList[0].Name == "Waluigi");
@@ -79,6 +88,31 @@ namespace ShipBattlesModel
             Assert.IsTrue(hsTest.ScoresList[3].Points == 1250);
             Assert.IsTrue(hsTest.ScoresList[4].Name == "Dr_Edgar_George_Zomboss");
             Assert.IsTrue(hsTest.ScoresList[4].Points == 925);
+        }
+
+        [TestMethod]
+        public void TestSaveSameScores()
+        {
+            ResetFile();
+
+            hsTest.SaveHighScore("Wow", 1000, true);
+            hsTest.SaveHighScore("Wow", 1000, true);
+            hsTest.SaveHighScore("Wow", 1000, true);
+            hsTest.SaveHighScore("Wow", 1000, true);
+            hsTest.SaveHighScore("Wow", 1000, true);
+            hsTest.SaveHighScore("Wow", 1000, true);
+
+            Assert.IsTrue(hsTest.ScoresList.Count == 5);
+            Assert.IsTrue(hsTest.ScoresList[0].Name == "Wow");
+            Assert.IsTrue(hsTest.ScoresList[0].Points == 1000);
+            Assert.IsTrue(hsTest.ScoresList[1].Name == "Wow");
+            Assert.IsTrue(hsTest.ScoresList[1].Points == 1000);
+            Assert.IsTrue(hsTest.ScoresList[2].Name == "Wow");
+            Assert.IsTrue(hsTest.ScoresList[2].Points == 1000);
+            Assert.IsTrue(hsTest.ScoresList[3].Name == "Wow");
+            Assert.IsTrue(hsTest.ScoresList[3].Points == 1000);
+            Assert.IsTrue(hsTest.ScoresList[4].Name == "Wow");
+            Assert.IsTrue(hsTest.ScoresList[4].Points == 1000);
         }
     }
 }

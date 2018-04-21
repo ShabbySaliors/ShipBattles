@@ -9,6 +9,7 @@ namespace ShipBattlesModel
 {
     public class HighScore
     {
+        // testMode will trigger an alternate filename for unit tests
         string filename = "highscores.txt";
         private List<Score> scoresList = new List<Score> { };
         public string Filename
@@ -28,8 +29,9 @@ namespace ShipBattlesModel
 
         // Checks if the high-scores file exists
         // If it does not, it makes a new high-scores file
-        public void CheckHighScoresFile()
+        public void CheckHighScoresFile(bool testMode)
         {
+            if (testMode) filename = "test.txt";
             // from https://msdn.microsoft.com/en-us/library/system.io.file.exists%28v=vs.110%29.aspx
             if (!File.Exists(filename))
             {
@@ -42,11 +44,12 @@ namespace ShipBattlesModel
         // Saves a high-score to an output file (it first creates the output file if it does not exist)
         // If the maximum number of high-scores is reached, it deletes the lowest high-score
         // (or the newest high-score if it ties with the lowest)
-        public void SaveHighScore(string username, int highScore)
+        public void SaveHighScore(string username, int highScore, bool testMode)
         {
             string nameToSave = "";
             int i = 0;
-            bool isUniqueScore = false;
+            bool isUniqueScore = true;
+            if (testMode) filename = "test.txt";
             FileStream fs1 = File.Open(filename, FileMode.Open);
             StreamWriter sw1 = new StreamWriter(fs1);
 
@@ -57,13 +60,13 @@ namespace ShipBattlesModel
             }
 
             Score score = new Score(nameToSave, highScore);
-            if (scoresList.Count == 0) scoresList.Add(score);
+            if (scoresList.Count <= 4) scoresList.Add(score);
             else
             {
                 foreach (Score s in scoresList)
                 {
-                    if (score.Points == s.Points) isUniqueScore = true;
-                    if (isUniqueScore == false)
+                    if (score.Points == s.Points) isUniqueScore = false;
+                    if (isUniqueScore)
                     {
                         scoresList.Add(score);
                         break;
@@ -71,16 +74,13 @@ namespace ShipBattlesModel
                 }
             }
             scoresList.Sort();
-            if (scoresList.Count == 6)
-            {
-                scoresList.RemoveAt(0);
-            }
+            if (scoresList.Count == 6) scoresList.RemoveAt(0);
             scoresList.Reverse();
 
             sw1.Close();
             fs1.Close();
             File.Delete(filename);
-            CheckHighScoresFile();
+            CheckHighScoresFile(false);
             FileStream fs2 = File.Open(filename, FileMode.Open);
             StreamWriter sw2 = new StreamWriter(fs2);
             foreach (Score s in scoresList)
@@ -91,15 +91,14 @@ namespace ShipBattlesModel
             }
             sw2.Close();
             fs2.Close();
+            filename = "highscores.txt";
         }
 
         // Load a list of high-scores from said output file
-        // testMode will trigger an alternate filename for unit tests that need it
         public void LoadHighScores(bool testMode)
         {
-            string nameToLoad = "";
-            // here is the trigger
             if (testMode) filename = "test.txt";
+            if (scoresList.Count > 0) ScoresList.Clear();
             if (File.Exists(filename))
             {
                 using (FileStream fs = File.Open(filename, FileMode.Open))
@@ -112,6 +111,7 @@ namespace ShipBattlesModel
                             if ((tempString1 = sr.ReadLine()) != null)
                             {
                                 string[] tempString2 = tempString1.Split(' ');
+                                string nameToLoad = "";
                                 foreach (char c in tempString2[0])
                                 {
                                     if (c == '_') nameToLoad += ' ';
@@ -129,7 +129,6 @@ namespace ShipBattlesModel
                     }
                 }
             }
-            // reset filename regardless of trigger activation
             filename = "highscores.txt";
         }
     }

@@ -42,6 +42,7 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Name.Text = ctrl.Username;
             if (GameWorld.Instance.LoadedGame)
             {
                 ctrl.LoadWorld(1);
@@ -76,7 +77,7 @@ namespace ShipBattlesApp
                 PlotObject(obj);
             if (ctrl.IsGameOver())
             {
-                hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score);
+                hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score, false);
                 iterationTimer.Stop();
                 AnimateEnding();
             }
@@ -93,7 +94,7 @@ namespace ShipBattlesApp
             newImage.Height = 2 * obj.CollideBoxSize + 5;
             GameBoardCanvas.Children.Add(newImage);
             // newImage.MouseDown += Img_MouseDown;
-            // Here we must concider the possibility that the images move instead of all being replotted every time. 
+            // Here we must consider the possibility that the images move instead of all being replotted every time. 
             // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on?
             if (obj == ctrl.PlayerShip)
             {
