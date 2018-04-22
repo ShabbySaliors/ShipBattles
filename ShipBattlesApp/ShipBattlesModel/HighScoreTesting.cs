@@ -40,30 +40,7 @@ namespace ShipBattlesModel
             Assert.IsTrue(hsTest.ScoresList[0].Points == 6975);
         }
 
-        [TestMethod]
-        public void TestLoadAllScores()
-        {
-            ResetFile();
-
-            hsTest.SaveHighScore("Jeff", 7000, true);
-            hsTest.SaveHighScore("Bob", 5000, true);
-            hsTest.SaveHighScore("James", 3000, true);
-            hsTest.SaveHighScore("Desmond", 2525, true);
-            hsTest.SaveHighScore("Alex", 1000, true);
-
-            hsTest.LoadHighScores(true);
-            Assert.IsTrue(hsTest.ScoresList.Count == 5);
-            Assert.IsTrue(hsTest.ScoresList[0].Name == "Jeff");
-            Assert.IsTrue(hsTest.ScoresList[0].Points == 7000);
-            Assert.IsTrue(hsTest.ScoresList[1].Name == "Bob");
-            Assert.IsTrue(hsTest.ScoresList[1].Points == 5000);
-            Assert.IsTrue(hsTest.ScoresList[2].Name == "James");
-            Assert.IsTrue(hsTest.ScoresList[2].Points == 3000);
-            Assert.IsTrue(hsTest.ScoresList[3].Name == "Desmond");
-            Assert.IsTrue(hsTest.ScoresList[3].Points == 2525);
-            Assert.IsTrue(hsTest.ScoresList[4].Name == "Alex");
-            Assert.IsTrue(hsTest.ScoresList[4].Points == 1000);
-        }
+        
 
         [TestMethod]
         public void TestSaveAndSortHighScores()
@@ -103,16 +80,11 @@ namespace ShipBattlesModel
             hsTest.SaveHighScore("Wow", 1000, true);
 
             Assert.IsTrue(hsTest.ScoresList.Count == 5);
-            Assert.IsTrue(hsTest.ScoresList[0].Name == "Wow");
-            Assert.IsTrue(hsTest.ScoresList[0].Points == 1000);
-            Assert.IsTrue(hsTest.ScoresList[1].Name == "Wow");
-            Assert.IsTrue(hsTest.ScoresList[1].Points == 1000);
-            Assert.IsTrue(hsTest.ScoresList[2].Name == "Wow");
-            Assert.IsTrue(hsTest.ScoresList[2].Points == 1000);
-            Assert.IsTrue(hsTest.ScoresList[3].Name == "Wow");
-            Assert.IsTrue(hsTest.ScoresList[3].Points == 1000);
-            Assert.IsTrue(hsTest.ScoresList[4].Name == "Wow");
-            Assert.IsTrue(hsTest.ScoresList[4].Points == 1000);
+            for (int i = 0; i <= 4; i++)
+            {
+                Assert.IsTrue(hsTest.ScoresList[i].Name == "Wow");
+                Assert.IsTrue(hsTest.ScoresList[i].Points == 1000);
+            }
         }
     }
 }

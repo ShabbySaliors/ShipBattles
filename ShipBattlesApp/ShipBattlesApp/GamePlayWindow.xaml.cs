@@ -142,6 +142,20 @@ namespace ShipBattlesApp
                 else
                     ctrl.PlayerShip.IsInCheatMode = true;
             }
+            else if (e.Key == Key.Q)
+            {
+                if (!ctrl.IsGameOver())
+                {
+                    if (iterationTimer.IsEnabled)
+                    {
+                        iterationTimer.Stop();
+                    }
+                    else if (!iterationTimer.IsEnabled)
+                    {
+                        iterationTimer.Start();
+                    }
+                }
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)

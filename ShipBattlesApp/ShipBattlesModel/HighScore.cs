@@ -44,14 +44,12 @@ namespace ShipBattlesModel
         // Saves a high-score to an output file (it first creates the output file if it does not exist)
         // If the maximum number of high-scores is reached, it deletes the lowest high-score
         // (or the newest high-score if it ties with the lowest)
-        public void SaveHighScore(string username, int highScore, bool testMode)
+        public async void SaveHighScore(string username, int highScore, bool testMode)
         {
             string nameToSave = "";
             int i = 0;
             bool isUniqueScore = true;
             if (testMode) filename = "test.txt";
-            FileStream fs1 = File.Open(filename, FileMode.Open);
-            StreamWriter sw1 = new StreamWriter(fs1);
 
             foreach (char c in username)
             {
@@ -77,25 +75,23 @@ namespace ShipBattlesModel
             if (scoresList.Count == 6) scoresList.RemoveAt(0);
             scoresList.Reverse();
 
-            sw1.Close();
-            fs1.Close();
             File.Delete(filename);
-            CheckHighScoresFile(false);
-            FileStream fs2 = File.Open(filename, FileMode.Open);
-            StreamWriter sw2 = new StreamWriter(fs2);
+            CheckHighScoresFile(testMode);
+            FileStream fs = File.Open(filename, FileMode.Open);
+            StreamWriter sw = new StreamWriter(fs);
             foreach (Score s in scoresList)
             {
-                if (i == (scoresList.Count - 1)) sw2.Write(s.Name + " " + s.Points.ToString());
-                else sw2.WriteLine(s.Name + " " + s.Points.ToString());
+                if (i == (scoresList.Count - 1)) await sw.WriteAsync(s.Name + " " + s.Points.ToString());
+                else await sw.WriteLineAsync(s.Name + " " + s.Points.ToString());
                 i++;
             }
-            sw2.Close();
-            fs2.Close();
+            sw.Close();
+            fs.Close();
             filename = "highscores.txt";
         }
 
         // Load a list of high-scores from said output file
-        public void LoadHighScores(bool testMode)
+        public async void LoadHighScores(bool testMode)
         {
             if (testMode) filename = "test.txt";
             if (scoresList.Count > 0) ScoresList.Clear();
@@ -108,7 +104,7 @@ namespace ShipBattlesModel
                         for (int i = 0; i <= 4; i++)
                         {
                             string tempString1;
-                            if ((tempString1 = sr.ReadLine()) != null)
+                            if ((tempString1 = await sr.ReadLineAsync()) != null)
                             {
                                 string[] tempString2 = tempString1.Split(' ');
                                 string nameToLoad = "";
