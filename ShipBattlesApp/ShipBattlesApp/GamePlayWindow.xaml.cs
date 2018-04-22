@@ -84,6 +84,7 @@ namespace ShipBattlesApp
             ctrl.IsLevelOver();
             TimerBlock.Text = ctrl.LevelTimer.Write();
             PointsBlock.Text = "Points: " + GameWorld.Instance.Score.ToString();
+            LivesBlock.Text = "Lives: " + ctrl.PlayerShip.Lives;
         }
 
         private void PlotObject(GameObject obj)

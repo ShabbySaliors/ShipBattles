@@ -115,8 +115,9 @@ namespace ShipBattlesModel
         }
     }
 
-    public class PlayerShip: GameObject, ISerializible
+    public class PlayerShip : GameObject, ISerializible
     {
+        public int Lives { get; set; }
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
@@ -129,6 +130,7 @@ namespace ShipBattlesModel
         public bool IsInCheatMode = false;
         public PlayerShip()
         {
+            Lives = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
             ImageFilepath = "Images/playerShip.png";
@@ -227,8 +229,15 @@ namespace ShipBattlesModel
         {
             if (!IsInCheatMode)
             {
-                GameWorld.Instance.Objects.Remove(this);
-                return this;
+                if (Lives == 1)
+                {
+                    GameWorld.Instance.Objects.Remove(this);
+                    return this;
+                } else
+                {
+                    Lives -= 1;
+                }
+
             }
             return null;
         }
@@ -275,7 +284,7 @@ namespace ShipBattlesModel
             
         }
         public override GameObject GetHit()
-        {
+         {
             CollideBoxSize -= 4;
             GameWorld.Instance.Score += 1;
             if(CollideBoxSize < 5)

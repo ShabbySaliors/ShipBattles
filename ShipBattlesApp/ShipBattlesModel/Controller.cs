@@ -29,8 +29,8 @@ namespace ShipBattlesModel
                 {
                     GameWorld.Instance.Score = 0;
                     GameWorld.Instance.BulletSpeed = 2;
-                    GameWorld.Instance.Width = 1000;
-                    GameWorld.Instance.Height = 740;
+                    GameWorld.Instance.Width = 1000; // 1000
+                    GameWorld.Instance.Height = 740; // 740
                     PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
                     PlayerShip.Speed = PlayerSpeed;
                     GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
@@ -38,11 +38,11 @@ namespace ShipBattlesModel
 
             LevelTimer = new LevelTimer();
             GameWorld.Instance.Objects.Clear();
-            for (int i = 0; i < lev + 4; i++)
+            for (int i = 0; i < lev + 4; i++) // lev + 4
             {
                 GameWorld.Instance.Objects.Add(new AIShip() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-            for (int i = 0; i < lev + 3; i++)
+            for (int i = 0; i < lev + 2; i++)
             {
                 GameWorld.Instance.Objects.Add(new Base() { Loc = MakeRandLocation() });
             }
@@ -50,7 +50,7 @@ namespace ShipBattlesModel
             {
                 GameWorld.Instance.Objects.Add(new Asteroid() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
-            for (int i = 0; i < lev + 3; i++)
+            for (int i = 0; i < lev + 1; i++)
             {
                 GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
@@ -110,6 +110,9 @@ namespace ShipBattlesModel
             foreach (GameObject obj in hits)
                 if (obj != null)
                     obj.GetHit();
+
+            DoPlayerCollisions();
+
             LevelTimer.Update();
             GameWorld.Instance.Plottibles = MakePlottibles();
         }
@@ -135,6 +138,20 @@ namespace ShipBattlesModel
             return null;
         }
 
+        public void DoPlayerCollisions()
+        {
+            GameObject hitter = CheckForCollisions(PlayerShip);
+            if (hitter is Asteroid)
+            {
+                PlayerShip.GetHit();
+                GameWorld.Instance.Objects.Remove(hitter);
+            } else if (hitter is RepairKit)
+            {
+                PlayerShip.Lives += 1;
+                GameWorld.Instance.Objects.Remove(hitter);
+            }
+        }
+
         public bool IsGameOver()
         {
             if (GameWorld.Instance.Objects.Contains(PlayerShip))
@@ -148,7 +165,8 @@ namespace ShipBattlesModel
                 if (obj is Base)
                     return false;
             level += 1;
-            GameWorld.Instance.Score += (int)(1000 / LevelTimer.Seconds());
+            GameWorld.Instance.Score += (int)(1000 / LevelTimer.Seconds() + PlayerShip.Lives * 3);
+            PlayerShip.Lives = 1;
             LoadWorld(level);
             return true;
         }

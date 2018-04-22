@@ -13,7 +13,7 @@
         <StackPanel x:Name="GameStatusPanel" HorizontalAlignment="Left" Height="900" Margin="1150,10,0,0" VerticalAlignment="Top" Width="250">
             <TextBlock x:Name="Name" TextWrapping="Wrap" Text="Test" Height="50" Foreground="Red"/>
             <TextBlock x:Name="TimerBlock" Text="Timer Here" Height="50" Foreground="White" FontSize="20" FontWeight="Bold"/>
-            <TextBlock x:Name="LivesBlock" Text="Number Of Lives Here!" Height="50" Foreground="Red"/>
+            <TextBlock x:Name="LivesBlock" Text="Number Of Lives Here!" Height="50" Foreground="#FF46FF00" FontWeight="Bold" FontSize="20"/>
             <TextBlock x:Name="PointsBlock" Text="Number Of Points Here!" Height="50" Foreground="#FF07FF1D" FontSize="20" FontWeight="Bold"/>
         </StackPanel>
     </Grid>
