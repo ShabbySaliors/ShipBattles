@@ -47,10 +47,10 @@ namespace ShipBattlesApp
             if (GameWorld.Instance.LoadedGame)
             {
                 ctrl.LoadWorld(1);
+                
                 ctrl.Load();
                 ctrl.MakePlottibles();
                 Name.Text = ctrl.Username;
-                //ctrl.LoadWorld(ctrl.level);
                 foreach (GameObject obj in GameWorld.Instance.Plottibles)
                 {
                     PlotObject(obj);

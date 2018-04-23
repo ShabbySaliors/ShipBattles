@@ -181,9 +181,6 @@ namespace ShipBattlesModel
             StreamWriter writer = new StreamWriter(stream);
             writer.WriteLine(Username);
             writer.WriteLine(Convert.ToString(level));
-            //writer.WriteLine(Convert.ToString(PlayerShip.Lives));
-            //writer.WriteLine(Convert.ToString(PlayerShip.Loc.X));
-            //writer.WriteLine(Convert.ToString(PlayerShip.Loc.Y));
             writer.WriteLine(Convert.ToString(GameWorld.Instance.Score));
             foreach (GameObject gameObject in GameWorld.Instance.Objects)
             {
@@ -204,9 +201,7 @@ namespace ShipBattlesModel
                     StreamReader reader = new StreamReader(stream);
                     Username = reader.ReadLine();
                     level = Convert.ToInt32(reader.ReadLine());
-                    //PlayerShip.Lives = Convert.ToInt32(reader.ReadLine());
-                    //PlayerShip.Loc.X = Convert.ToInt32(reader.ReadLine());
-                    //PlayerShip.Loc.Y = Convert.ToInt32(reader.ReadLine());
+                    LoadWorld(level);
                     GameWorld.Instance.Score = Convert.ToInt32(reader.ReadLine());
                     GameWorld.Instance.Objects.Clear();
                     string nextObj = reader.ReadLine();
@@ -220,6 +215,7 @@ namespace ShipBattlesModel
                         {
                             case 0:
                                 PlayerShip p = new PlayerShip() { Loc = loc, Direct = dir, Speed = 1, Lives = 1 };
+                                PlayerShip = p;
                                 p.Deserialize(nextObj);
                                 GameWorld.Instance.Objects.Add(p);
                                 break;
