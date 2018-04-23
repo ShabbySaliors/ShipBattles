@@ -18,15 +18,13 @@ namespace ShipBattlesModel
             Direction dir = ctrl.MakeRandDirection();
             AIShip ship = new AIShip() { Loc = loc, Direct = dir, Speed = 1 };
             string serial = ship.Serialize();
-            Console.WriteLine(serial);
             Location newLoc = ctrl.MakeRandLocation();
             Direction newDir = ctrl.MakeRandDirection();
             AIShip newShip = new AIShip() { Loc = newLoc, Direct = newDir, Speed = 0 };
             newShip.Deserialize(serial);
-            Console.WriteLine(newShip);
-            //Assert.IsTrue(newShip.Loc == loc);
-            //Assert.IsTrue(newShip.Speed == 1);
-            Assert.IsTrue(newShip.Direct == dir);
+            Assert.IsTrue(newShip.Loc.X == loc.X);
+            Assert.IsTrue(newShip.Speed == 1);
+            Assert.IsTrue(newShip.Direct.Up == dir.Up);
         }
 
         [TestMethod]
@@ -41,9 +39,9 @@ namespace ShipBattlesModel
             Direction newDir = ctrl.MakeRandDirection();
             RepairKit newKit = new RepairKit() { Loc = newLoc, Direct = newDir, Speed = 0 };
             newKit.Deserialize(serial);
-            Assert.IsTrue(newKit.Loc == loc);
+            Assert.IsTrue(newKit.Loc.X == loc.X);
             Assert.IsTrue(newKit.Speed == -1);
-            Assert.IsTrue(newKit.Direct == dir);
+            Assert.IsTrue(newKit.Direct.Up == dir.Up);
         }
 
         [TestMethod]
@@ -58,9 +56,9 @@ namespace ShipBattlesModel
             Direction newDir = ctrl.MakeRandDirection();
             Asteroid newAst = new Asteroid() { Loc = newLoc, Direct = newDir, Speed = 0 };
             newAst.Deserialize(serial);
-            Assert.IsTrue(newAst.Loc == loc);
+            Assert.IsTrue(newAst.Loc.X == loc.X);
             Assert.IsTrue(newAst.Speed == -1);
-            Assert.IsTrue(newAst.Direct == dir);
+            Assert.IsTrue(newAst.Direct.Up == dir.Up);
         }
 
         [TestMethod]
@@ -75,9 +73,9 @@ namespace ShipBattlesModel
             Direction newDir = ctrl.MakeRandDirection();
             Bullet newBull = new Bullet() { Loc = newLoc, Direct = newDir, Speed = 0 };
             newBull.Deserialize(serial);
-            Assert.IsTrue(newBull.Loc == loc);
+            Assert.IsTrue(newBull.Loc.X == loc.X);
             Assert.IsTrue(newBull.Speed == -1);
-            Assert.IsTrue(newBull.Direct == dir);
+            Assert.IsTrue(newBull.Direct.Up == dir.Up);
         }
 
     }

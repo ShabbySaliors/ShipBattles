@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -101,6 +102,10 @@ namespace ShipBattlesApp
                 else name += c;
             }
 
+            if (File.Exists("SaveFile.txt"))
+            {
+                File.Delete("SaveFile.txt");
+            }
             backgroundMusicPlayer.Stop();
             GamePlayWindow gpwindow = new GamePlayWindow(hs, name);
             gpwindow.Show();

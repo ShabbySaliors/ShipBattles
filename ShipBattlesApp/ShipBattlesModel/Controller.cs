@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Media;
 
 namespace ShipBattlesModel
@@ -182,9 +181,9 @@ namespace ShipBattlesModel
             StreamWriter writer = new StreamWriter(stream);
             writer.WriteLine(Username);
             writer.WriteLine(Convert.ToString(level));
-            writer.WriteLine(Convert.ToString(PlayerShip.Loc.X));
-            writer.WriteLine(Convert.ToString(PlayerShip.Loc.Y));
-            //writer.WriteLine(GameWorld.Instance.PlayerShipLocation);
+            //writer.WriteLine(Convert.ToString(PlayerShip.Lives));
+            //writer.WriteLine(Convert.ToString(PlayerShip.Loc.X));
+            //writer.WriteLine(Convert.ToString(PlayerShip.Loc.Y));
             writer.WriteLine(Convert.ToString(GameWorld.Instance.Score));
             foreach (GameObject gameObject in GameWorld.Instance.Objects)
             {
@@ -205,15 +204,58 @@ namespace ShipBattlesModel
                     StreamReader reader = new StreamReader(stream);
                     Username = reader.ReadLine();
                     level = Convert.ToInt32(reader.ReadLine());
-                    PlayerShip.Loc.X = Convert.ToInt32(reader.ReadLine());
-                    PlayerShip.Loc.Y = Convert.ToInt32(reader.ReadLine());
-                    //GameWorld.Instance.PlayerShipLocation = (Location)reader.ReadLine();
+                    //PlayerShip.Lives = Convert.ToInt32(reader.ReadLine());
+                    //PlayerShip.Loc.X = Convert.ToInt32(reader.ReadLine());
+                    //PlayerShip.Loc.Y = Convert.ToInt32(reader.ReadLine());
                     GameWorld.Instance.Score = Convert.ToInt32(reader.ReadLine());
-                    //while (reader.ReadLine() != null)
-                    //{
-                        //gameObject.Deserialize(reader.ReadLine());
-                        //GameWorld.Instance.Objects.Add(gameObject);
-                    //}
+                    GameWorld.Instance.Objects.Clear();
+                    string nextObj = reader.ReadLine();
+                    while (nextObj != null)
+                    {
+                        Location loc = MakeRandLocation();
+                        Direction dir = MakeRandDirection();
+                        string[] tempArray = nextObj.Split(',');
+                        int objectType = Convert.ToInt32(tempArray[5]);
+                        switch (objectType)
+                        {
+                            case 0:
+                                PlayerShip p = new PlayerShip() { Loc = loc, Direct = dir, Speed = 1, Lives = 1 };
+                                p.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(p);
+                                break;
+                            case 1:
+                                AIShip a = new AIShip() { Loc = loc, Direct = dir, Speed = 1 };
+                                a.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(a);
+                                break;
+                            case 2:
+                                Base b = new Base() { Loc = loc, Direct = dir, Speed = 1 };
+                                b.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(b);
+                                break;
+                            case 3:
+                                RepairKit r = new RepairKit() { Loc = loc, Direct = dir, Speed = 1 };
+                                r.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(r);
+                                break;
+                            case 4:
+                                Asteroid ast = new Asteroid() { Loc = loc, Direct = dir, Speed = 1 };
+                                ast.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(ast);
+                                break;
+                            case 5:
+                                PlayerBullet pb = new PlayerBullet() { Loc = loc, Direct = dir, Speed = 1 };
+                                pb.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(pb);
+                                break;
+                            case 6:
+                                Bullet bult = new Bullet() { Loc = loc, Direct = dir, Speed = 1 };
+                                bult.Deserialize(nextObj);
+                                GameWorld.Instance.Objects.Add(bult);
+                                break;
+                        }
+                        nextObj = reader.ReadLine();
+                    }
                     reader.Close();
                     stream.Close();
                 }
