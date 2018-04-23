@@ -20,6 +20,7 @@ namespace ShipBattlesModel
             Assert.IsTrue(GameWorld.Instance.Width == 300);
         }
 
+        [TestMethod]
         public void TestMakeRandDirection()
         {
             Controller ctrl = new Controller();
@@ -31,6 +32,7 @@ namespace ShipBattlesModel
             }
         }
 
+        [TestMethod]
         public void TestMakeRandLocation()
         {
             Controller ctrl = new Controller();

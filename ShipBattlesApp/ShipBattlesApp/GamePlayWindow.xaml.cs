@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,8 +47,10 @@ namespace ShipBattlesApp
             if (GameWorld.Instance.LoadedGame)
             {
                 ctrl.LoadWorld(1);
+                
                 ctrl.Load();
-                ctrl.LoadWorld(ctrl.level);
+                ctrl.MakePlottibles();
+                Name.Text = ctrl.Username;
                 foreach (GameObject obj in GameWorld.Instance.Plottibles)
                 {
                     PlotObject(obj);
