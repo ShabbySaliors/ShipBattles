@@ -28,6 +28,7 @@ namespace ShipBattlesApp
         public Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
         HighScore hs;
+        string nameToShow;
 
         public GamePlayWindow(HighScore hstemp)
         {
@@ -39,12 +40,18 @@ namespace ShipBattlesApp
         {
             hs = hstemp;
             ctrl.Username = name;
+            foreach (char c in name)
+            {
+                if (c == '_') nameToShow += ' ';
+                else nameToShow += c;
+            }
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Name.Text = ctrl.Username;
+
+            Name.Text = nameToShow;
             if (GameWorld.Instance.Level != 0) ctrl.LoadWorld(GameWorld.Instance.Level);
             else
             {
@@ -69,7 +76,7 @@ namespace ShipBattlesApp
             {
                 hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score, false);
                 iterationTimer.Stop();
-                AnimateEnding();
+                GameOverBlock.Text = "Game Over!";
             }
             ctrl.IsLevelOver();
             TimerBlock.Text = ctrl.LevelTimer.Write();
@@ -135,13 +142,6 @@ namespace ShipBattlesApp
                     }
                 }
             }
-            // from https://stackoverflow.com/questions/19013087/how-to-detect-multiple-keys-down-onkeydown-event-in-wpf
-            else if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.S))
-            {
-                iterationTimer.Stop();
-                ctrl.Save();
-                this.Close();
-            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -152,44 +152,6 @@ namespace ShipBattlesApp
 
         // Another problem is that I need to center the coordinate of the picture and then rotate the picture with 
         // respect to that coordinate according to the direction of the object.
-
-        private void AnimateEnding()
-        {
-            string msg = "Score: ";
-            msg += Convert.ToString(GameWorld.Instance.Score);
-            msg += "\nCheck to see if you got a high-score!";
-            TextBox gameOver = new TextBox()
-            {
-                Margin = new Thickness(40, 0, 40, 0),
-                Text = msg,
-                TextAlignment = TextAlignment.Center,
-                FontSize = 40,
-                FontWeight = FontWeights.ExtraBold,
-                Background = Brushes.Red,
-            };
-            gameOver.IsEnabled = false;
-
-            Window wind = new Window()
-            {
-                Title = "Game Over",
-                Height = 300,
-                Width = 850,
-                ForceCursor = true,
-                WindowStyle = WindowStyle.ToolWindow,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Visibility = Visibility.Visible,
-                Background = Brushes.DarkBlue,
-                Name = "wind",
-                Content = gameOver
-            };
-        }
-
-        // do we need this?
-        public void PrintTimer()
-        {
-            
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
             if (iterationTimer.IsEnabled) iterationTimer.Stop();
