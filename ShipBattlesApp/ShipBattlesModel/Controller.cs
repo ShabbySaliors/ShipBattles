@@ -225,7 +225,7 @@ namespace ShipBattlesModel
                                 GameWorld.Instance.Objects.Add(a);
                                 break;
                             case 2:
-                                Base b = new Base() { Loc = loc, Direct = dir, Speed = 1 };
+                                Base b = new Base() { Loc = loc, Direct = dir, Speed = 1, CollideBoxSize = 1 };
                                 b.Deserialize(nextObj);
                                 GameWorld.Instance.Objects.Add(b);
                                 break;
@@ -240,12 +240,12 @@ namespace ShipBattlesModel
                                 GameWorld.Instance.Objects.Add(ast);
                                 break;
                             case 5:
-                                PlayerBullet pb = new PlayerBullet() { Loc = loc, Direct = dir, Speed = 1 };
+                                PlayerBullet pb = new PlayerBullet() { Loc = loc, Direct = dir, Speed = 1, numberOfMoves = 0 };
                                 pb.Deserialize(nextObj);
                                 GameWorld.Instance.Objects.Add(pb);
                                 break;
                             case 6:
-                                Bullet bult = new Bullet() { Loc = loc, Direct = dir, Speed = 1 };
+                                Bullet bult = new Bullet() { Loc = loc, Direct = dir, Speed = 1, numberOfMoves = 0 };
                                 bult.Deserialize(nextObj);
                                 GameWorld.Instance.Objects.Add(bult);
                                 break;

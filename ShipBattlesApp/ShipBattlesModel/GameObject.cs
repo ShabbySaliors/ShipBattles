@@ -268,9 +268,7 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Loc.Y) + ",";
             serial += Convert.ToString(Loc.X) + ",";
             serial += Convert.ToString(Speed) + ",";
-            //serial += Convert.ToString(Direct.Up) + ",";
-            //serial += Convert.ToString(Direct.Right) + ",";
-            serial += "0,";
+            serial += Convert.ToString(CollideBoxSize) + ",";
             serial += "0,";
             serial += "2";
             return serial;
@@ -282,8 +280,7 @@ namespace ShipBattlesModel
             Loc.Y = Convert.ToInt32(serialArray[0]);
             Loc.X = Convert.ToInt32(serialArray[1]);
             Speed = Convert.ToDouble(serialArray[2]);
-            //Direct.Up = Convert.ToInt32(serialArray[3]);
-            //Direct.Right = Convert.ToInt32(serialArray[4]);
+            CollideBoxSize = Convert.ToInt32(serialArray[3]);
         }
 
         public override void DoNextAction()
@@ -430,7 +427,7 @@ namespace ShipBattlesModel
 
     public class PlayerBullet: GameObject, ISerializible
     {
-        private int numberOfMoves = 0;
+        public int numberOfMoves = 0;
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
@@ -453,7 +450,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Speed) + ",";
             serial += Convert.ToString(Direct.Up) + ",";
             serial += Convert.ToString(Direct.Right) + ",";
-            serial += "5";
+            serial += "5,";
+            serial += Convert.ToString(numberOfMoves);
             return serial;
         }
 
@@ -465,6 +463,7 @@ namespace ShipBattlesModel
             Speed = Convert.ToInt32(serialArray[2]);
             Direct.Up = Convert.ToInt32(serialArray[3]);
             Direct.Right = Convert.ToInt32(serialArray[4]);
+            numberOfMoves = Convert.ToInt32(serialArray[6]);
         }
 
         public override void DoNextAction()
@@ -494,7 +493,7 @@ namespace ShipBattlesModel
 
     public class Bullet: GameObject, ISerializible
     {
-        private int numberOfMoves = 0;
+        public int numberOfMoves = 0;
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
@@ -518,7 +517,8 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Speed) + ",";
             serial += Convert.ToString(Direct.Up) + ",";
             serial += Convert.ToString(Direct.Right) + ",";
-            serial += "6";
+            serial += "6,";
+            serial += Convert.ToString(numberOfMoves);
             return serial;
         }
 
@@ -530,6 +530,7 @@ namespace ShipBattlesModel
             Speed = Convert.ToInt32(serialArray[2]);
             Direct.Up = Convert.ToInt32(serialArray[3]);
             Direct.Right = Convert.ToInt32(serialArray[4]);
+            numberOfMoves = Convert.ToInt32(serialArray[6]);
         }
 
         public override void DoNextAction()
