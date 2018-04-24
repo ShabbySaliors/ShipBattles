@@ -54,10 +54,7 @@ namespace ShipBattlesApp
             // Potentially put an if statement here which loads the level of the game. (Done)
             ctrl.MakePlottibles();
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
-            foreach (GameObject obj in GameWorld.Instance.Plottibles)
-            {
-                PlotObject(obj);
-            }
+            foreach (GameObject obj in GameWorld.Instance.Plottibles) PlotObject(obj);
             iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20); // 100 ms
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
@@ -67,8 +64,7 @@ namespace ShipBattlesApp
         {
             ctrl.IterateGame();
             GameBoardCanvas.Children.Clear();
-            foreach (GameObject obj in GameWorld.Instance.Plottibles)
-                PlotObject(obj);
+            foreach (GameObject obj in GameWorld.Instance.Plottibles) PlotObject(obj);
             if (ctrl.IsGameOver())
             {
                 hs.SaveHighScore(ctrl.Username, GameWorld.Instance.Score, false);
@@ -110,16 +106,10 @@ namespace ShipBattlesApp
         // The first solution which comes to mind is creating a variable witin
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W)
-            {
-                ctrl.PlayerShip.Direct.Up = -1;
-            }
-            else if (e.Key == Key.A)
-                ctrl.PlayerShip.Direct.Right = -1;
-            else if (e.Key == Key.S)
-                ctrl.PlayerShip.Direct.Up = 1;
-            else if (e.Key == Key.D)
-                ctrl.PlayerShip.Direct.Right = 1;
+            if (e.Key == Key.W) ctrl.PlayerShip.Direct.Up = -1;
+            else if (e.Key == Key.A) ctrl.PlayerShip.Direct.Right = -1;
+            else if (e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 1;
+            else if (e.Key == Key.D) ctrl.PlayerShip.Direct.Right = 1;
             else if (e.Key == Key.Space)
             {
                 playerLaserPlayer.Play();
@@ -127,10 +117,8 @@ namespace ShipBattlesApp
             }
             else if (e.Key == Key.C)
             {
-                if (ctrl.PlayerShip.IsInCheatMode)
-                    ctrl.PlayerShip.IsInCheatMode = false;
-                else
-                    ctrl.PlayerShip.IsInCheatMode = true;
+                if (ctrl.PlayerShip.IsInCheatMode) ctrl.PlayerShip.IsInCheatMode = false;
+                else ctrl.PlayerShip.IsInCheatMode = true;
             }
             else if (e.Key == Key.Q)
             {
@@ -139,6 +127,7 @@ namespace ShipBattlesApp
                     if (iterationTimer.IsEnabled)
                     {
                         iterationTimer.Stop();
+                        ctrl.Save();
                     }
                     else if (!iterationTimer.IsEnabled)
                     {
@@ -157,10 +146,8 @@ namespace ShipBattlesApp
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W || e.Key == Key.S)
-                ctrl.PlayerShip.Direct.Up = 0;
-            else if (e.Key == Key.A || e.Key == Key.D)
-                ctrl.PlayerShip.Direct.Right = 0;
+            if (e.Key == Key.W || e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 0;
+            else if (e.Key == Key.A || e.Key == Key.D) ctrl.PlayerShip.Direct.Right = 0;
         }
 
         // Another problem is that I need to center the coordinate of the picture and then rotate the picture with 
@@ -197,6 +184,7 @@ namespace ShipBattlesApp
             };
         }
 
+        // do we need this?
         public void PrintTimer()
         {
             
@@ -204,10 +192,7 @@ namespace ShipBattlesApp
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (iterationTimer.IsEnabled)
-            {
-                iterationTimer.Stop();
-            }
+            if (iterationTimer.IsEnabled) iterationTimer.Stop();
         }
     }
 }
