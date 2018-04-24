@@ -19,6 +19,7 @@ namespace ShipBattlesModel
         //public PlayerShip PlayerShip;
         public List<GameObject> Plottibles { get; set; }
         public int BulletSpeed { get; set; }
+        public int Level { get; set; }
 
         private GameWorld()
         {

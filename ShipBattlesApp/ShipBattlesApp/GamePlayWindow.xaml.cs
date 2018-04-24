@@ -25,9 +25,10 @@ namespace ShipBattlesApp
     public partial class GamePlayWindow : Window
     {
         private SoundPlayer playerLaserPlayer = new SoundPlayer("Audio/playerLaser.wav");
-        Controller ctrl = new Controller();
+        public Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
         HighScore hs;
+
         public GamePlayWindow(HighScore hstemp)
         {
             hs = hstemp;
@@ -44,29 +45,19 @@ namespace ShipBattlesApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Name.Text = ctrl.Username;
-            if (GameWorld.Instance.LoadedGame)
-            {
-                ctrl.LoadWorld(1);
-                
-                ctrl.Load();
-                ctrl.MakePlottibles();
-                Name.Text = ctrl.Username;
-                foreach (GameObject obj in GameWorld.Instance.Plottibles)
-                {
-                    PlotObject(obj);
-                }
-            }
+            if (GameWorld.Instance.Level != 0) ctrl.LoadWorld(GameWorld.Instance.Level);
             else
             {
-                ctrl.LoadWorld(1);
-                ctrl.MakePlottibles();
-                Console.WriteLine(GameWorld.Instance.Plottibles.Count);
-                foreach (GameObject obj in GameWorld.Instance.Plottibles)
-                {
-                    PlotObject(obj);
-                }
+                GameWorld.Instance.Level = 1;
+                ctrl.LoadWorld(GameWorld.Instance.Level);
             }
-
+            // Potentially put an if statement here which loads the level of the game. (Done)
+            ctrl.MakePlottibles();
+            Console.WriteLine(GameWorld.Instance.Plottibles.Count);
+            foreach (GameObject obj in GameWorld.Instance.Plottibles)
+            {
+                PlotObject(obj);
+            }
             iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20); // 100 ms
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
@@ -134,11 +125,6 @@ namespace ShipBattlesApp
                 playerLaserPlayer.Play();
                 ctrl.PlayerShip.ToShoot = true;
             }
-            else if (e.Key == Key.Enter)
-            {
-                ctrl.Save();
-                this.Close();
-            }
             else if (e.Key == Key.C)
             {
                 if (ctrl.PlayerShip.IsInCheatMode)
@@ -159,6 +145,13 @@ namespace ShipBattlesApp
                         iterationTimer.Start();
                     }
                 }
+            }
+            // from https://stackoverflow.com/questions/19013087/how-to-detect-multiple-keys-down-onkeydown-event-in-wpf
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.S))
+            {
+                iterationTimer.Stop();
+                ctrl.Save();
+                this.Close();
             }
         }
 
@@ -207,6 +200,14 @@ namespace ShipBattlesApp
         public void PrintTimer()
         {
             
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (iterationTimer.IsEnabled)
+            {
+                iterationTimer.Stop();
+            }
         }
     }
 }
