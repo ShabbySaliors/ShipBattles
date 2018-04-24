@@ -12,7 +12,7 @@ namespace ShipBattlesModel
 {
     public class Controller
     {
-        private SoundPlayer explosionPlayer = new SoundPlayer("Audio/explosion.wav");
+        private SoundPlayer explosionPlayer = new SoundPlayer("../../Audio/explosion.wav");
         public string Username;
         public int level = 1;
         public LevelTimer LevelTimer {get; set;}
@@ -91,7 +91,7 @@ namespace ShipBattlesModel
                     GameObject hitObject = CheckForCollisions(obj);
                     if (hitObject != null)
                     {
-                        explosionPlayer.Play();
+                        //explosionPlayer.Play();
                         hits.Add(hitObject);
                         hits.Add(obj); // remove the bullet too.
                     }
@@ -155,6 +155,7 @@ namespace ShipBattlesModel
         {
             if (GameWorld.Instance.Objects.Contains(PlayerShip))
                 return false;
+            explosionPlayer.Play();
             return true;
         }
 

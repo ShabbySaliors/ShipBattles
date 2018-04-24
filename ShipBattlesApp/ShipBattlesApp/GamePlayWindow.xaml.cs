@@ -24,7 +24,7 @@ namespace ShipBattlesApp
     /// </summary>
     public partial class GamePlayWindow : Window
     {
-        private SoundPlayer playerLaserPlayer = new SoundPlayer("Audio/playerLaser.wav");
+        private SoundPlayer playerLaserPlayer = new SoundPlayer("../../Audio/playerLaser.wav");
         public Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
         HighScore hs;
