@@ -59,6 +59,8 @@ namespace ShipBattlesApp
             else
             {
                 ctrl.LoadWorld(1);
+                if (GameWorld.Instance.Level != 0)
+                    ctrl.LoadWorld(GameWorld.Instance.Level);
                 // Potentially put an if statement here which loads the level of the game.
                 ctrl.MakePlottibles();
                 Console.WriteLine(GameWorld.Instance.Plottibles.Count);
