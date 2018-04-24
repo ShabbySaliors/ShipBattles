@@ -56,13 +56,33 @@ namespace ShipBattlesApp
             InitializeComponent();
         }
 
-        private void btnDiff_Click(object sender, RoutedEventArgs e)
+        private void btnHard_Click(object sender, RoutedEventArgs e)
         {
             oldBtn.Background = new SolidColorBrush(Colors.LightGray);
             btn = (Button)sender;
             btn.Background = new SolidColorBrush(Colors.Green);
             oldBtn = btn;
-            gameMode = GameMode.Easy;
+            GameWorld.Instance.Level = 6;
+            btnStart_Click(sender, e);
+        }
+
+        private void btnEasy_Click(object sender, RoutedEventArgs e)
+        {
+            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
+            btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.Green);
+            oldBtn = btn;
+            GameWorld.Instance.Level = 1;
+            btnStart_Click(sender, e);
+        }
+        private void btnMed_Click(object sender, RoutedEventArgs e)
+        {
+            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
+            btn = (Button)sender;
+            btn.Background = new SolidColorBrush(Colors.Green);
+            oldBtn = btn;
+            GameWorld.Instance.Level = 3;
+            btnStart_Click(sender, e);
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)

@@ -25,7 +25,7 @@ namespace ShipBattlesApp
     public partial class GamePlayWindow : Window
     {
         private SoundPlayer playerLaserPlayer = new SoundPlayer("Audio/playerLaser.wav");
-        Controller ctrl = new Controller();
+        public Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
         HighScore hs;
 
@@ -45,10 +45,14 @@ namespace ShipBattlesApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Name.Text = ctrl.Username;
-            ctrl.LoadWorld(1);
-            ctrl.Load();
+            if (GameWorld.Instance.Level != 0) ctrl.LoadWorld(GameWorld.Instance.Level);
+            else
+            {
+                GameWorld.Instance.Level = 1;
+                ctrl.LoadWorld(GameWorld.Instance.Level);
+            }
+            // Potentially put an if statement here which loads the level of the game. (Done)
             ctrl.MakePlottibles();
-            Name.Text = ctrl.Username;
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
             foreach (GameObject obj in GameWorld.Instance.Plottibles)
             {
