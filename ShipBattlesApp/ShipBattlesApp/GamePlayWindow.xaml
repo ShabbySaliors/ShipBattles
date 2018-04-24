@@ -11,10 +11,11 @@
         <Image Stretch="UniformToFill" Source="Images/gameBackground.jpg" Margin="-10,0,9.6,0.4" />
         <Canvas x:Name="GameBoardCanvas" HorizontalAlignment="Center" Height="739" Margin="79,51,0,0" VerticalAlignment="Center" Width="1084"/>
         <StackPanel x:Name="GameStatusPanel" HorizontalAlignment="Left" Height="900" Margin="1150,10,0,0" VerticalAlignment="Top" Width="250">
-            <TextBlock x:Name="Name" TextWrapping="Wrap" Text="Test" Height="50" Foreground="Red"/>
-            <TextBlock x:Name="TimerBlock" Text="Timer Here" Height="50" Foreground="White" FontSize="20" FontWeight="Bold"/>
-            <TextBlock x:Name="LivesBlock" Text="Number Of Lives Here!" Height="50" Foreground="#FF46FF00" FontWeight="Bold" FontSize="20"/>
-            <TextBlock x:Name="PointsBlock" Text="Number Of Points Here!" Height="50" Foreground="#FF07FF1D" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="Name" Text="" Height="50" Foreground="White" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="TimerBlock" Text="" Height="50" Foreground="White" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="LivesBlock" Text="" Height="50" Foreground="#FF46FF00" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="PointsBlock" Text="" Height="50" Foreground="#FF46FF00" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="GameOverBlock" Text="" Height="50" Foreground="Red" FontSize="20" FontWeight="Bold"/>
         </StackPanel>
     </Grid>
 </Window>
