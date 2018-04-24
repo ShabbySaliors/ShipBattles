@@ -191,10 +191,10 @@ namespace ShipBattlesModel
             stream.Close();
         }
 
-        public bool Load()
+        public void Load()
         {
             string saveFile = "SaveFile.txt";
-            if (File.Exists(saveFile) == true)
+            if (File.Exists(saveFile))
             {
                 using (FileStream stream = File.Open(saveFile, FileMode.Open))
                 {
@@ -254,12 +254,7 @@ namespace ShipBattlesModel
                     }
                     reader.Close();
                     stream.Close();
-                    return true;
                 }
-            }
-            else
-            {
-                return false;
             }
         }
 

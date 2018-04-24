@@ -45,28 +45,15 @@ namespace ShipBattlesApp
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Name.Text = ctrl.Username;
-            if (GameWorld.Instance.LoadedGame)
+            ctrl.LoadWorld(1);
+            ctrl.Load();
+            ctrl.MakePlottibles();
+            Name.Text = ctrl.Username;
+            Console.WriteLine(GameWorld.Instance.Plottibles.Count);
+            foreach (GameObject obj in GameWorld.Instance.Plottibles)
             {
-                ctrl.LoadWorld(1);
-                
-                ctrl.MakePlottibles();
-                Name.Text = ctrl.Username;
-                foreach (GameObject obj in GameWorld.Instance.Plottibles)
-                {
-                    PlotObject(obj);
-                }
+                PlotObject(obj);
             }
-            else
-            {
-                ctrl.LoadWorld(1);
-                ctrl.MakePlottibles();
-                Console.WriteLine(GameWorld.Instance.Plottibles.Count);
-                foreach (GameObject obj in GameWorld.Instance.Plottibles)
-                {
-                    PlotObject(obj);
-                }
-            }
-
             iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20); // 100 ms
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
