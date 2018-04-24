@@ -1,5 +1,4 @@
 
-
 # ShipBattles
 A world where life is short and enemies are many
 
@@ -50,6 +49,9 @@ To Cheat:
 - 
 
 # Gameplay Link
+
+## RC
+- https://tinyurl.com/shipbattlesrc
 
 ## Alpha
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
