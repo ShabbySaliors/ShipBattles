@@ -25,7 +25,7 @@ namespace ShipBattlesApp
     public partial class MainWindow : Window
     {
 
-        private SoundPlayer backgroundMusicPlayer = new SoundPlayer("Audio/MystOnTheMoor.wav");
+        private SoundPlayer backgroundMusicPlayer = new SoundPlayer("../../Audio/MystOnTheMoor.wav");
         public enum GameMode { Easy, Medium, Hard }
         GameMode gameMode = new GameMode();
         ShipBattlesModel.HighScore hs = new ShipBattlesModel.HighScore();
