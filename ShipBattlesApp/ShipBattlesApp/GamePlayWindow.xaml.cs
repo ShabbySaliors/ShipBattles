@@ -28,6 +28,7 @@ namespace ShipBattlesApp
         public Controller ctrl = new Controller();
         DispatcherTimer iterationTimer = new DispatcherTimer();
         HighScore hs;
+
         public GamePlayWindow(HighScore hstemp)
         {
             hs = hstemp;
@@ -48,7 +49,6 @@ namespace ShipBattlesApp
             {
                 ctrl.LoadWorld(1);
                 
-                ctrl.Load();
                 ctrl.MakePlottibles();
                 Name.Text = ctrl.Username;
                 foreach (GameObject obj in GameWorld.Instance.Plottibles)
@@ -137,11 +137,6 @@ namespace ShipBattlesApp
                 playerLaserPlayer.Play();
                 ctrl.PlayerShip.ToShoot = true;
             }
-            else if (e.Key == Key.Enter)
-            {
-                ctrl.Save();
-                this.Close();
-            }
             else if (e.Key == Key.C)
             {
                 if (ctrl.PlayerShip.IsInCheatMode)
@@ -162,6 +157,13 @@ namespace ShipBattlesApp
                         iterationTimer.Start();
                     }
                 }
+            }
+            // from https://stackoverflow.com/questions/19013087/how-to-detect-multiple-keys-down-onkeydown-event-in-wpf
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.S))
+            {
+                iterationTimer.Stop();
+                ctrl.Save();
+                this.Close();
             }
         }
 
@@ -210,6 +212,14 @@ namespace ShipBattlesApp
         public void PrintTimer()
         {
             
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (iterationTimer.IsEnabled)
+            {
+                iterationTimer.Stop();
+            }
         }
     }
 }

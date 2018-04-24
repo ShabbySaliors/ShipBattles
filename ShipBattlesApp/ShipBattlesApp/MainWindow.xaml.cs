@@ -153,6 +153,12 @@ namespace ShipBattlesApp
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
+            if (!File.Exists("SaveFile.txt"))
+            {
+                GameWorld.Instance.LoadedGame = false;
+                e.Handled = false;
+                return;
+            }
             backgroundMusicPlayer.Stop();
             GameWorld.Instance.LoadedGame = true;
             GamePlayWindow gpwindow = new GamePlayWindow(hs);
