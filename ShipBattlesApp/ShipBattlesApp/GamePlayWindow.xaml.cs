@@ -50,9 +50,14 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-            Name.Text = nameToShow;
-            if (GameWorld.Instance.Level != 0) ctrl.LoadWorld(GameWorld.Instance.Level);
+            Name.Text = ctrl.Username;
+            if (GameWorld.Instance.LoadedGame)
+            {
+                ctrl.LoadWorld(1);
+                ctrl.Load();
+                ctrl.MakePlottibles();
+                Name.Text = ctrl.Username;
+            }
             else
             {
                 GameWorld.Instance.Level = 1;
@@ -130,12 +135,14 @@ namespace ShipBattlesApp
             }
             else if (e.Key == Key.Q)
             {
+
                 if (!ctrl.IsGameOver())
                 {
+                    ctrl.Save();
                     if (iterationTimer.IsEnabled)
                     {
                         iterationTimer.Stop();
-                        ctrl.Save();
+                        //ctrl.Save();
                     }
                     else if (!iterationTimer.IsEnabled)
                     {

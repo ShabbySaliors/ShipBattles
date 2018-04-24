@@ -1,3 +1,4 @@
+
 # ShipBattles
 A world where life is short and enemies are many
 
@@ -14,6 +15,9 @@ To Move:
 To Shoot:
 - Spacebar
 
+To Pause:
+- "Q"  
+
 To Save:
 - Enter
 
@@ -29,16 +33,25 @@ To Cheat:
 - Tame Based Scoring
 - Cheat Mode
 - Username Entry
-- Serialization 
 - Main Menu (Help, Title, About)
+- Infinite World
+- Save Load
+- Pausing
+- Game Status Panel
+- Asteroid Collisions
+- Extra lives
+- Sounde Effects/ Music
+- Difficulty selection at begining of game
 
 # Known Issues
-- Serialization tests do not pass.
-- Load does not fully restore saved state. 
-- Unknown bug in High Scores.
+- The Infinite world does not calculate collitions when you proceed up and left
 - Objects spawn on top of each other.
+- 
 
 # Gameplay Link
+
+## RC
+- https://tinyurl.com/shipbattlesrc
 
 ## Alpha
 - https://www.dropbox.com/s/4ecfulueuzmo7g3/ship_battles_gameplay.mp4?dl=0
@@ -49,7 +62,7 @@ To Cheat:
 # Work Hours
 |Author | Time| 
 |-------|-----|
-| Zach | 15.25 |
-| Jeremiah | 32.34 |
-| Rusty | 22.00 | 
-|Total  | 69.59|
+| Zach | 21.83 |
+| Jeremiah | 39.00 |
+| Rusty | 32.00 | 
+|Total  | 92.58|
