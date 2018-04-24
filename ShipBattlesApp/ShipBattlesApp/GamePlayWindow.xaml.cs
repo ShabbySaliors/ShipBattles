@@ -50,7 +50,6 @@ namespace ShipBattlesApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-<<<<<<< HEAD
             Name.Text = ctrl.Username;
             if (GameWorld.Instance.LoadedGame)
             {
@@ -59,11 +58,6 @@ namespace ShipBattlesApp
                 ctrl.MakePlottibles();
                 Name.Text = ctrl.Username;
             }
-=======
-
-            Name.Text = nameToShow;
-            if (GameWorld.Instance.Level != 0) ctrl.LoadWorld(GameWorld.Instance.Level);
->>>>>>> 7b424198ff49ab938fe84bc10a2eb339063b3749
             else
             {
                 GameWorld.Instance.Level = 1;
