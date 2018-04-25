@@ -2,6 +2,9 @@
 
 namespace ShipBattlesModel
 {
+    /// <summary>
+    /// Parent class for all in-game objects
+    /// </summary>
     public abstract class GameObject : ISerializible
     {
         abstract public string ImageFilepath { get; set; }
@@ -29,6 +32,11 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/alien.png";
         }
+        
+        /// <summary>
+        /// Compiles `AIShip` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make it a single String
         {
             string serial = "";
@@ -40,7 +48,11 @@ namespace ShipBattlesModel
             serial += "1";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `AIShip` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -68,21 +80,27 @@ namespace ShipBattlesModel
             // Here we would like to point the AIShip in the direction of the player's ship. 
             // To do this, we will check each case where the players coordinates are in different 
             // quadrents of the AIships origin. 
-            if(target.Y - GameWorld.Instance.PlayerShipHitBoxSize > Loc.Y)
-                Direct.Up = 1;
-            else if (target.Y + GameWorld.Instance.PlayerShipHitBoxSize < Loc.Y)
-                Direct.Up = -1;
-            else
+            int dy = GameWorld.Instance.ModY(target.Y + GameWorld.Instance.PlayerShipHitBoxSize) - GameWorld.Instance.ModY(Loc.Y);
+            int dx = GameWorld.Instance.ModX(target.X + GameWorld.Instance.PlayerShipHitBoxSize) - GameWorld.Instance.ModX(Loc.X);
+            if ((dy < 2 * GameWorld.Instance.PlayerShipHitBoxSize && dy >= 0) || dy < 2 * GameWorld.Instance.PlayerShipHitBoxSize - GameWorld.Instance.Height)
                 Direct.Up = 0;
-
-            if (target.X - GameWorld.Instance.PlayerShipHitBoxSize > Loc.X)
-                Direct.Right = 1;
-            else if (target.X + GameWorld.Instance.PlayerShipHitBoxSize < Loc.X)
-                Direct.Right = -1;
-            else if (Direct.Up != 0)
-                Direct.Right = 0;
+            else if (Math.Abs(dy) == 0)
+                return;
+            else if (Math.Abs(dy) < GameWorld.Instance.Height / 2)
+                Direct.Up = dy / Math.Abs(dy); // sign of dy    { -1, 1 } 
             else
-                Direct.Right = 1; // This is merely to handle that case where the algorithm would 
+                Direct.Up = -dy / Math.Abs(dy); // opposite sign of dy { 1, -1 } 
+
+            if ((dx < 2 * GameWorld.Instance.PlayerShipHitBoxSize && dx >= 0) || dx < 2 * GameWorld.Instance.PlayerShipHitBoxSize - GameWorld.Instance.Width)
+                Direct.Right = 0;
+            else if (Math.Abs(dx) == 0)
+                return;
+            else if (Math.Abs(dx) < GameWorld.Instance.Width / 2)
+                Direct.Right = dx / Math.Abs(dx); // sign of dy    { -1, 1 } 
+            else
+                Direct.Right = -dx / Math.Abs(dx); // opposite sign of dy { 1, -1 } 
+            
+                                // This is merely to handle that case where the algorithm would 
                                   // place both in the components of the direction to 0. 
         }
 
@@ -122,7 +140,7 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public int Speed { get; set; }
         public bool ToShoot { get; set; }
-        public Direction ShootDirection { get; set; }
+        public Direction ShootDirection { get; set; } // here!
         public Direction Direct { get; set; }
         public bool IsInCheatMode = false;
         public PlayerShip()
@@ -196,7 +214,11 @@ namespace ShipBattlesModel
                 return d;
         }
 
-        public override string Serialize() // Make is a single String
+        /// <summary>
+        /// Compiles `PlayerShip` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
+        public override string Serialize()
         {
             string serial = "";
             serial += Convert.ToString(Loc.Y) + ",";
@@ -208,7 +230,11 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Lives);
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `PlayerShip` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -258,6 +284,11 @@ namespace ShipBattlesModel
             HitBoxSize = 30;
             ImageFilepath = "Images/SpaceStation.png";
         }
+
+        /// <summary>
+        /// Compiles `Base` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -269,7 +300,11 @@ namespace ShipBattlesModel
             serial += "2";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `Base` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -309,6 +344,11 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/life.png";
         }
+
+        /// <summary>
+        /// Compiles `RepairKit` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -320,7 +360,11 @@ namespace ShipBattlesModel
             serial += "3";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `RepairKit` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -373,6 +417,11 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/asteroid.png";
         }
+
+        /// <summary>
+        /// Compiles `Asteroid` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -384,7 +433,11 @@ namespace ShipBattlesModel
             serial += "4";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `Asteroid` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -416,7 +469,6 @@ namespace ShipBattlesModel
         }
         public override GameObject GetHit()
         {
-            GameWorld.Instance.Objects.Remove(this);
             return this;
         }
     }
@@ -438,6 +490,11 @@ namespace ShipBattlesModel
             ImageFilepath = "Images/laser.png";
             Speed = 5;
         }
+
+        /// <summary>
+        /// Compiles `PlayerBullet` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -450,7 +507,11 @@ namespace ShipBattlesModel
             serial += Convert.ToString(numberOfMoves);
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `PlayerBullet` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -505,7 +566,12 @@ namespace ShipBattlesModel
             CollideBoxSize = 3;
             ImageFilepath = "Images/laser.png";
         }
-        public override string Serialize() // Make is a single String
+
+        /// <summary>
+        /// Compiles `Bullet` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
+        public override string Serialize()
         {
             string serial = "";
             serial += Convert.ToString(Loc.Y) + ",";
@@ -517,7 +583,11 @@ namespace ShipBattlesModel
             serial += Convert.ToString(numberOfMoves);
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `Bullet` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');

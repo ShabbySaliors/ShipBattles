@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Media;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ShipBattlesModel
 {
@@ -24,8 +26,8 @@ namespace ShipBattlesModel
                 {
                     GameWorld.Instance.Score = 0;
                     GameWorld.Instance.BulletSpeed = 2;
-                    GameWorld.Instance.Width = 1000; // 1000
-                    GameWorld.Instance.Height = 740; // 740
+                    GameWorld.Instance.Width = 1000; 
+                    GameWorld.Instance.Height = 740; 
                     PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
                     PlayerShip.Speed = PlayerSpeed;
                     GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
@@ -50,6 +52,15 @@ namespace ShipBattlesModel
                 GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
             GameWorld.Instance.Objects.Add(PlayerShip);
+            Task.Run(() =>
+            {
+                if (!PlayerShip.IsInCheatMode)
+                {
+                    PlayerShip.IsInCheatMode = true;
+                    Thread.Sleep(3000);
+                    PlayerShip.IsInCheatMode = false;
+                }
+            });
         }
 
         // Load Logic:
@@ -87,7 +98,6 @@ namespace ShipBattlesModel
                     GameObject hitObject = CheckForCollisions(obj);
                     if (hitObject != null)
                     {
-                        //explosionPlayer.Play();
                         hits.Add(hitObject);
                         hits.Add(obj); // remove the bullet too.
                     }
@@ -116,17 +126,10 @@ namespace ShipBattlesModel
         {
             foreach(GameObject hitObject in GameWorld.Instance.Objects)
             {
-                //if ((obj.Loc.Y % GameWorld.Instance.Height < hitObject.Loc.Y % GameWorld.Instance.Height + hitObject.CollideBoxSize
-                //        || obj.Loc.Y % GameWorld.Instance.Height < hitObject.Loc.Y % GameWorld.Instance.Height + hitObject.CollideBoxSize) // if lower than top
-                //        && obj.Loc.Y % GameWorld.Instance.Height > hitObject.Loc.Y % GameWorld.Instance.Height - hitObject.CollideBoxSize) // if higher than bottom
-                //    if (obj.Loc.X % GameWorld.Instance.Width < hitObject.Loc.X % GameWorld.Instance.Width + hitObject.CollideBoxSize // If 'lefter' than right
-                //            && obj.Loc.X % GameWorld.Instance.Width > hitObject.Loc.X % GameWorld.Instance.Width - hitObject.CollideBoxSize) // if 'righter/ than left
-                //        if(hitObject != obj)
-                //            return hitObject;
-                int dy = ((hitObject.Loc.Y + hitObject.CollideBoxSize) % GameWorld.Instance.Height) - (obj.Loc.Y % GameWorld.Instance.Height);
-                int dx = ((hitObject.Loc.X + hitObject.CollideBoxSize) % GameWorld.Instance.Width) - (obj.Loc.X % GameWorld.Instance.Width);
+                int dy = GameWorld.Instance.ModY(hitObject.Loc.Y + hitObject.CollideBoxSize) - GameWorld.Instance.ModY(obj.Loc.Y);
+                int dx = GameWorld.Instance.ModX(hitObject.Loc.X + hitObject.CollideBoxSize) - GameWorld.Instance.ModX(obj.Loc.X);
                 if ((dy < 2 * hitObject.CollideBoxSize && dy > 0) || dy < 2 * hitObject.CollideBoxSize - GameWorld.Instance.Height)
-                    if ((dx < 2 * hitObject.CollideBoxSize && dx > 0) || dx < 2 * hitObject.CollideBoxSize -GameWorld.Instance.Width)
+                    if ((dx < 2 * hitObject.CollideBoxSize && dx > 0) || dx < 2 * hitObject.CollideBoxSize - GameWorld.Instance.Width)
                         if (hitObject != obj)
                             return hitObject;
             }
@@ -169,6 +172,9 @@ namespace ShipBattlesModel
             return true;
         }
 
+        /// <summary>
+        /// Saves all current game state data into a text file `SaveFile.txt`
+        /// </summary>
         public void Save()
         {
             string saveFile = "SaveFile.txt";
@@ -187,6 +193,11 @@ namespace ShipBattlesModel
             stream.Close();
         }
 
+        /// <summary>
+        /// Loads all saved game state data from `SaveFile.txt` into the 
+        /// instance of a new game to give the appearance of seamless 
+        /// gameplay from the last saved state
+        /// </summary>
         public void Load()
         {
             string saveFile = "SaveFile.txt";
@@ -275,8 +286,9 @@ namespace ShipBattlesModel
 
     public class LevelTimer
     {
-        DateTime startingTime;
-        DateTime currentTime;
+        public DateTime startingTime;
+        public DateTime currentTime;
+        public int seconds;
         public LevelTimer()
         {
             startingTime = DateTime.Now;
@@ -287,7 +299,8 @@ namespace ShipBattlesModel
         }
         public int Seconds()
         {
-            return currentTime.Subtract(startingTime).Seconds;
+            seconds = currentTime.Subtract(startingTime).Seconds;
+            return seconds;
         }
         public string Write()
         {
