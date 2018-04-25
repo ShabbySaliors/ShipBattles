@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Media;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ShipBattlesModel
 {
@@ -50,6 +52,15 @@ namespace ShipBattlesModel
                 GameWorld.Instance.Objects.Add(new RepairKit() { Direct = MakeRandDirection(), Loc = MakeRandLocation(), Speed = AIShipSpeed });
             }
             GameWorld.Instance.Objects.Add(PlayerShip);
+            Task.Run(() =>
+            {
+                if (!PlayerShip.IsInCheatMode)
+                {
+                    PlayerShip.IsInCheatMode = true;
+                    Thread.Sleep(3000);
+                    PlayerShip.IsInCheatMode = false;
+                }
+            });
         }
 
         // Load Logic:
