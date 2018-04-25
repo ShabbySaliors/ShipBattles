@@ -154,7 +154,6 @@
   <ItemGroup>
     <Resource Include="Images\gameBackground.jpg" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Audio\enemyLaser.mp3" />
     <Content Include="Audio\explosion.wav" />

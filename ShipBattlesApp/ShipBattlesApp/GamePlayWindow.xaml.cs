@@ -1,27 +1,21 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-------------------------------------------------------
+//File:   GameplayWindow.xaml.cs
+//Desc:   This file contains essential gameplay code that
+//        the other files need in order to operate, such
+//        as a public Controller instance.
+//-------------------------------------------------------
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Media;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Microsoft.Win32;
-using System.Windows.Shapes;
 using ShipBattlesModel;
 using System.Windows.Threading;
 
 namespace ShipBattlesApp
 {
-    /// <summary>
-    /// Interaction logic for GamePlayWindow.xaml
-    /// </summary>
+    // Code for making the gameplay, well, play.
     public partial class GamePlayWindow : Window
     {
         private SoundPlayer playerLaserPlayer = new SoundPlayer("../../Audio/playerLaser.wav");
@@ -30,12 +24,16 @@ namespace ShipBattlesApp
         HighScore hs;
         string nameToShow;
 
+        // Begins constructing a game screen for a saved game.
         public GamePlayWindow(HighScore hstemp)
         {
             hs = hstemp;
             InitializeComponent();
         }
 
+        // Begins constructing a game screen for a new game.
+        // Also switches the underscores in 'name' with spaces
+        // to prep for displaying in the stackpanel.
         public GamePlayWindow(HighScore hstemp, string name)
         {
             hs = hstemp;
@@ -48,6 +46,8 @@ namespace ShipBattlesApp
             InitializeComponent();
         }
 
+        // Executes upon loading the MainWindow.
+        // Sets up the necessary data for gameplay to begin, then starts gameplay
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Name.Text = ctrl.Username;
@@ -63,6 +63,7 @@ namespace ShipBattlesApp
                 GameWorld.Instance.Level = 1;
                 ctrl.LoadWorld(GameWorld.Instance.Level);
             }
+            ctrl.Load();
             // Potentially put an if statement here which loads the level of the game. (Done)
             ctrl.MakePlottibles();
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
@@ -72,6 +73,11 @@ namespace ShipBattlesApp
             iterationTimer.Start();
         }
 
+        // Runs each time the timer fires.
+        // Calls the method that updates the position of all of the
+        // objects on the screen, save the player's ship.
+        // Then it saves the score (if it is a high-score) and stops
+        // gameplay if the game is over.
         private void Timer_Tick(object sender, EventArgs e)
         {
             ctrl.IterateGame();
@@ -86,11 +92,12 @@ namespace ShipBattlesApp
             ctrl.IsLevelOver();
             TimerBlock.Text = ctrl.LevelTimer.Write();
             PointsBlock.Text = "Points: " + GameWorld.Instance.Score.ToString();
-            LivesBlock.Text = "Lives: " + ctrl.PlayerShip.Lives;
-            CoordinateBlock.Text = "Position/n " + Convert.ToString(ctrl.PlayerShip.Loc.X) + ", " +
-                Convert.ToString(ctrl.PlayerShip.Loc.Y);
+            PointsBlock.Text = "Score: " + GameWorld.Instance.Score.ToString();
+            LivesBlock.Text = "Hitpoints: " + ctrl.PlayerShip.Lives;
         }
 
+        // Updates the position of all of the objects on the screen,
+        // save the player's ship.
         private void PlotObject(GameObject obj)
         {
             Image newImage = new Image();
@@ -99,7 +106,7 @@ namespace ShipBattlesApp
             newImage.Height = 2 * obj.CollideBoxSize + 5;
             GameBoardCanvas.Children.Add(newImage);
             // newImage.MouseDown += Img_MouseDown;
-            // Here we must consider the possibility that the images move instead of all being replotted every time. 
+            // Here we must consider the possibility that the images move instead of all being replotted every time.
             // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on?
             if (obj == ctrl.PlayerShip)
             {
@@ -115,9 +122,16 @@ namespace ShipBattlesApp
             //Canvas.SetTop(newImage, obj.Loc.Y - newImage.Height / 2);
         }
 
-        // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the 
+        // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the
         // WASD keys are being pressed, and then stop moving yet still shoot while the keys are not being depressed.
-        // The first solution which comes to mind is creating a variable witin
+        // The first solution which comes to mind is creating a variable within...
+
+        // Does various things that depend on what key is pressed.
+        // If a key in WASD is pressed, it moves the ship up, left, down, or right
+        // (in reality, it moves everything but the ship in the opposite direction)
+        // Q pauses/unpauses the game as well as saves it.
+        // C enables Cheat Mode.
+        // Space fires the ship's GBG (green ball gun).
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W) ctrl.PlayerShip.Direct.Up = -1;
@@ -126,8 +140,11 @@ namespace ShipBattlesApp
             else if (e.Key == Key.D) ctrl.PlayerShip.Direct.Right = 1;
             else if (e.Key == Key.Space)
             {
-                playerLaserPlayer.Play();
-                ctrl.PlayerShip.ToShoot = true;
+                if (!ctrl.IsGameOver())
+                {
+                    playerLaserPlayer.Play();
+                    ctrl.PlayerShip.ToShoot = true;
+                }
             }
             else if (e.Key == Key.C)
             {
@@ -143,7 +160,6 @@ namespace ShipBattlesApp
                     if (iterationTimer.IsEnabled)
                     {
                         iterationTimer.Stop();
-                        //ctrl.Save();
                     }
                     else if (!iterationTimer.IsEnabled)
                     {
@@ -153,14 +169,17 @@ namespace ShipBattlesApp
             }
         }
 
+        // This does something. Jeremiah, Rusty, HELP!
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W || e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 0;
             else if (e.Key == Key.A || e.Key == Key.D) ctrl.PlayerShip.Direct.Right = 0;
         }
 
-        // Another problem is that I need to center the coordinate of the picture and then rotate the picture with 
+        // Another problem is that I need to center the coordinate of the picture and then rotate the picture with
         // respect to that coordinate according to the direction of the object.
+
+        // Ends the game when the game screen is closed.
         private void Window_Closed(object sender, EventArgs e)
         {
             if (iterationTimer.IsEnabled) iterationTimer.Stop();

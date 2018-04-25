@@ -1,43 +1,36 @@
-﻿using System;
+﻿//---------------------------------------------------------------
+//File:   MainWindow.xaml.cs
+//Desc:   This file contains the necessary code to show
+//        every screen available, starting with the title screen.
+//---------------------------------------------------------------
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 using ShipBattlesModel;
 using System.Media;
 
 namespace ShipBattlesApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    // Contains code for summoning the various screens in the game.
+    // It summons the Title Screen first by default.
     public partial class MainWindow : Window
     {
-
         private SoundPlayer backgroundMusicPlayer = new SoundPlayer("../../Audio/MystOnTheMoor.wav");
-        public enum GameMode { Easy, Medium, Hard }
-        GameMode gameMode = new GameMode();
-        ShipBattlesModel.HighScore hs = new ShipBattlesModel.HighScore();
+        HighScore hs = new HighScore();
         Button oldBtn;
         Button btn;
 
+        // This is for something. Jeremiah, Rusty, HELP!
         private void FrameworkElement_Loaded(object sender, RoutedEventArgs e)
         {
 
         }
 
-        // This event executes upon loading the MainWindow
+        // Executes upon loading the MainWindow.
+        // It sets the default difficulty to Easy.
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             backgroundMusicPlayer.PlayLooping();
@@ -45,53 +38,40 @@ namespace ShipBattlesApp
             this.MinWidth = 1440.0;
             this.MinHeight = 900.0;
             btnEasy.Background = new SolidColorBrush(Colors.Green);
-            gameMode = GameMode.Easy;
             hs.CheckHighScoresFile(false);
             hs.LoadHighScores(false);
             oldBtn = btnEasy;
         }
 
+        // Initializes the component. What more could you ask for?
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void btnHard_Click(object sender, RoutedEventArgs e)
+        // Handles all three difficulty buttons.
+        // If a non-highlighted diff. button is clicked, it changes the difficulty
+        // and highlights the selected button.
+        private void btnDiff_Click(object sender, RoutedEventArgs e)
         {
             oldBtn.Background = new SolidColorBrush(Colors.LightGray);
             btn = (Button)sender;
             btn.Background = new SolidColorBrush(Colors.Green);
             oldBtn = btn;
-            GameWorld.Instance.Level = 6;
-            btnStart_Click(sender, e);
+            if (btn == btnEasy) GameWorld.Instance.Level = 1;
+            else if (btn == btnMed) GameWorld.Instance.Level = 3;
+            else if (btn == btnHard) GameWorld.Instance.Level = 6;
         }
 
-        private void btnEasy_Click(object sender, RoutedEventArgs e)
-        {
-            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
-            btn = (Button)sender;
-            btn.Background = new SolidColorBrush(Colors.Green);
-            oldBtn = btn;
-            GameWorld.Instance.Level = 1;
-            btnStart_Click(sender, e);
-        }
-        private void btnMed_Click(object sender, RoutedEventArgs e)
-        {
-            oldBtn.Background = new SolidColorBrush(Colors.LightGray);
-            btn = (Button)sender;
-            btn.Background = new SolidColorBrush(Colors.Green);
-            oldBtn = btn;
-            GameWorld.Instance.Level = 3;
-            btnStart_Click(sender, e);
-        }
-
+        // If there is nothing in the username box, it shows an error window saying that
+        // there is no username and does not start a new game.
+        // Otherwise, deletes the save file, if it exists, and starts a new game.
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             string tempName = nameBox.Text;
             string name = "";
-            nameBox.Text = "";
             List<int> indexList = new List<int> { };
-            if (tempName == "")
+            if (nameBox.Text == "")
             {
                 TextBox noName = new TextBox()
                 {
@@ -131,6 +111,7 @@ namespace ShipBattlesApp
             gpwindow.Show();
         }
 
+        // Opens the About screen. That's 'about' it.
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
             AboutWindow aboutWindow = new AboutWindow();
@@ -143,6 +124,8 @@ namespace ShipBattlesApp
             helpWindow.Show();
         }
 
+        // Opens the High Scores screen and gives it the necessary data
+        // to load the high-scores.
         private void btnHighScore_Click(object sender, RoutedEventArgs e)
         {
             // from https://stackoverflow.com/questions/11133947/how-to-open-second-window-from-first-window-in-wpf
@@ -151,10 +134,33 @@ namespace ShipBattlesApp
             hswindow.Show();
         }
 
+        // Checks to see if there is a save file.
+        // If there is, it loads the save file and starts a game with it.
+        // Otherwise, it shows an error window saying that there is no save file to load.
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             if (!File.Exists("SaveFile.txt"))
             {
+                TextBox noSaveFile = new TextBox()
+                {
+                    Margin = new Thickness(40, 0, 40, 0),
+                    Text = "There is no save file.",
+                    TextAlignment = TextAlignment.Center,
+                    FontSize = 70,
+                    FontWeight = FontWeights.ExtraBold,
+                    Foreground = Brushes.Green,
+                };
+                noSaveFile.IsEnabled = false;
+
+                Window noSaveWind = new Window()
+                {
+                    Title = "There is no save file.",
+                    Height = 150,
+                    Width = 1000,
+                    Visibility = Visibility.Visible,
+                    Name = "noSaveWind",
+                    Content = noSaveFile
+                };
                 GameWorld.Instance.LoadedGame = false;
                 e.Handled = false;
                 return;
@@ -165,6 +171,9 @@ namespace ShipBattlesApp
             gpwindow.Show();
         }
 
+        // Checks to see if the key that was pressed is a letter or a space.
+        // If the key is neither, the event handler stops the key's corresponding character
+        // from being entered into the username textbox.
         private void nameBox_KeyDown(object sender, KeyEventArgs e)
         {
             List<string> list = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
