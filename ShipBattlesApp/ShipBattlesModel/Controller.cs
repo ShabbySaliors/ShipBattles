@@ -28,8 +28,8 @@ namespace ShipBattlesModel
                 {
                     GameWorld.Instance.Score = 0;
                     GameWorld.Instance.BulletSpeed = 2;
-                    GameWorld.Instance.Width = 1000; // 1000
-                    GameWorld.Instance.Height = 740; // 740
+                    GameWorld.Instance.Width = 1000; 
+                    GameWorld.Instance.Height = 740; 
                     PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
                     PlayerShip.Speed = PlayerSpeed;
                     GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
@@ -127,10 +127,10 @@ namespace ShipBattlesModel
                 //            && obj.Loc.X % GameWorld.Instance.Width > hitObject.Loc.X % GameWorld.Instance.Width - hitObject.CollideBoxSize) // if 'righter/ than left
                 //        if(hitObject != obj)
                 //            return hitObject;
-                int dy = ((hitObject.Loc.Y + hitObject.CollideBoxSize) % GameWorld.Instance.Height) - (obj.Loc.Y % GameWorld.Instance.Height);
-                int dx = ((hitObject.Loc.X + hitObject.CollideBoxSize) % GameWorld.Instance.Width) - (obj.Loc.X % GameWorld.Instance.Width);
+                int dy = GameWorld.Instance.ModY(hitObject.Loc.Y + hitObject.CollideBoxSize) - GameWorld.Instance.ModY(obj.Loc.Y);
+                int dx = GameWorld.Instance.ModX(hitObject.Loc.X + hitObject.CollideBoxSize) - GameWorld.Instance.ModX(obj.Loc.X);
                 if ((dy < 2 * hitObject.CollideBoxSize && dy > 0) || dy < 2 * hitObject.CollideBoxSize - GameWorld.Instance.Height)
-                    if ((dx < 2 * hitObject.CollideBoxSize && dx > 0) || dx < 2 * hitObject.CollideBoxSize -GameWorld.Instance.Width)
+                    if ((dx < 2 * hitObject.CollideBoxSize && dx > 0) || dx < 2 * hitObject.CollideBoxSize - GameWorld.Instance.Width)
                         if (hitObject != obj)
                             return hitObject;
             }
@@ -280,8 +280,9 @@ namespace ShipBattlesModel
 
     public class LevelTimer
     {
-        DateTime startingTime;
-        DateTime currentTime;
+        public DateTime startingTime;
+        public DateTime currentTime;
+        public int seconds;
         public LevelTimer()
         {
             startingTime = DateTime.Now;
@@ -292,7 +293,8 @@ namespace ShipBattlesModel
         }
         public int Seconds()
         {
-            return currentTime.Subtract(startingTime).Seconds;
+            seconds = currentTime.Subtract(startingTime).Seconds;
+            return seconds;
         }
         public string Write()
         {

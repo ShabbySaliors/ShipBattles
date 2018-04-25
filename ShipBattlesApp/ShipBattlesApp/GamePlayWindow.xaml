@@ -16,6 +16,8 @@
             <TextBlock x:Name="LivesBlock" Text="" Height="50" Foreground="#FF46FF00" FontSize="20" FontWeight="Bold"/>
             <TextBlock x:Name="PointsBlock" Text="" Height="50" Foreground="#FF46FF00" FontSize="20" FontWeight="Bold"/>
             <TextBlock x:Name="GameOverBlock" Text="" Height="50" Foreground="Red" FontSize="20" FontWeight="Bold"/>
+            <TextBlock x:Name="CoordinateBlock" Text="" Height="50" Foreground="Red" FontSize="20" FontWeight="Bold"/>
+
         </StackPanel>
     </Grid>
 </Window>

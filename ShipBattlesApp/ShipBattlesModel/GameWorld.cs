@@ -38,15 +38,6 @@ namespace ShipBattlesModel
             // disicions. Whatever. I'll just put the World as the singleton and see what happens.
         }
 
-        //public List<GameObject> MakePlottibles()
-        //{
-        //    foreach(GameObject obj in Objects)
-        //    {
-        //        if((Math.Abs(obj.Loc.Y - PlayerShip.Loc.Y) < Height / 2) && (Math.Abs(obj.Loc.X - PlayerShip.Loc.X) < Width / 2))
-        //            Plottibles.Add(obj);
-        //    }
-        //    return Plottibles;
-        //}
 
         public Direction MakeRandomDirection ()
         {
@@ -63,6 +54,28 @@ namespace ShipBattlesModel
         {
             Location loc = new Location() { X = Rand.Next(Width), Y = Rand.Next(Height) };
             return loc;
+        }
+
+        public int ModY(int y)
+        {
+            if (y > 0)
+                return y % Height;
+            else
+            {
+                int mult = (y - (y % Height)) / Height - 1;
+                return (y - mult * Height) % Height;
+            }
+        }
+
+        public int ModX(int x)
+        {
+            if (x > 0)
+                return x % Width;
+            else
+            {
+                int mult = (x - (x % Width)) / Width - 1;
+                return (x - mult * Width) % Width;
+            }
         }
 
         private static GameWorld instance = new GameWorld();

@@ -87,6 +87,8 @@ namespace ShipBattlesApp
             TimerBlock.Text = ctrl.LevelTimer.Write();
             PointsBlock.Text = "Points: " + GameWorld.Instance.Score.ToString();
             LivesBlock.Text = "Lives: " + ctrl.PlayerShip.Lives;
+            CoordinateBlock.Text = "Position/n " + Convert.ToString(ctrl.PlayerShip.Loc.X) + ", " +
+                Convert.ToString(ctrl.PlayerShip.Loc.Y);
         }
 
         private void PlotObject(GameObject obj)

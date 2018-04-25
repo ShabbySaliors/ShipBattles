@@ -126,7 +126,7 @@ namespace ShipBattlesModel
         public override Location Loc { get; set; }
         public int Speed { get; set; }
         public bool ToShoot { get; set; }
-        public Direction ShootDirection { get; set; }
+        public Direction ShootDirection { get; set; } // here!
         public Direction Direct { get; set; }
         public bool IsInCheatMode = false;
         public PlayerShip()
