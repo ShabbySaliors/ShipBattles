@@ -115,13 +115,6 @@ namespace ShipBattlesModel
         {
             foreach(GameObject hitObject in GameWorld.Instance.Objects)
             {
-                //if ((obj.Loc.Y % GameWorld.Instance.Height < hitObject.Loc.Y % GameWorld.Instance.Height + hitObject.CollideBoxSize
-                //        || obj.Loc.Y % GameWorld.Instance.Height < hitObject.Loc.Y % GameWorld.Instance.Height + hitObject.CollideBoxSize) // if lower than top
-                //        && obj.Loc.Y % GameWorld.Instance.Height > hitObject.Loc.Y % GameWorld.Instance.Height - hitObject.CollideBoxSize) // if higher than bottom
-                //    if (obj.Loc.X % GameWorld.Instance.Width < hitObject.Loc.X % GameWorld.Instance.Width + hitObject.CollideBoxSize // If 'lefter' than right
-                //            && obj.Loc.X % GameWorld.Instance.Width > hitObject.Loc.X % GameWorld.Instance.Width - hitObject.CollideBoxSize) // if 'righter/ than left
-                //        if(hitObject != obj)
-                //            return hitObject;
                 int dy = GameWorld.Instance.ModY(hitObject.Loc.Y + hitObject.CollideBoxSize) - GameWorld.Instance.ModY(obj.Loc.Y);
                 int dx = GameWorld.Instance.ModX(hitObject.Loc.X + hitObject.CollideBoxSize) - GameWorld.Instance.ModX(obj.Loc.X);
                 if ((dy < 2 * hitObject.CollideBoxSize && dy > 0) || dy < 2 * hitObject.CollideBoxSize - GameWorld.Instance.Height)

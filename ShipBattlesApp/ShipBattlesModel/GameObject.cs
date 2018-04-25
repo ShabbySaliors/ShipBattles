@@ -68,21 +68,39 @@ namespace ShipBattlesModel
             // Here we would like to point the AIShip in the direction of the player's ship. 
             // To do this, we will check each case where the players coordinates are in different 
             // quadrents of the AIships origin. 
-            if(target.Y - GameWorld.Instance.PlayerShipHitBoxSize > Loc.Y)
-                Direct.Up = 1;
-            else if (target.Y + GameWorld.Instance.PlayerShipHitBoxSize < Loc.Y)
-                Direct.Up = -1;
-            else
+            int dy = GameWorld.Instance.ModY(target.Y + GameWorld.Instance.PlayerShipHitBoxSize) - GameWorld.Instance.ModY(Loc.Y);
+            int dx = GameWorld.Instance.ModX(target.X + GameWorld.Instance.PlayerShipHitBoxSize) - GameWorld.Instance.ModX(Loc.X);
+            if ((dy < 2 * GameWorld.Instance.PlayerShipHitBoxSize && dy >= 0) || dy < 2 * GameWorld.Instance.PlayerShipHitBoxSize - GameWorld.Instance.Height)
                 Direct.Up = 0;
-
-            if (target.X - GameWorld.Instance.PlayerShipHitBoxSize > Loc.X)
-                Direct.Right = 1;
-            else if (target.X + GameWorld.Instance.PlayerShipHitBoxSize < Loc.X)
-                Direct.Right = -1;
-            else if (Direct.Up != 0)
-                Direct.Right = 0;
+            else if (Math.Abs(dy) < GameWorld.Instance.Height / 2)
+                Direct.Up = dy / Math.Abs(dy); // sign of dy    { -1, 1 } 
             else
-                Direct.Right = 1; // This is merely to handle that case where the algorithm would 
+                Direct.Up = -dy / Math.Abs(dy); // opposite sign of dy { 1, -1 } 
+
+            if ((dx < 2 * GameWorld.Instance.PlayerShipHitBoxSize && dx >= 0) || dx < 2 * GameWorld.Instance.PlayerShipHitBoxSize - GameWorld.Instance.Width)
+                Direct.Right = 0;
+            else if (Math.Abs(dx) < GameWorld.Instance.Width / 2)
+                Direct.Right = dx / Math.Abs(dx); // sign of dy    { -1, 1 } 
+            else
+                Direct.Right = -dx / Math.Abs(dx); // opposite sign of dy { 1, -1 } 
+
+            //if (GameWorld.Instance.ModY(target.Y) - GameWorld.Instance.PlayerShipHitBoxSize > Loc.Y)
+            //    Direct.Up = 1;
+            //else if (target.Y + GameWorld.Instance.PlayerShipHitBoxSize < Loc.Y)
+            //    Direct.Up = -1;
+            //else
+            //    Direct.Up = 0;
+
+            //if (target.X - GameWorld.Instance.PlayerShipHitBoxSize > Loc.X)
+            //    Direct.Right = 1;
+            //else if (target.X + GameWorld.Instance.PlayerShipHitBoxSize < Loc.X)
+            //    Direct.Right = -1;
+            //else if (Direct.Up != 0)
+            //    Direct.Right = 0;
+            //else
+            //    Direct.Right = 1; 
+            
+                                // This is merely to handle that case where the algorithm would 
                                   // place both in the components of the direction to 0. 
         }
 
