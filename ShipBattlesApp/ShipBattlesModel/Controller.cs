@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Diagnostics;
-using System.Runtime.Serialization;
 using System.Media;
 
 namespace ShipBattlesModel
@@ -15,6 +10,7 @@ namespace ShipBattlesModel
         private SoundPlayer explosionPlayer = new SoundPlayer("../../Audio/explosion.wav");
         public string Username;
         public int level = 1;
+        private bool hasExplosionPlayed = false;
         public LevelTimer LevelTimer {get; set;}
         Random rand = new Random();
         public int AIShipSpeed = 1;
@@ -153,17 +149,19 @@ namespace ShipBattlesModel
 
         public bool IsGameOver()
         {
-            if (GameWorld.Instance.Objects.Contains(PlayerShip))
-                return false;
-            explosionPlayer.Play();
+            if (GameWorld.Instance.Objects.Contains(PlayerShip)) return false;
+            if (!hasExplosionPlayed)
+            {
+                explosionPlayer.Play();
+                hasExplosionPlayed = true;
+            } 
             return true;
         }
 
         public bool IsLevelOver()
         {
             foreach (GameObject obj in GameWorld.Instance.Objects)
-                if (obj is Base)
-                    return false;
+                if (obj is Base) return false;
             level += 1;
             GameWorld.Instance.Score += (int)(1000 / LevelTimer.Seconds() + PlayerShip.Lives * 3);
             PlayerShip.Lives = 1;
@@ -174,10 +172,7 @@ namespace ShipBattlesModel
         public void Save()
         {
             string saveFile = "SaveFile.txt";
-            if (File.Exists(saveFile))
-            {
-                File.Delete(saveFile);
-            }
+            if (File.Exists(saveFile)) File.Delete(saveFile);
             FileStream stream = File.Open(saveFile, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             StreamWriter writer = new StreamWriter(stream);
             writer.WriteLine(Username);

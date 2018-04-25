@@ -1,16 +1,20 @@
-﻿using System;
+﻿//-----------------------------------------
+//File:   HighScore.cs
+//Desc:   This file contains code to manage
+//        the high-scores in ShipBattles.
+//-----------------------------------------
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace ShipBattlesModel
 {
+    // Manages checking for a high-scores file (which is seperate from the save file),
+    // saving, and loading high-scores.
     public class HighScore
     {
         // testMode will trigger an alternate filename for unit tests
-        string filename = "highscores.txt";
+        private string filename = "highscores.txt";
         private List<Score> scoresList = new List<Score> { };
         public string Filename
         {
@@ -39,6 +43,7 @@ namespace ShipBattlesModel
                 var temp = File.Create(filename);
                 temp.Close();
             }
+            filename = "highscores.txt";
         }
 
         // Saves a high-score to an output file (it first creates the output file if it does not exist)
@@ -129,7 +134,8 @@ namespace ShipBattlesModel
         }
     }
 
-    // taken and changed from https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=netframework-4.7.1#System_Collections_Generic_List_1_Sort_System_Comparison__0
+    // A convenient class for sorting and managing high-scores.
+    // Taken and changed from https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=netframework-4.7.1#System_Collections_Generic_List_1_Sort_System_Comparison__0
     // (it is the first big code example)
     public class Score : IComparable<Score>
     {
