@@ -148,7 +148,7 @@ namespace ShipBattlesModel
             Lives = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/playerShip.png";
+            ImageFilepath = "Images/playerShip_up.png";
             ToShoot = false;
             ShootDirection = new Direction { Up = 1, Right = 0 };
         }
@@ -469,7 +469,6 @@ namespace ShipBattlesModel
         }
         public override GameObject GetHit()
         {
-            GameWorld.Instance.Objects.Remove(this);
             return this;
         }
     }

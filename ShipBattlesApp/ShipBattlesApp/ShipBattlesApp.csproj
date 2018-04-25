@@ -133,7 +133,6 @@
     <Resource Include="Images\background2.jpg" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\logo_hs.png" />
-    <Resource Include="Images\playerShip.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background2WithoutStar.jpg" />
@@ -163,6 +162,14 @@
     <Content Include="Audio\MystOnTheMoor.wav" />
     <Content Include="Audio\playerLaser.mp3" />
     <Content Include="Audio\playerLaser.wav" />
+    <Resource Include="Images\playerShip_downLeft.png" />
+    <Resource Include="Images\playerShip_downRight.png" />
+    <Resource Include="Images\playerShip_upLeft.png" />
+    <Resource Include="Images\playerShip_upRight.png" />
+    <Resource Include="Images\playerShip_down.png" />
+    <Resource Include="Images\playerShip_left.png" />
+    <Resource Include="Images\playerShip_right.png" />
+    <Resource Include="Images\playerShip_up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
