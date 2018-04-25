@@ -18,12 +18,13 @@ namespace ShipBattlesApp
     // It summons the Title Screen first by default.
     public partial class MainWindow : Window
     {
+        // `SoundPlayer` instance used to play background music upon startup of MainWindow
         private SoundPlayer backgroundMusicPlayer = new SoundPlayer("../../Audio/MystOnTheMoor.wav");
         HighScore hs = new HighScore();
         Button oldBtn;
         Button btn;
 
-        // This is for something. Jeremiah, Rusty, HELP!
+        // Auto-generated class for loading background elements
         private void FrameworkElement_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -118,6 +119,7 @@ namespace ShipBattlesApp
             aboutWindow.Show();
         }
 
+        // Opens the Help screen.
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             HelpWindow helpWindow = new HelpWindow();

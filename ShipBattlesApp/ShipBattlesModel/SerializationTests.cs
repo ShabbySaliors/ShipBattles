@@ -1,4 +1,9 @@
-﻿
+﻿//-------------------------------------------------------
+//File:   SerializationTests.cs
+//Desc:   This file contains testing logic to make sure
+//        objects are serialized/deserialized correctly
+//-------------------------------------------------------
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ShipBattlesModel
