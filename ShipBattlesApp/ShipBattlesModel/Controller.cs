@@ -63,12 +63,6 @@ namespace ShipBattlesModel
             });
         }
 
-        // Load Logic:
-        // Call the LoadWorld method once with lev = 1;
-        // Call it again with current level;
-        // Clear Gameworld.Object;
-        // Populate Gameworld.Objects with your info from the file
-
         public List<GameObject> MakePlottibles()
         {
             GameWorld.Instance.Plottibles.Clear();
@@ -184,6 +178,7 @@ namespace ShipBattlesModel
             writer.WriteLine(Username);
             writer.WriteLine(Convert.ToString(level));
             writer.WriteLine(Convert.ToString(GameWorld.Instance.Score));
+            writer.WriteLine(Convert.ToString(LevelTimer.currentTime.Subtract(LevelTimer.startingTime)));
             foreach (GameObject gameObject in GameWorld.Instance.Objects)
             {
                 string stringObject = gameObject.Serialize();
@@ -210,6 +205,10 @@ namespace ShipBattlesModel
                     level = Convert.ToInt32(reader.ReadLine());
                     LoadWorld(level);
                     GameWorld.Instance.Score = Convert.ToInt32(reader.ReadLine());
+                    // https://msdn.microsoft.com/en-us/library/se73z7b9(v=vs.110).aspx
+                    LevelTimer.startingTime = DateTime.Now.Subtract(TimeSpan.Parse(reader.ReadLine()));
+                    LevelTimer.Update();
+                    LevelTimer.Seconds();
                     GameWorld.Instance.Objects.Clear();
                     string nextObj = reader.ReadLine();
                     while (nextObj != null)
