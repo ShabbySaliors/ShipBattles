@@ -87,7 +87,6 @@ namespace ShipBattlesModel
                     GameObject hitObject = CheckForCollisions(obj);
                     if (hitObject != null)
                     {
-                        //explosionPlayer.Play();
                         hits.Add(hitObject);
                         hits.Add(obj); // remove the bullet too.
                     }
@@ -169,6 +168,9 @@ namespace ShipBattlesModel
             return true;
         }
 
+        /// <summary>
+        /// Saves all current game state data into a text file `SaveFile.txt`
+        /// </summary>
         public void Save()
         {
             string saveFile = "SaveFile.txt";
@@ -187,6 +189,11 @@ namespace ShipBattlesModel
             stream.Close();
         }
 
+        /// <summary>
+        /// Loads all saved game state data from `SaveFile.txt` into the 
+        /// instance of a new game to give the appearance of seamless 
+        /// gameplay from the last saved state
+        /// </summary>
         public void Load()
         {
             string saveFile = "SaveFile.txt";
