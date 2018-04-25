@@ -63,8 +63,6 @@ namespace ShipBattlesApp
                 GameWorld.Instance.Level = 1;
                 ctrl.LoadWorld(GameWorld.Instance.Level);
             }
-            ctrl.Load();
-            // Potentially put an if statement here which loads the level of the game. (Done)
             ctrl.MakePlottibles();
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
             foreach (GameObject obj in GameWorld.Instance.Plottibles) PlotObject(obj);
