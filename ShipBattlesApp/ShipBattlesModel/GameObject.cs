@@ -469,7 +469,6 @@ namespace ShipBattlesModel
         }
         public override GameObject GetHit()
         {
-            GameWorld.Instance.Objects.Remove(this);
             return this;
         }
     }
