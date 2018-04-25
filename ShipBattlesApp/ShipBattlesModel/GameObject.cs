@@ -2,6 +2,9 @@
 
 namespace ShipBattlesModel
 {
+    /// <summary>
+    /// Parent class for all in-game objects
+    /// </summary>
     public abstract class GameObject : ISerializible
     {
         abstract public string ImageFilepath { get; set; }
@@ -29,6 +32,11 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/alien.png";
         }
+        
+        /// <summary>
+        /// Compiles `AIShip` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make it a single String
         {
             string serial = "";
@@ -40,7 +48,11 @@ namespace ShipBattlesModel
             serial += "1";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `AIShip` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -202,7 +214,11 @@ namespace ShipBattlesModel
                 return d;
         }
 
-        public override string Serialize() // Make is a single String
+        /// <summary>
+        /// Compiles `PlayerShip` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
+        public override string Serialize()
         {
             string serial = "";
             serial += Convert.ToString(Loc.Y) + ",";
@@ -214,7 +230,11 @@ namespace ShipBattlesModel
             serial += Convert.ToString(Lives);
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `PlayerShip` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -264,6 +284,11 @@ namespace ShipBattlesModel
             HitBoxSize = 30;
             ImageFilepath = "Images/SpaceStation.png";
         }
+
+        /// <summary>
+        /// Compiles `Base` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -275,7 +300,11 @@ namespace ShipBattlesModel
             serial += "2";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `Base` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -315,6 +344,11 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/life.png";
         }
+
+        /// <summary>
+        /// Compiles `RepairKit` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -326,7 +360,11 @@ namespace ShipBattlesModel
             serial += "3";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `RepairKit` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -379,6 +417,11 @@ namespace ShipBattlesModel
             HitBoxSize = 10;
             ImageFilepath = "Images/asteroid.png";
         }
+
+        /// <summary>
+        /// Compiles `Asteroid` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -390,7 +433,11 @@ namespace ShipBattlesModel
             serial += "4";
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `Asteroid` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -444,6 +491,11 @@ namespace ShipBattlesModel
             ImageFilepath = "Images/laser.png";
             Speed = 5;
         }
+
+        /// <summary>
+        /// Compiles `PlayerBullet` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
         public override string Serialize() // Make is a single String
         {
             string serial = "";
@@ -456,7 +508,11 @@ namespace ShipBattlesModel
             serial += Convert.ToString(numberOfMoves);
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `PlayerBullet` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
@@ -511,7 +567,12 @@ namespace ShipBattlesModel
             CollideBoxSize = 3;
             ImageFilepath = "Images/laser.png";
         }
-        public override string Serialize() // Make is a single String
+
+        /// <summary>
+        /// Compiles `Bullet` components into a single string
+        /// </summary>
+        /// <returns>Comma-delineated string</returns>
+        public override string Serialize()
         {
             string serial = "";
             serial += Convert.ToString(Loc.Y) + ",";
@@ -523,7 +584,11 @@ namespace ShipBattlesModel
             serial += Convert.ToString(numberOfMoves);
             return serial;
         }
-
+        /// <summary>
+        /// Breaks apart a comma-delineated string and
+        /// sets the appropriate `Bullet` properties
+        /// </summary>
+        /// <param name="serial">Comma-delineated</param>
         public override void Deserialize(string serial)
         {
             string[] serialArray = serial.Split(',');
