@@ -109,9 +109,6 @@ namespace ShipBattlesApp
             newImage.Width = 2 * obj.CollideBoxSize + 5;
             newImage.Height = 2 * obj.CollideBoxSize + 5;
             GameBoardCanvas.Children.Add(newImage);
-            // newImage.MouseDown += Img_MouseDown;
-            // Here we must consider the possibility that the images move instead of all being replotted every time.
-            // What if they just moved up when the "s" key was pressed, down when the "W" key is pressed, and so on?
             if (obj == ctrl.PlayerShip)
             {
                 Canvas.SetLeft(newImage, (GameBoardCanvas.Width + GameBoardCanvas.Width % 2) / 2 - newImage.Width / 2);
@@ -121,14 +118,7 @@ namespace ShipBattlesApp
                 Canvas.SetLeft(newImage, (GameBoardCanvas.Width + GameBoardCanvas.Width % 2) / 2 + ctrl.PlayerShip.FindX_Dist(obj) - newImage.Width / 2);
                 Canvas.SetTop(newImage, (GameBoardCanvas.Height + GameBoardCanvas.Height % 2) / 2 + ctrl.PlayerShip.FindY_Dist(obj) - newImage.Height / 2);
             }
-
-            //Canvas.SetLeft(newImage, obj.Loc.X - newImage.Width / 2);
-            //Canvas.SetTop(newImage, obj.Loc.Y - newImage.Height / 2);
         }
-
-        // To handle the logic for moving the player's ship, I need to make sure that the ship will move while the
-        // WASD keys are being pressed, and then stop moving yet still shoot while the keys are not being depressed.
-        // The first solution which comes to mind is creating a variable within...
 
         // Does various things that depend on what key is pressed.
         // If a key in WASD is pressed, it moves the ship up, left, down, or right
@@ -225,6 +215,7 @@ namespace ShipBattlesApp
             }
         }
 
+        // Handles various events when a key is released. 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W || e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 0;
