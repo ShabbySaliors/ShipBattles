@@ -12,27 +12,36 @@ using System.Threading.Tasks;
 
 namespace ShipBattlesModel
 {
+    /// <summary>
+    /// The controller contains all the main logic for the game including the main game loop, IterateGame().
+    /// </summary>
     public class Controller
     {
-        private SoundPlayer explosionPlayer = new SoundPlayer("../../Audio/explosion.wav");
-        public string Username;
-        public int level = 1;
-        private bool hasExplosionPlayed = false;
-        public LevelTimer LevelTimer {get; set;}
-        Random rand = new Random();
-        public int AIShipSpeed = 1;
-        public PlayerShip PlayerShip { get; set; }
-        int PlayerSpeed = 3;
-        public List<GameObject> hits = new List<GameObject>();
+        private SoundPlayer explosionPlayer = new SoundPlayer("../../Audio/explosion.wav"); // the sound for the exposion.
+        public string Username;   // the username for highscores
+        public int level = 1;     // the initial level is 1. But this varaible increased later on.
+        private bool hasExplosionPlayed = false;  // I don't know.
+        public LevelTimer LevelTimer {get; set;}  // keeps track of how long the level has been happening
+        Random rand = new Random();               // A random variable for a bunch of random stuff
+        public int AIShipSpeed = 1;               // the speed of the AIShips. Placed here because at one time
+                                                  // we were concidering making it vary depending of levels. 
+        public PlayerShip PlayerShip { get; set; } // the player's ship.
+        int PlayerSpeed = 3;                        // speed of the player's ship
+        public List<GameObject> hits = new List<GameObject>(); // a list of objects which were calculated to 
+                                                               // have been hit during this iteration of the game.
+        /// <summary>
+        /// This method laods everything necessary into the GameWorld.Instance to make the game go. 
+        /// </summary>
+        /// <param name="lev"></param>
         public void LoadWorld(int lev)
         {
-
+            // if the level is 1, then the inital conditions are set.
             if(lev == 1)
                 {
                     GameWorld.Instance.Score = 0;
                     GameWorld.Instance.BulletSpeed = 2;
-                    GameWorld.Instance.Width = 1000; 
-                    GameWorld.Instance.Height = 740; 
+                    GameWorld.Instance.Width = 1200; 
+                    GameWorld.Instance.Height = 900; 
                     PlayerShip = new PlayerShip() { Loc = GetCenterLocation(), Direct = MakeRandDirection() };
                     PlayerShip.Speed = PlayerSpeed;
                     GameWorld.Instance.PlayerShipLocation = PlayerShip.Loc;
