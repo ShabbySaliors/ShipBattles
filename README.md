@@ -65,6 +65,6 @@ To Cheat:
 |Author | Time| 
 |-------|-----|
 | Zach | 29.83 |
-| Jeremiah | 39.00 |
-| Rusty | 32.00 |
+| Jeremiah | 45.58 |
+| Rusty | 37.00 |
 |Total  | 92.58|
