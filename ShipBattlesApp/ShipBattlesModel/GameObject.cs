@@ -7,25 +7,58 @@ namespace ShipBattlesModel
     /// </summary>
     public abstract class GameObject : ISerializible
     {
-        abstract public string ImageFilepath { get; set; }
-        abstract public int CollideBoxSize { get; set; }
-        abstract public int HitBoxSize { get; set; }
-        abstract public Location Loc { get; set; }
+        abstract public string ImageFilepath { get; set; } // a path for image
+        abstract public int CollideBoxSize { get; set; } // The size of half an edge of the box 
+                                                         // which is used for detecting collisions
+        abstract public int HitBoxSize { get; set; }    // size of half an edge of the bos which 
+                                                        // is used for detecting hits from a bullet.
+        abstract public Location Loc { get; set; }      // The location of the GameObject
+
+        /// <summary>
+        /// A method which is called in the main game loop on each WorldObject. The object then 
+        /// moves or shoots according to its own logic
+        /// </summary>
         abstract public void DoNextAction();
+
+        /// <summary>
+        /// Compiles all the necesary information about the object into a string so that it can 
+        /// later be accessed by the Deserialize(string serial) method
+        /// </summary>
+        /// <returns></returns>
         abstract public string Serialize();
+
+        /// <summary>
+        /// This method takes a string with information and the object uses that information 
+        /// to reset its properties and instance variables.
+        /// </summary>
+        /// <param name="serial"></param>
         abstract public void Deserialize(string serial);
+
+        /// <summary>
+        /// This method is called whenever a bullet hits the object. Usually the object is removed
+        /// from the GameWorld.Instance
+        /// </summary>
+        /// <returns></returns>
         abstract public GameObject GetHit();
     }
 
+    /// <summary>
+    /// The class of ailien ships.
+    /// </summary>
     public class AIShip: GameObject, ISerializible
     {
         public override string ImageFilepath { get; set; }
         public override int CollideBoxSize { get; set; }
         public override int HitBoxSize { get; set; }
-        private Random rand = GameWorld.Instance.Rand;
-        public override Location Loc { get; set; }
-        public int Speed { get; set; }
-        public Direction Direct { get; set; }
+        private Random rand = GameWorld.Instance.Rand;  // a random variable for the some AI operations
+        public override Location Loc { get; set; } 
+        public int Speed { get; set; }                  // An integer assinging the distance the ship moves
+                                                        // each time MOve() is called.
+        public Direction Direct { get; set; }           // The direction of movement.
+
+        /// <summary>
+        /// A constructor which assigns the imagepath, the HitBoxSize, and the CollideBoxSize
+        /// </summary>
         public AIShip()
         {
             CollideBoxSize = 20;
@@ -63,6 +96,12 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
+        /// <summary>
+        /// Here is the AI logic of the ship. 
+        ///     - 90% of the time, the ship will move
+        ///     - 5% of the time, the ship will turn
+        ///     - 5% of the time, the ship will shoot
+        /// </summary>
         public override void DoNextAction()
         {
             double r = rand.NextDouble();
@@ -74,12 +113,16 @@ namespace ShipBattlesModel
                 Shoot();
         }
 
+        /// <summary>
+        /// This logic is rather complicated to explain. The basic idea is to use mod math to 
+        /// get the relative placement of the players ship to the AIship.
+        /// We want to point the AIShip in the direction of the player's ship. 
+        /// To do this, we will check each case where the players coordinates are in different 
+        /// quadrents of the AIships origin and asign a direction accrodingly.
+        /// </summary>
         public void Turn()
         {
             Location target = GameWorld.Instance.PlayerShipLocation;
-            // Here we would like to point the AIShip in the direction of the player's ship. 
-            // To do this, we will check each case where the players coordinates are in different 
-            // quadrents of the AIships origin. 
             int dy = GameWorld.Instance.ModY(target.Y + GameWorld.Instance.PlayerShipHitBoxSize) - GameWorld.Instance.ModY(Loc.Y);
             int dx = GameWorld.Instance.ModX(target.X + GameWorld.Instance.PlayerShipHitBoxSize) - GameWorld.Instance.ModX(Loc.X);
             if ((dy < 2 * GameWorld.Instance.PlayerShipHitBoxSize && dy >= 0) || dy < 2 * GameWorld.Instance.PlayerShipHitBoxSize - GameWorld.Instance.Height)
@@ -87,7 +130,7 @@ namespace ShipBattlesModel
             else if (Math.Abs(dy) == 0)
                 return;
             else if (Math.Abs(dy) < GameWorld.Instance.Height / 2)
-                Direct.Up = dy / Math.Abs(dy); // sign of dy    { -1, 1 } 
+                Direct.Up = dy / Math.Abs(dy); // sign (+-) of dy    { -1, 1 } 
             else
                 Direct.Up = -dy / Math.Abs(dy); // opposite sign of dy { 1, -1 } 
 
@@ -96,20 +139,23 @@ namespace ShipBattlesModel
             else if (Math.Abs(dx) == 0)
                 return;
             else if (Math.Abs(dx) < GameWorld.Instance.Width / 2)
-                Direct.Right = dx / Math.Abs(dx); // sign of dy    { -1, 1 } 
+                Direct.Right = dx / Math.Abs(dx); // sign (+-) of dx    { -1, 1 } 
             else
-                Direct.Right = -dx / Math.Abs(dx); // opposite sign of dy { 1, -1 } 
-            
-                                // This is merely to handle that case where the algorithm would 
-                                  // place both in the components of the direction to 0. 
+                Direct.Right = -dx / Math.Abs(dx); // opposite sign of dx { 1, -1 } 
         }
 
+        /// <summary>
+        /// This method takes moves the AIship one graph unit in its Direct (direction).
+        /// </summary>
         public void Move()
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
-
+        /// <summary>
+        /// Creates a bullet that heads in the direction that the ship is heading. 
+        /// </summary>
+        /// <returns></returns>
         public Bullet Shoot()
         {
             Bullet b = new Bullet();
@@ -122,6 +168,13 @@ namespace ShipBattlesModel
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
+        
+
+        /// <summary>
+        /// This method is called whenever the ship gets hit. It removes the ship from the game
+        /// and increases the score by 1 point.
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
         {
             GameWorld.Instance.Score += 1;
@@ -130,29 +183,41 @@ namespace ShipBattlesModel
         }
     }
 
+    /// <summary>
+    /// The class of the player's ship which he controls to win the game.
+    /// </summary>
     public class PlayerShip : GameObject, ISerializible
     {
-        public int Lives { get; set; }
+        public int Lives { get; set; }                  // The number of lives that the player has left. 
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
-        private Random rand = GameWorld.Instance.Rand;
         public override Location Loc { get; set; }
         public int Speed { get; set; }
-        public bool ToShoot { get; set; }
-        public Direction ShootDirection { get; set; } // here!
+        public bool ToShoot { get; set; }               // In the DoNextAction method, we check if the player is supposed to shoot. 
+        public Direction ShootDirection { get; set; }   // This is the direction which the bullets shoot. 
+                                                        // It had to be different from the player's moving
+                                                        // direction because the ship is not always moving 
+                                                        // and therefore does not always have a non-zero direction.
+                                                        // This direction is passed onto the bullet. We would 
+                                                        // not want the bullet to just sit there.
         public Direction Direct { get; set; }
-        public bool IsInCheatMode = false;
+        public bool IsInCheatMode = false;              // This bool lets the controler know whether the ship is destructible.
         public PlayerShip()
         {
             Lives = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
             ImageFilepath = "Images/playerShip.png";
-            ToShoot = false;
-            ShootDirection = new Direction { Up = 1, Right = 0 };
+            ToShoot = false;                            // We set ToShoot to false initially so that the ship 
+                                                        // does not shoot whenever the game starts up.
+            ShootDirection = new Direction { Up = 1, Right = 0 }; // the initial direction is up for the bullets
         }
-
+        /// <summary>
+        /// This method is called by the contoller at the begining of each level. The ship is randomly placed.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public PlayerShip Callibrate(int level)
         {
             Loc = GameWorld.Instance.MakeRandomLocation();
@@ -160,6 +225,11 @@ namespace ShipBattlesModel
             Speed = 2;
             return this;
         }
+
+        /// <summary>
+        /// Called by the main game loop upon each iteration, this method performs what action 
+        /// the user has selected to be next. 
+        /// </summary>
         public override void DoNextAction()
         {
             Move();
@@ -171,15 +241,24 @@ namespace ShipBattlesModel
             if(ToShoot)
             {
                  Shoot();
-                ToShoot = false;
+                ToShoot = false; // so that we aren't shooting continually.
             }
         }
+        
+        /// <summary>
+        /// This method moves the object one graph unit in the direction of Direct.
+        /// </summary>
         private void Move()
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
 
+        /// <summary>
+        /// Creates a PlayerBullet (which moves faster than other bullets) and sets it in the direction
+        /// which the Playership is pointing.
+        /// </summary>
+        /// <returns></returns>
         public PlayerBullet Shoot()
         {
             PlayerBullet b = new PlayerBullet();
@@ -192,6 +271,12 @@ namespace ShipBattlesModel
             GameWorld.Instance.Objects.Add(b);
             return b;
         }
+
+        /// <summary>
+        /// This method gets some object relative position to the playership in the y direction. 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int FindY_Dist(GameObject obj)
         {
             int d = obj.Loc.Y % GameWorld.Instance.Height - Loc.Y % GameWorld.Instance.Height;
@@ -203,6 +288,11 @@ namespace ShipBattlesModel
                 return d;
         }
 
+        /// <summary>
+        /// This method gets some object relative position to the playership in the x direction. 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public int FindX_Dist(GameObject obj)
         {
             int d = obj.Loc.X % GameWorld.Instance.Width - Loc.X % GameWorld.Instance.Width;
@@ -246,11 +336,12 @@ namespace ShipBattlesModel
             Lives = Convert.ToInt32(serialArray[6]);
         }
 
-        //private static PlayerShip instance = new PlayerShip();
-        //public static PlayerShip Instance
-        //{
-        //    get { return instance; }
-        //}
+        /// <summary>
+        /// Called whenever a bullet or an asteroid collides with the playership, this method
+        /// decreases the number of lives. If the player has only one life left, then it is 
+        /// removed from the game and the game is over.
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
         {
             if (!IsInCheatMode)
@@ -269,15 +360,21 @@ namespace ShipBattlesModel
         }
     }
 
+    /// <summary>
+    /// Class for the Bases, which are the object of the game.
+    /// </summary>
     public class Base: GameObject, ISerializible
     {
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
-        private Random rand = GameWorld.Instance.Rand;
         public override Location Loc { get; set; }
         public double Speed { get; set; }
         public Direction Direct { get; set; }
+
+        /// <summary>
+        /// Sets the image, the collidebox size and the hitbox size for the Base()
+        /// </summary>
         public Base()
         {
             CollideBoxSize = 40;
@@ -314,10 +411,19 @@ namespace ShipBattlesModel
             CollideBoxSize = Convert.ToInt32(serialArray[3]);
         }
 
+        /// <summary>
+        /// Bases are passive. But I still need the method for how the main game loop works
+        /// </summary>
         public override void DoNextAction()
         {
             
         }
+
+        /// <summary>
+        /// If the base is hit by a bullet, then the CollideBoxSize shrinks. When the size 
+        /// reaches a certain minimum, the based is destroyed and removed from the game.
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
          {
             CollideBoxSize -= 4;
@@ -328,15 +434,23 @@ namespace ShipBattlesModel
         }
     }
 
+    /// <summary>
+    /// The purpose of the repairkit is to give the player some extra lives. When the player collides with 
+    /// one of these, its lives increase by one and the repairKit disapears.
+    /// </summary>
     public class RepairKit: GameObject, ISerializible
     {
         public override string ImageFilepath { get; set; }
         public override int HitBoxSize { get; set; }
         public override int CollideBoxSize { get; set; }
-        private Random rand = GameWorld.Instance.Rand;
+        private Random rand = GameWorld.Instance.Rand;      // To make it wander.
         public override Location Loc { get; set; }
         public int Speed { get; set; }
         public Direction Direct { get; set; }
+
+        /// <summary>
+        /// Sets the speed, collideBoxSize, HitBoxSize and the Image.
+        /// </summary>
         public RepairKit()
         {
             Speed = 1;
@@ -375,6 +489,10 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
+        /// <summary>
+        /// Causes the repairkit to walk randomly on the GameWorld plain. 
+        /// 5% of the time, the repairkit changes its direction of movement. 
+        /// </summary>
         public override void DoNextAction()
         {
             double r = rand.NextDouble();
@@ -384,16 +502,27 @@ namespace ShipBattlesModel
                 Move();
         }
 
+        /// <summary>
+        /// Selects a random direction.
+        /// </summary>
         public void Turn()
         {
             Direct = GameWorld.Instance.MakeRandomDirection();
         }
 
+        /// <summary>
+        /// Moves the object one graph unit in its direction of travel.
+        /// </summary>
         public void Move()
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
+
+        /// <summary>
+        /// if a repairkit is shot, it will be removed from the game.
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
         {
             GameWorld.Instance.Objects.Remove(this);
@@ -401,6 +530,10 @@ namespace ShipBattlesModel
         }
     }
 
+    /// <summary>
+    /// If the player collides with an asteroid, he is destroyed and the game is over.
+    /// Asteroids are indestrucitble (unless hit by the player).
+    /// </summary>
     public class Asteroid: GameObject, ISerializible
     {
         public override string ImageFilepath { get; set; }
@@ -448,6 +581,9 @@ namespace ShipBattlesModel
             Direct.Right = Convert.ToInt32(serialArray[4]);
         }
 
+        /// <summary>
+        /// selects a random direction
+        /// </summary>
         public override void DoNextAction()
         {
             double r = rand.NextDouble();
@@ -457,22 +593,36 @@ namespace ShipBattlesModel
                 Move();
         }
 
+        /// <summary>
+        /// Turns a random direction
+        /// </summary>
         public void Turn()
         {
             Direct = GameWorld.Instance.MakeRandomDirection();
         }
 
+        /// <summary>
+        /// Moves the object one graph unit in the direction of its motion.
+        /// </summary>
         public void Move()
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
+
+        /// <summary>
+        /// If an asteroid is hit, only the bullet is destroyed.
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
         {
             return this;
         }
     }
 
+    /// <summary>
+    /// The player bullet has its own class becuase it has a different speed than the other bullets.
+    /// </summary>
     public class PlayerBullet: GameObject, ISerializible
     {
         public int numberOfMoves = 0;
@@ -523,6 +673,9 @@ namespace ShipBattlesModel
             numberOfMoves = Convert.ToInt32(serialArray[6]);
         }
 
+        /// <summary>
+        /// Moves the bullet if it has not yet exhausted its moves. If it has, the method destroyes the bullet.
+        /// </summary>
         public override void DoNextAction()
         {
             if (numberOfMoves < GameWorld.Instance.Height / Speed / 2)
@@ -535,11 +688,20 @@ namespace ShipBattlesModel
                 GameWorld.Instance.Objects.Remove(this);
             }
         }
+
+        /// <summary>
+        /// Moves the object one graph unit in the direction of its travel.
+        /// </summary>
         public void Move()
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
+
+        /// <summary>
+        /// If hit, it is removed
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
         {
             GameWorld.Instance.Objects.Remove(this);
@@ -548,6 +710,9 @@ namespace ShipBattlesModel
 
     }
 
+    /// <summary>
+    /// The class of bullets produced by AIships.
+    /// </summary>
     public class Bullet: GameObject, ISerializible
     {
         public int numberOfMoves = 0;
@@ -599,6 +764,10 @@ namespace ShipBattlesModel
             numberOfMoves = Convert.ToInt32(serialArray[6]);
         }
 
+        /// <summary>
+        /// If the bullet has not exhausted its moves, it moves.
+        /// Else, the bullet is destroyed
+        /// </summary>
         public override void DoNextAction()
         {
             if (numberOfMoves < GameWorld.Instance.Height / Speed / 2)
@@ -610,11 +779,19 @@ namespace ShipBattlesModel
                 GameWorld.Instance.Objects.Remove(this);
         }
 
+        /// <summary>
+        /// Moves the bullet 2 graph units
+        /// </summary>
         private void Move()
         {
             Loc.X += Speed * Direct.Right;
             Loc.Y += Speed * Direct.Up;
         }
+
+        /// <summary>
+        /// If hit, the bullet is destroyed
+        /// </summary>
+        /// <returns></returns>
         public override GameObject GetHit()
         {
             GameWorld.Instance.Objects.Remove(this);
@@ -622,12 +799,19 @@ namespace ShipBattlesModel
         }
     }
 
+    /// <summary>
+    /// This is the class which can contain a coordinate for various purposes. 
+    /// Used primarily as Properties of GameObjects to place the data of where they are at.
+    /// </summary>
     public class Location
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; set; } // the positon on the x-axis
+        public int Y { get; set; } // the position on the y-axis
     }
 
+    /// <summary>
+    /// Contains the data for direcion of movement. 
+    /// </summary>
     public class Direction
     {
         public int Up { get; set; } // -1, 0, 1
