@@ -31,6 +31,7 @@ namespace ShipBattlesModel
                                                                // have been hit during this iteration of the game.
         /// <summary>
         /// This method laods everything necessary into the GameWorld.Instance to make the game go. 
+        /// It loads more object for higher levels.
         /// </summary>
         /// <param name="lev"></param>
         public void LoadWorld(int lev)
@@ -76,19 +77,26 @@ namespace ShipBattlesModel
                 }
             });
         }
-
+         
+        /// <summary>
+        /// This method adds all the object which should be added into a list.
+        /// It used to distinguish more, but now it just adds them all. HOwever, it would have
+        /// borken code to delete the method. 
+        /// </summary>
+        /// <returns></returns>
         public List<GameObject> MakePlottibles()
         {
             GameWorld.Instance.Plottibles.Clear();
             foreach (GameObject obj in GameWorld.Instance.Objects)
             {
-                //if ((Math.Abs(obj.Loc.Y % GameWorld.Instance.Height - PlayerShip.Loc.Y % GameWorld.Instance.Height) < GameWorld.Instance.Height / 2)
-                //        && (Math.Abs(obj.Loc.X % GameWorld.Instance.Width - PlayerShip.Loc.X % GameWorld.Instance.Width) < GameWorld.Instance.Width / 2))
-                //    GameWorld.Instance.Plottibles.Add(obj);
                 GameWorld.Instance.Plottibles.Add(obj);
             }
             return GameWorld.Instance.Plottibles;
         }
+
+        /// <summary>
+        /// The main game loop
+        /// </summary>
         public void IterateGame()
         {
             int i = 0;
@@ -130,6 +138,12 @@ namespace ShipBattlesModel
             GameWorld.Instance.Plottibles = MakePlottibles();
         }
 
+
+        /// <summary>
+        /// Checks for collisions with an object and returns the other object colliding with it.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         private GameObject CheckForCollisions(GameObject obj)
         {
             foreach(GameObject hitObject in GameWorld.Instance.Objects)
@@ -144,6 +158,10 @@ namespace ShipBattlesModel
             return null;
         }
 
+        /// <summary>
+        /// This increases the lives if the player collides with a repairkit and decreases the lives if
+        /// the player collides with an asteroid
+        /// </summary>
         public void DoPlayerCollisions()
         {
             GameObject hitter = CheckForCollisions(PlayerShip);
@@ -158,6 +176,10 @@ namespace ShipBattlesModel
             }
         }
 
+        /// <summary>
+        /// checks to see if the game is over and if it is, plays a sound.
+        /// </summary>
+        /// <returns></returns>
         public bool IsGameOver()
         {
             if (GameWorld.Instance.Objects.Contains(PlayerShip)) return false;
@@ -169,6 +191,10 @@ namespace ShipBattlesModel
             return true;
         }
 
+        /// <summary>
+        /// Checks see if the level is over and if it is, starts the next one.
+        /// </summary>
+        /// <returns></returns>
         public bool IsLevelOver()
         {
             foreach (GameObject obj in GameWorld.Instance.Objects)
@@ -278,16 +304,28 @@ namespace ShipBattlesModel
             }
         }
 
+        /// <summary>
+        /// returns a random direction
+        /// </summary>
+        /// <returns></returns>
         public Direction MakeRandDirection()
         {
             return new Direction() { Up = (rand.Next(3) - 1), Right = (rand.Next(3) - 1) };
         }
 
+        /// <summary>
+        /// Makes a random location
+        /// </summary>
+        /// <returns></returns>
         public Location MakeRandLocation()
         {
             return new Location() { X = rand.Next(GameWorld.Instance.Width), Y = rand.Next(GameWorld.Instance.Height) };
         }
         
+        /// <summary>
+        /// Makes the center location of the board. Was a useful method without the infinite world.
+        /// </summary>
+        /// <returns></returns>
         public Location GetCenterLocation()
         {
             Location loc = new Location();
@@ -297,24 +335,45 @@ namespace ShipBattlesModel
         }
     }
 
+    /// <summary>
+    /// This class contians the data for calculating the time for each level.
+    /// </summary>
     public class LevelTimer
     {
-        public DateTime startingTime;
-        public DateTime currentTime;
-        public int seconds;
+        public DateTime startingTime;       // the time that the level started
+        public DateTime currentTime;        // the current time
+        public int seconds;                 // the number of seconds between them.
+
+        /// <summary>
+        /// Sets the starting time to now.
+        /// </summary>
         public LevelTimer()
         {
             startingTime = DateTime.Now;
         }
+
+        /// <summary>
+        /// Sets the current time to now.
+        /// </summary>
         public void Update()
         {
             currentTime = DateTime.Now;
         }
+        
+        /// <summary>
+        /// returns the number of seconds since the level started. 
+        /// </summary>
+        /// <returns></returns>
         public int Seconds()
         {
             seconds = currentTime.Subtract(startingTime).Seconds;
             return seconds;
         }
+
+        /// <summary>
+        /// for serialization.
+        /// </summary>
+        /// <returns></returns>
         public string Write()
         {
             return currentTime.Subtract(startingTime).ToString();
