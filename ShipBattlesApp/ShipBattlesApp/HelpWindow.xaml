@@ -11,11 +11,6 @@
         <Image Source="Images/help.png" HorizontalAlignment="Left" Height="100" Margin="624,116,0,0" VerticalAlignment="Top" Width="271"/>
         <TextBlock x:Name="Block_0" HorizontalAlignment="Left" Margin="547,275,0,0" TextWrapping="Wrap" Text="How to play Ship Battles:"  Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-<<<<<<< HEAD
-        <TextBlock x:Name="Block_1" HorizontalAlignment="Left" Margin="125,350,0,0" TextWrapping="Wrap" Text="Control the direction and thrust of your ship with the WASD keys.
-Shoot the enemies and enemy bases with the SPACEBAR. Pick up the orange repair kits for an extra hitpoint. Destroy all enemy bases to win! But if you lose all of your hitpoints, then you lose the
-game!"  Foreground="White" FontSize="35" VerticalAlignment="Top" Height="218" Width="1232"/>
-=======
         <TextBlock x:Name="Block_1" HorizontalAlignment="Left" Margin="34,403,0,0" TextWrapping="Wrap" 
                    Text="Ship Battles is a fun but hectic game. Enemy lasers and asteroids will harm your ship, 
 so be careful to navigate around them! You can destroy enemy ships and bases with your own laser, 
@@ -29,6 +24,5 @@ and can fix damage to your ship by flying over repair kits. A new level will sta
         <Button Content="Q" HorizontalAlignment="Left" Margin="1092,562,0,0" VerticalAlignment="Top" Width="90" Height="90" FontSize="30"/>
         <TextBlock HorizontalAlignment="Left" Margin="987,408,0,0" TextWrapping="Wrap" Foreground="White" Text="Use WASD to control movement and aim." VerticalAlignment="Top" Height="108" Width="349" FontSize="30"/>
         <TextBlock HorizontalAlignment="Left" Margin="987,679,0,0" TextWrapping="Wrap" Foreground="White" Text="Use SPACEBAR to shoot, and use Q to pause/save the game." VerticalAlignment="Top" Height="172" Width="329" FontSize="30"/>
->>>>>>> 93d4cf722d6c1fff01866baf952e4e0989a3e470
     </Grid>
 </Window>

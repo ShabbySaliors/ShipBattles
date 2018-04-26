@@ -1,4 +1,8 @@
-﻿
+﻿//---------------------------------------------
+//File:   HighScoreTesting.cs
+//Desc:   This file contains code to test the
+//        capabilites of the game model.
+//---------------------------------------------
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ShipBattlesModel

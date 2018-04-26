@@ -13,8 +13,11 @@ namespace ShipBattlesModel
     // saving, and loading high-scores.
     public class HighScore
     {
+        // The file to load the high-scores from.
         private string filename = "highscores.txt";
+        // A list that contains high-scores in the form of Scores (see the Score class below).
         private List<Score> scoresList = new List<Score> { };
+        // Property for 'filename'.
         public string Filename
         {
             get
@@ -22,6 +25,7 @@ namespace ShipBattlesModel
                 return filename;
             }
         }
+        // Property for 'scoresList'.
         public List<Score> ScoresList
         {
             get
@@ -140,8 +144,9 @@ namespace ShipBattlesModel
     // (it is the first big code example)
     public class Score : IComparable<Score>
     {
+        // The name of the person who got the high-score.
         public string Name { get; set; }
-
+        // The points of the high-score.
         public int Points { get; set; }
 
         public Score(string name, int points)
