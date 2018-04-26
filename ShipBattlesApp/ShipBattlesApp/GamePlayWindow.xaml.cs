@@ -10,8 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Media;
 using System.Windows.Media.Imaging;
-using ShipBattlesModel;
 using System.Windows.Threading;
+using ShipBattlesModel;
 
 namespace ShipBattlesApp
 {
@@ -66,7 +66,7 @@ namespace ShipBattlesApp
             ctrl.MakePlottibles();
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
             foreach (GameObject obj in GameWorld.Instance.Plottibles) PlotObject(obj);
-            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20); // 100 ms
+            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
         }
@@ -219,7 +219,6 @@ namespace ShipBattlesApp
             }
         }
 
-        // This does something. Jeremiah, Rusty, HELP!
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W || e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 0;

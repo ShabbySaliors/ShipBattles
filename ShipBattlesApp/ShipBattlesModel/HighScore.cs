@@ -13,7 +13,6 @@ namespace ShipBattlesModel
     // saving, and loading high-scores.
     public class HighScore
     {
-        // testMode will trigger an alternate filename for unit tests
         private string filename = "highscores.txt";
         private List<Score> scoresList = new List<Score> { };
         public string Filename
@@ -31,8 +30,10 @@ namespace ShipBattlesModel
             }
         }
 
-        // Checks if the high-scores file exists
-        // If it does not, it makes a new high-scores file
+        // For the following three methods, if testMode is true, it will trigger an alternate filename for unit tests.
+
+        // Checks if the high-scores file exists.
+        // If it does not, it makes a new high-scores file.
         public void CheckHighScoresFile(bool testMode)
         {
             if (testMode) filename = "test.txt";
@@ -46,9 +47,9 @@ namespace ShipBattlesModel
             filename = "highscores.txt";
         }
 
-        // Saves a high-score to an output file (it first creates the output file if it does not exist)
+        // Saves a high-score to an output file (it first calls CheckHighScoresFile to ensure that the output file exists).
         // If the maximum number of high-scores is reached, it deletes the lowest high-score
-        // (or the newest high-score if it ties with the lowest)
+        // (or the newest high-score if it ties with the lowest).
         public async void SaveHighScore(string username, int highScore, bool testMode)
         {
             string nameToSave = "";
@@ -95,7 +96,7 @@ namespace ShipBattlesModel
             filename = "highscores.txt";
         }
 
-        // Load a list of high-scores from said output file
+        // Load a list of high-scores from said output file.
         public async void LoadHighScores(bool testMode)
         {
             if (testMode) filename = "test.txt";

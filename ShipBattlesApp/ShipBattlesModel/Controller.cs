@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------
+//File:   Controller.cs
+//Desc:   This file contains code that controls
+//        all of the game world objects in ShipBattles.
+//-----------------------------------------------------
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Media;
