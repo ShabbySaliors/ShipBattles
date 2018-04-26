@@ -1,4 +1,10 @@
-﻿using System;
+﻿//-----------------------------------------
+//File:   GameWorld.cs
+//Desc:   This file contains code to manage
+//        the game world behind the game
+//        screen in ShipBattles.
+//-----------------------------------------
+using System;
 using System.Collections.Generic;
 
 namespace ShipBattlesModel
@@ -13,7 +19,6 @@ namespace ShipBattlesModel
         public List<GameObject> Objects { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        //public PlayerShip PlayerShip;
         public List<GameObject> Plottibles { get; set; }
         public int BulletSpeed { get; set; }
         public int Level { get; set; }

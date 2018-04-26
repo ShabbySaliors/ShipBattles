@@ -1,4 +1,8 @@
-﻿
+﻿//---------------------------------------------
+//File:   HighScoreTesting.cs
+//Desc:   This file contains code to test the
+//        capabilites of the HighScore.cs file.
+//---------------------------------------------
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

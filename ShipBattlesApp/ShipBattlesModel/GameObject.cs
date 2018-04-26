@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------
+//File:   GameObject.cs
+//Desc:   This file contains code that defines all of
+//        the objects in the game world in ShipBattles.
+//-----------------------------------------------------
+using System;
 
 namespace ShipBattlesModel
 {

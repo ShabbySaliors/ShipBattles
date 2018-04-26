@@ -1,29 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//---------------------------------------------
+//File:   HelpWindow.xaml.cs
+//Desc:   This file contains info regarding how
+//        to play ShipBattles.
+//---------------------------------------------
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ShipBattlesApp
 {
-    /// <summary>
-    /// Interaction logic for HelpWindow.xaml
-    /// </summary>
+    // Standard window code for the Help screen.
     public partial class HelpWindow : Window
     {
+        // Same as above.
         public HelpWindow()
         {
             InitializeComponent();
         }
 
+        // Makes sure that the window is exactly the size of the minimum screen resolution.
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.MinWidth = 1440.0;

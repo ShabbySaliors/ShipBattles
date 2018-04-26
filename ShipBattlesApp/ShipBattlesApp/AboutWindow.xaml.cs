@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace ShipBattlesApp
 {
-    // Standard code for the About screen.
+    // Standard window code for the About screen.
     public partial class AboutWindow : Window
     {
         // Same as above
