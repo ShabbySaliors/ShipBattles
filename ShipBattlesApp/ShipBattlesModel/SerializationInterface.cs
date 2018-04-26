@@ -1,9 +1,8 @@
-﻿//----------------------------------------------------------
+//------------------------------------------------------
 //File:   SerializationInterface.cs
-//Desc:   This file contains an implementable interface that
-//        all serializable objects in ShipBattles can use to
-//        save/load.
-//----------------------------------------------------------
+//Desc:   This file contains testing logic to make sure
+//        objects are serialized/deserialized correctly.
+//------------------------------------------------------
 namespace ShipBattlesModel
 {
     /// <summary>
