@@ -19,10 +19,13 @@ namespace ShipBattlesApp
     // It summons the Title Screen first by default.
     public partial class MainWindow : Window
     {
-        // 'SoundPlayer' instance used to play background music upon startup of MainWindow
+        // Used to play background music upon startup of MainWindow.
         private SoundPlayer backgroundMusicPlayer = new SoundPlayer("../../Audio/MystOnTheMoor.wav");
+        // Used to store high-score data that is then passed to other windows as needed.
         HighScore hs = new HighScore();
+        // Used for an efficient event handler regarding the difficulty buttons.
         Button oldBtn;
+        // Same as oldBtn
         Button btn;
 
         // Auto-generated class for loading background elements

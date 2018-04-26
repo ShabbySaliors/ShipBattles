@@ -13,6 +13,7 @@ namespace ShipBattlesApp
     // Code for the High-Scores screen
     public partial class HighScoreWindow : Window
     {
+        // Stores high-score data to be displayed in this window.
         HighScore hs;
 
         // Receives an instance of HighScore and stores it to prep for loading the current high-scores.

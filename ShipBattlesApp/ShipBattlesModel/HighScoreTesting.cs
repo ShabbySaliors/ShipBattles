@@ -8,11 +8,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ShipBattlesModel
 {
+    // Contains four unique tests for testing the abilities of the HighScore and Score classes.
+    // Also contains a helper method to reduce duplicate code.
     [TestClass]
     public class HighScoreTesting
     {
+        // A HighScore instance that is used in the four tests.
         HighScore hsTest = new HighScore();
 
+        // The aforementioned helper method. Reset the high-scores file and checks
+        // to make sure that it got reset.
         private void ResetFile()
         {
             File.Delete("test.txt");
@@ -20,6 +25,7 @@ namespace ShipBattlesModel
             Assert.IsTrue(File.Exists("test.txt"));
         }
 
+        // Tests to see if a file with no scores in it can be loaded correctly.
         [TestMethod]
         public void TestLoadNoScores()
         {
@@ -29,6 +35,7 @@ namespace ShipBattlesModel
             Assert.IsTrue(hsTest.ScoresList.Count == 0);
         }
 
+        // Tests to see if saving a high-score works correctly.
         [TestMethod]
         public void TestSaveHighScore()
         {
@@ -39,8 +46,8 @@ namespace ShipBattlesModel
             Assert.IsTrue(hsTest.ScoresList[0].Points == 6975);
         }
 
-        
-
+        // Tests to see if saving high-scores and the sorting logic
+        // that is built into the saving method works correctly.
         [TestMethod]
         public void TestSaveAndSortHighScores()
         {
@@ -66,6 +73,9 @@ namespace ShipBattlesModel
             Assert.IsTrue(hsTest.ScoresList[4].Points == 925);
         }
 
+        // Tests to see if saving mutiple identical scores works correctly.
+        // An score with an identical number of points should only be thrown out
+        // if it ties with the lowest score in scoresList (see the HighScore class).
         [TestMethod]
         public void TestSaveSameScores()
         {

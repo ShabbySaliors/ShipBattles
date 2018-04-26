@@ -18,10 +18,16 @@ namespace ShipBattlesApp
     // Code for making the gameplay, well, play.
     public partial class GamePlayWindow : Window
     {
+        // Used for playing the 'laser fired' sound effect when the player hits SPACEBAR.
+        // Does not play if the game is over.
         private SoundPlayer playerLaserPlayer = new SoundPlayer("../../Audio/playerLaser.wav");
+        // A public Controller instance that is used by multiple files.
         public Controller ctrl = new Controller();
+        // A timer that always runs unless the game is paused or over.
         DispatcherTimer iterationTimer = new DispatcherTimer();
+        // A HighScore instance that is potentially updated when the game is over.
         HighScore hs;
+        // The name to display in the stackpanel.
         string nameToShow;
 
         // Begins constructing a game screen for a saved game.
@@ -50,7 +56,7 @@ namespace ShipBattlesApp
         // Sets up the necessary data for gameplay to begin, then starts gameplay
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Name.Text = ctrl.Username;
+            Name.Text = nameToShow;
             if (GameWorld.Instance.LoadedGame)
             {
                 ctrl.LoadWorld(1);
