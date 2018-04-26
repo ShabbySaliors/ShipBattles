@@ -50,7 +50,7 @@ To Cheat:
 # Gameplay Link
 
 ## Final Release
-- Put the link here, please!
+- https://www.youtube.com/watch?v=tTCfbAWbhs8
 
 ## RC
 - https://tinyurl.com/shipbattlesrc
