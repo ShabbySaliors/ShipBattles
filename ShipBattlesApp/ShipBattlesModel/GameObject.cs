@@ -1,4 +1,9 @@
-﻿using System;
+﻿//-----------------------------------------------------
+//File:   GameObject.cs
+//Desc:   This file contains code that defines all of
+//        the objects in the game world in ShipBattles.
+//-----------------------------------------------------
+using System;
 
 namespace ShipBattlesModel
 {
@@ -208,10 +213,11 @@ namespace ShipBattlesModel
             Lives = 1;
             CollideBoxSize = 20;
             HitBoxSize = 10;
-            ImageFilepath = "Images/playerShip.png";
             ToShoot = false;                            // We set ToShoot to false initially so that the ship 
                                                         // does not shoot whenever the game starts up.
-            ShootDirection = new Direction { Up = 1, Right = 0 }; // the initial direction is up for the bullets
+                                                        // the initial direction is up for the bullets
+            ImageFilepath = "Images/playerShip_up.png";
+            ShootDirection = new Direction { Up = 1, Right = 0 };
         }
         /// <summary>
         /// This method is called by the contoller at the begining of each level. The ship is randomly placed.

@@ -1,8 +1,9 @@
-﻿//---------------------------------------------------------------
+﻿//-------------------------------------------------------
 //File:   MainWindow.xaml.cs
 //Desc:   This file contains the necessary code to show
-//        every screen available, starting with the title screen.
-//---------------------------------------------------------------
+//        every screen available in ShipBattles, starting
+//        with the title screen.
+//-------------------------------------------------------
 using System.IO;
 using System.Collections.Generic;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace ShipBattlesApp
     // It summons the Title Screen first by default.
     public partial class MainWindow : Window
     {
-        // `SoundPlayer` instance used to play background music upon startup of MainWindow
+        // 'SoundPlayer' instance used to play background music upon startup of MainWindow
         private SoundPlayer backgroundMusicPlayer = new SoundPlayer("../../Audio/MystOnTheMoor.wav");
         HighScore hs = new HighScore();
         Button oldBtn;
@@ -44,7 +45,6 @@ namespace ShipBattlesApp
             oldBtn = btnEasy;
         }
 
-        // Initializes the component. What more could you ask for?
         public MainWindow()
         {
             InitializeComponent();

@@ -9,9 +9,19 @@
     <Grid>
         <Image Stretch="UniformToFill" Source="Images/background2.jpg"/>
         <Image Source="Images/about.png" HorizontalAlignment="Left" Height="100" Margin="528,116,0,0" VerticalAlignment="Top" Width="414"/>
-        <TextBlock x:Name="Block_0" HorizontalAlignment="Left" Margin="600,453,0,0" TextWrapping="Wrap" Text="Programmers:"  Foreground="White" 
+        <TextBlock HorizontalAlignment="Left" Margin="300,300,0,0" TextWrapping="Wrap" Text="The following programmers made this game possible:" Foreground="White" 
             FontSize="35" VerticalAlignment="Top" Height="75"/>
-        <TextBlock x:Name="Block_1" HorizontalAlignment="Left" Margin="275,609,0,0" TextWrapping="Wrap" Text="Jeremiah England      Zachary Metzger      Rusty Ranta"  Foreground="White" 
-            FontSize="35" VerticalAlignment="Top" Height="75"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,380,0,0" TextWrapping="Wrap" Text="Jeremiah England" VerticalAlignment="Top" Height="75" Width="288"
+            Foreground="White" FontSize="35"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,460,0,0" TextWrapping="Wrap" Text="Rusty Ranta" VerticalAlignment="Top" Height="75" Width="288"
+            Foreground="White" FontSize="35"/>
+        <TextBlock HorizontalAlignment="Left" Margin="300,540,0,0" TextWrapping="Wrap" Text="Zachary Metzger" VerticalAlignment="Top" Height="75" Width="288"
+            Foreground="White" FontSize="35"/>
+        <TextBlock HorizontalAlignment="Left" Margin="841,540,0,0" TextWrapping="Wrap" Text="High Scores" VerticalAlignment="Top" Height="75" Width="288"
+            Foreground="White" FontSize="35" TextAlignment="Right"/>
+        <TextBlock HorizontalAlignment="Left" Margin="841,460,0,0" TextWrapping="Wrap" Text="Serialization" VerticalAlignment="Top" Height="75" Width="288"
+            Foreground="White" FontSize="35" TextAlignment="Right"/>
+        <TextBlock HorizontalAlignment="Left" Margin="841,380,0,0" TextWrapping="Wrap" Text="Gameplay" VerticalAlignment="Top" Height="75" Width="288"
+            Foreground="White" FontSize="35" TextAlignment="Right"/>
     </Grid>
 </Window>

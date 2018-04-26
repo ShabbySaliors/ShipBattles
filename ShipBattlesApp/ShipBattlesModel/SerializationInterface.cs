@@ -1,4 +1,8 @@
-﻿
+//------------------------------------------------------
+//File:   SerializationInterface.cs
+//Desc:   This file contains testing logic to make sure
+//        objects are serialized/deserialized correctly.
+//------------------------------------------------------
 namespace ShipBattlesModel
 {
     /// <summary>

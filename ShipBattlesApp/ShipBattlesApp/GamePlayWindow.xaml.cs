@@ -10,8 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Media;
 using System.Windows.Media.Imaging;
-using ShipBattlesModel;
 using System.Windows.Threading;
+using ShipBattlesModel;
 
 namespace ShipBattlesApp
 {
@@ -66,7 +66,7 @@ namespace ShipBattlesApp
             ctrl.MakePlottibles();
             Console.WriteLine(GameWorld.Instance.Plottibles.Count);
             foreach (GameObject obj in GameWorld.Instance.Plottibles) PlotObject(obj);
-            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20); // 100 ms
+            iterationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             iterationTimer.Tick += Timer_Tick;
             iterationTimer.Start();
         }
@@ -132,10 +132,62 @@ namespace ShipBattlesApp
         // Space fires the ship's GBG (green ball gun).
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W) ctrl.PlayerShip.Direct.Up = -1;
-            else if (e.Key == Key.A) ctrl.PlayerShip.Direct.Right = -1;
-            else if (e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 1;
-            else if (e.Key == Key.D) ctrl.PlayerShip.Direct.Right = 1;
+            if (e.Key == Key.W)
+            {
+                ctrl.PlayerShip.Direct.Up = -1;
+
+                if (ctrl.PlayerShip.Direct.Right == -1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_upLeft.png";
+                }
+                else if (ctrl.PlayerShip.Direct.Right == 1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_upRight.png";
+                }
+                else ctrl.PlayerShip.ImageFilepath = "Images/playerShip_up.png";
+            }
+            else if (e.Key == Key.A)
+            {
+                ctrl.PlayerShip.Direct.Right = -1;
+
+                if (ctrl.PlayerShip.Direct.Up == -1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_upLeft.png";
+                }
+                else if (ctrl.PlayerShip.Direct.Up == 1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_downLeft.png";
+                }
+                else ctrl.PlayerShip.ImageFilepath = "Images/playerShip_left.png";
+            }
+            else if (e.Key == Key.S)
+            {
+                ctrl.PlayerShip.Direct.Up = 1;
+
+                if (ctrl.PlayerShip.Direct.Right == -1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_downLeft.png";
+                }
+                else if (ctrl.PlayerShip.Direct.Right == 1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_downRight.png";
+                }
+                else ctrl.PlayerShip.ImageFilepath = "Images/playerShip_down.png";
+            }
+            else if (e.Key == Key.D)
+            {
+                ctrl.PlayerShip.Direct.Right = 1;
+
+                if (ctrl.PlayerShip.Direct.Up == -1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_upRight.png";
+                }
+                else if (ctrl.PlayerShip.Direct.Up == 1)
+                {
+                    ctrl.PlayerShip.ImageFilepath = "Images/playerShip_downRight.png";
+                }
+                else ctrl.PlayerShip.ImageFilepath = "Images/playerShip_right.png";
+            }
             else if (e.Key == Key.Space)
             {
                 if (!ctrl.IsGameOver())
@@ -167,15 +219,18 @@ namespace ShipBattlesApp
             }
         }
 
-        // This does something. Jeremiah, Rusty, HELP!
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W || e.Key == Key.S) ctrl.PlayerShip.Direct.Up = 0;
             else if (e.Key == Key.A || e.Key == Key.D) ctrl.PlayerShip.Direct.Right = 0;
+            if (e.Key == Key.W || e.Key == Key.A || e.Key == Key.S || e.Key == Key.D)
+            {
+                if (ctrl.PlayerShip.Direct.Up == -1) ctrl.PlayerShip.ImageFilepath = "Images/playerShip_up.png";
+                else if (ctrl.PlayerShip.Direct.Right == -1) ctrl.PlayerShip.ImageFilepath = "Images/playerShip_left.png";
+                else if (ctrl.PlayerShip.Direct.Up == 1) ctrl.PlayerShip.ImageFilepath = "Images/playerShip_down.png";
+                else if (ctrl.PlayerShip.Direct.Right == 1) ctrl.PlayerShip.ImageFilepath = "Images/playerShip_right.png";
+            }        
         }
-
-        // Another problem is that I need to center the coordinate of the picture and then rotate the picture with
-        // respect to that coordinate according to the direction of the object.
 
         // Ends the game when the game screen is closed.
         private void Window_Closed(object sender, EventArgs e)
