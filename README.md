@@ -64,7 +64,7 @@ To Cheat:
 # Work Hours
 |Author | Time| 
 |-------|-----|
-| Zach | 31.5 |
+| Zach | 31.50 |
 | Jeremiah | 45.58 |
 | Rusty | 37.00 |
 |Total  |114.08|
