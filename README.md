@@ -46,7 +46,7 @@ To Cheat:
 # Known Issues
 - Objects spawn on top of each other.
 - The player's ship starts off moving in a random direction until the WASD keys are pressed
-- Unfortunately, the buttons for 'easy', 'hard', 'medium' do not work in the final release. They were working earlier that day, but someone deleted the event handlers for these buttons without chonsolting their creator to see why they were there. 
+- Unfortunately, the buttons for 'easy', 'hard', 'medium' do not work in the final release. They were working earlier that day, but someone deleted the event handlers for these buttons without consulting their creator to see why they were there. 
 
 # Gameplay Link
 
